@@ -4,8 +4,8 @@ public class AccountCredentials {
 	
 	private String username;
 	private String password;
-	private String role;
 	private String tokenFacebook;
+	private String tokenGoogle;
 	
 	public String getTokenFacebook() {
 		return tokenFacebook;
@@ -23,16 +23,8 @@ public class AccountCredentials {
 		this.tokenGoogle = tokenGoogle;
 	}
 
-	private String tokenGoogle;
 	
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
+	
 	public String getUsername() {
 		return username;
 	}
