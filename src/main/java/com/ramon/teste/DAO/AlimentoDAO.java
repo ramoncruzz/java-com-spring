@@ -6,4 +6,5 @@ import com.ramon.teste.model.Alimento;
 
 public interface AlimentoDAO extends JpaRepository<Alimento, Long> {
 
+	Alimento findById(Long id);
 }

@@ -5,4 +5,5 @@ import com.ramon.teste.model.Usuario;
 
 public interface UsuarioDAO extends JpaRepository<Usuario, Long> {
 
+	Usuario findById(Long id);
 }

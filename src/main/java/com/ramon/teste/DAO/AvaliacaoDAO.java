@@ -6,4 +6,5 @@ import com.ramon.teste.model.Avaliacao;
 
 public interface AvaliacaoDAO extends JpaRepository<Avaliacao, Long> {
 
+	Avaliacao findById(Long id);
 }

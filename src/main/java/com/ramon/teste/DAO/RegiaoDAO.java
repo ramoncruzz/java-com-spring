@@ -5,4 +5,5 @@ import com.ramon.teste.model.Regiao;
 
 public interface RegiaoDAO extends JpaRepository<Regiao, Long> {
 
+	Regiao findById(Long id);
 }

@@ -5,4 +5,5 @@ import com.ramon.teste.model.Pedido;
 
 public interface PedidoDAO extends JpaRepository<Pedido, Long> {
 
+	Pedido findById(Long id);
 }

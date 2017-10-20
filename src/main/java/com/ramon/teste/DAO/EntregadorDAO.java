@@ -6,4 +6,6 @@ import com.ramon.teste.model.Entregador;
 
 public interface EntregadorDAO extends JpaRepository<Entregador, Long> {
 
+	Entregador findById(Long id);
+	
 }

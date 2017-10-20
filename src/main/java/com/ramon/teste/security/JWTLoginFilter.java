@@ -55,13 +55,10 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 	private Roles getAutorizacao(AccountCredentials credenciais)
 	{
 		Roles role =null;
-		if(!credenciais.equals(null))
+		if(credenciais!=null)
 		{
-			if(!credenciais.getTokenFacebook().equals(null))
-			{
-				role=new Roles(RoleNames.USER);
-			}
-			if(!credenciais.getTokenGoogle().equals(null))
+			role=new Roles(RoleNames.USER);
+			if(credenciais.getTokenFacebook()!=null)
 			{
 				role=new Roles(RoleNames.USER);
 			}

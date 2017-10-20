@@ -6,4 +6,5 @@ import com.ramon.teste.model.Cardapio;
 
 public interface CardapioDAO extends JpaRepository<Cardapio, Long> {
 
+	Cardapio findById(Long id);
 }
