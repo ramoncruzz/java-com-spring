@@ -2,23 +2,18 @@ package com.ramon.teste.security;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-
-import javax.management.relation.Role;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ramon.teste.model.Usuario;
+
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
@@ -56,10 +51,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 		if(role.getAuthority().equalsIgnoreCase(RoleNames.USER)) TokenAuthenticationService.addAuthentication(response, auth.getName());
 		
 	}
-	private Usuario getAutorizacaoNoBanco(AccountCredentials credenciais)
-	{
-		return null;
-	}
+	
 	private Roles getAutorizacao(AccountCredentials credenciais)
 	{
 		Roles role =null;

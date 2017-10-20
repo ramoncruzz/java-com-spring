@@ -23,8 +23,6 @@ public class AccountCredentials {
 		this.tokenGoogle = tokenGoogle;
 	}
 
-	
-	
 	public String getUsername() {
 		return username;
 	}

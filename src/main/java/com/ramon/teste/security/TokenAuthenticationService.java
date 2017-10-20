@@ -1,6 +1,5 @@
 package com.ramon.teste.security;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;

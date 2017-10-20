@@ -11,13 +11,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
  
-
 @Entity
 public class Pedido {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+	private String numeroPedido;
 	
 	private Date dataHora;
 	
@@ -112,6 +113,14 @@ public class Pedido {
 
 	public void setBebidasEscolhidas(List<String> bebidasEscolhidas) {
 		this.bebidasEscolhidas = bebidasEscolhidas;
+	}
+
+	public String getNumeroPedido() {
+		return numeroPedido;
+	}
+
+	public void setNumeroPedido(String numeroPedido) {
+		this.numeroPedido = numeroPedido;
 	}
 	
 	
