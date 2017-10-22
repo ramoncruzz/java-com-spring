@@ -1,8 +1,5 @@
 package com.ramon.teste.security;
 
-import java.sql.Connection;
-import java.sql.Statement;
-
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;

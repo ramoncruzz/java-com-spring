@@ -29,7 +29,9 @@ public class JWTAuthenticationFilter extends GenericFilterBean implements Serial
 	private static String ADMIN="ADMIN";
 	private static String JEDI="JEDI";
 	
+	@SuppressWarnings("unused")
 	private static String URI_BEBIDA="/bebida";
+	@SuppressWarnings("unused")
 	private static String URI_ALIMENTO="/alimento";
 	private static String URI_CARDAPIO="/cardapio";
 	private static String URI_AVALIACAO="/avaliacao";
@@ -69,10 +71,6 @@ public class JWTAuthenticationFilter extends GenericFilterBean implements Serial
 			String permissao = ((Autorizacao)authentication.getAuthorities().toArray()[0]).getAuthority();
 			String metodo = ((HttpServletRequest)request).getMethod()+"";
 			String caminho =((HttpServletRequest)request).getRequestURI()+"";
-			
-			System.out.println("=== "+permissao);
-			System.out.println("-->"+metodo);
-			System.out.println(caminho);
 			
 			if(permissao.trim().equals(JEDI) ||permissao.trim().equals(ADMIN))
 			{
