@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ramon.teste.DAO.UsuarioDAO;
 import com.ramon.teste.model.Usuario;
+import com.ramon.teste.services.UserService;
 
 @RestController
 @RequestMapping("/usuario")
@@ -21,9 +22,11 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioDAO usuarioDao;
+	@Autowired
+	UserService registro;
 	
 	@GetMapping
-	public List<Usuario> listarTodos(@RequestBody Usuario usuario)
+	public List<Usuario> listarTodos()
 	{
 		return usuarioDao.findAll();
 	}
@@ -31,7 +34,8 @@ public class UsuarioController {
 	@PostMapping
 	public HttpStatus cadastrar(@RequestBody Usuario usuario)
 	{
-		Usuario u = usuarioDao.save(usuario);
+		registro.registerUser(usuario);
+		Usuario u = usuarioDao.findByUserName(usuario.getUserName());
 		if(u.getId()>0)
 			return HttpStatus.CREATED;
 		else 

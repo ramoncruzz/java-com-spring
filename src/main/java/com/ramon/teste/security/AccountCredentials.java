@@ -2,7 +2,7 @@ package com.ramon.teste.security;
 
 public class AccountCredentials {
 	
-	private String username;
+	private String userName;
 	private String password;
 	private String tokenFacebook;
 	private String tokenGoogle;
@@ -23,19 +23,20 @@ public class AccountCredentials {
 		this.tokenGoogle = tokenGoogle;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
-	
-	public void setUsername(String username) {
-		this.username = username;
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
-	
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 }

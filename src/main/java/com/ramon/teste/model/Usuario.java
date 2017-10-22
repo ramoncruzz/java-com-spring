@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.ramon.teste.security.Autorizacao;
+
 @Entity
 public class Usuario {
 	@Id
@@ -33,6 +35,8 @@ public class Usuario {
 	
 	private String userName;
 	
+	private String password;
+	private boolean ativo;
 
 	public Long getId() {
 		return id;
@@ -88,6 +92,22 @@ public class Usuario {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 

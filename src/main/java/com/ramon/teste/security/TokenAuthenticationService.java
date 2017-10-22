@@ -1,26 +1,32 @@
 package com.ramon.teste.security;
+
+
 import java.util.ArrayList;
 import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
+import com.ramon.teste.DAO.UsuarioDAO;
+import com.ramon.teste.model.Usuario;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-
+@Service
 public class TokenAuthenticationService {
 
 	// EXPIRATION_TIME = 10 dias
 		//static final long EXPIRATION_TIME = 860_000_000;
-		static final long EXPIRATION_TIME = 600_000;
-		static final String SECRET = "kverrna";
-		static final String TOKEN_PREFIX = "vitoria";
-		static final String HEADER_STRING = "Authorization";
+		public final long EXPIRATION_TIME = 600_000;
+		public final String SECRET = "kverrna";
+		public final String TOKEN_PREFIX = "vitoria";
+		public final String HEADER_STRING = "Authorization";
 		
-		static void addAuthentication(HttpServletResponse response, String username) {
+		public TokenAuthenticationService() {}
+		
+		public  void addAuthentication(HttpServletResponse response, String username) {
 			String JWT = Jwts.builder()
 					.setSubject(username)
 					.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
@@ -30,10 +36,14 @@ public class TokenAuthenticationService {
 			response.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + JWT);
 		}
 		
-		static Authentication getAuthentication(HttpServletRequest request) {
+		public  Authentication getAuthentication(HttpServletRequest request,UsuarioDAO usuarioDao) 
+		{
+			Autorizacao auth = new Autorizacao();
+			auth.setId(2L);
+			auth.setNome("USER");
 			String token = request.getHeader(HEADER_STRING);
-			ArrayList<Roles> autorizacoes = new ArrayList<>();
-			autorizacoes.add(new Roles("USER"));
+			ArrayList<Autorizacao> autorizacoes = new ArrayList<>();
+			
 			
 			if (token != null) {
 				// faz parse do token
@@ -43,11 +53,25 @@ public class TokenAuthenticationService {
 						.getBody()
 						.getSubject();
 				
-				if (user != null) {
+				if (user != null) 
+				{
+					Usuario usuario=null;
+					try
+					{
+						usuario = usuarioDao.findByUserName(user);
+						usuario.getPassword();
+						autorizacoes.add(usuario.getAutorizacao());
+						
+					}catch (Exception e) {
+						
+					}
+					
+					
 					return new UsernamePasswordAuthenticationToken(user, null, autorizacoes);
 				}
 			}
 			return null;
 		}
+		
 }
 

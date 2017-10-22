@@ -25,7 +25,6 @@ public class AlimentoController {
 	@GetMapping
 	public List<Alimento> getTodosAlimentos()
 	{
-		
 		return alimentoDao.findAll();
 	}
 	

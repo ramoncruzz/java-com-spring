@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ramon.teste.DAO.AutorizacaoDAO;
-import com.ramon.teste.model.Autorizacao;
+import com.ramon.teste.security.Autorizacao;
 
 @RestController
 @RequestMapping("/autorizacao")
@@ -26,6 +26,19 @@ public class AutorizacaoController {
 	public List<Autorizacao> listarTodos()
 	{
 		return autorizacaoDao.findAll();
+	}
+	
+	@GetMapping
+	@RequestMapping("/popular")
+	public HttpStatus popular()
+	{
+		
+		Autorizacao a = new Autorizacao();
+		a.setNome("USER");
+		if(autorizacaoDao.save(a).getId()>0)
+			return HttpStatus.CREATED;
+		else 
+			return HttpStatus.BAD_REQUEST;
 	}
 	
 	@PostMapping
