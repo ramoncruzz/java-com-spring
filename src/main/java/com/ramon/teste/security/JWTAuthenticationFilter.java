@@ -30,6 +30,13 @@ public class JWTAuthenticationFilter extends GenericFilterBean implements Serial
 	private static String JEDI="JEDI";
 	
 	private static String URI_BEBIDA="/bebida";
+	private static String URI_ALIMENTO="/alimento";
+	private static String URI_CARDAPIO="/cardapio";
+	private static String URI_AVALIACAO="/avaliacao";
+	private static String URI_REGIAO="/regiao";
+	private static String URI_ENDERECO="/endereco";
+	private static String URI_USUARIO="/usuario";
+	private static String URI_PEDIDO="/pedido";
 	@Autowired
 	private UsuarioDAO usuarioDao;  
 	
@@ -67,7 +74,7 @@ public class JWTAuthenticationFilter extends GenericFilterBean implements Serial
 			System.out.println("-->"+metodo);
 			System.out.println(caminho);
 			
-			if(permissao.trim().equals(JEDI))
+			if(permissao.trim().equals(JEDI) ||permissao.trim().equals(ADMIN))
 			{
 				authToSend=authentication;
 			}
@@ -76,12 +83,32 @@ public class JWTAuthenticationFilter extends GenericFilterBean implements Serial
 			{
 				if(metodo.trim().equals("GET"))
 				{
-					if(caminho.trim().equals(URI_BEBIDA))
+					if(caminho.trim().equals(URI_REGIAO)||caminho.trim().equals(URI_CARDAPIO)||caminho.trim().equals(URI_PEDIDO))
 					{
 						authToSend=authentication;
 					}
 				}
-				
+				if(metodo.trim().equals("POST"))
+				{
+					if(caminho.trim().equals(URI_USUARIO)||caminho.trim().equals(URI_ENDERECO)||caminho.trim().equals(URI_AVALIACAO)||caminho.trim().equals(URI_PEDIDO))
+					{
+						authToSend=authentication;
+					}
+				}
+				if(metodo.trim().equals("PUT"))
+				{
+					if(caminho.trim().equals(URI_USUARIO)||caminho.trim().equals(URI_ENDERECO)||caminho.trim().equals(URI_PEDIDO))
+					{
+						authToSend=authentication;
+					}
+				}
+				if(metodo.trim().equals("DELETE"))
+				{
+					if(caminho.trim().equals(URI_USUARIO)||caminho.trim().equals(URI_ENDERECO)||caminho.trim().equals(URI_PEDIDO))
+					{
+						authToSend=authentication;
+					}
+				}
 			}
 			
 		}catch (Exception e) {
