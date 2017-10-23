@@ -23,7 +23,7 @@ public class CardapioController {
 	private CardapioDAO cardapioDao;
 	
 	@GetMapping
-	public List<Cardapio> listarTodos(@RequestBody Cardapio cardapio)
+	public List<Cardapio> listarTodos()
 	{
 		return cardapioDao.findAll();
 	}
