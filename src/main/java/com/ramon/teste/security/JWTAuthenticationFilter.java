@@ -2,6 +2,8 @@ package com.ramon.teste.security;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletContext;
@@ -38,7 +40,7 @@ public class JWTAuthenticationFilter extends GenericFilterBean implements Serial
 	private static String URI_REGIAO="/regiao";
 	private static String URI_ENDERECO="/endereco";
 	private static String URI_USUARIO="/usuario";
-	private static String URI_PEDIDO="/pedido";
+	private static String URI_PEDIDO="pedido";
 	@Autowired
 	private UsuarioDAO usuarioDao;  
 	
@@ -81,28 +83,28 @@ public class JWTAuthenticationFilter extends GenericFilterBean implements Serial
 			{
 				if(metodo.trim().equals("GET"))
 				{
-					if(caminho.trim().equals(URI_REGIAO)||caminho.trim().equals(URI_CARDAPIO)||caminho.trim().equals(URI_PEDIDO))
+					if(checkPath(caminho,URI_REGIAO)||checkPath(caminho, URI_CARDAPIO)||checkPath(caminho, URI_PEDIDO))
 					{
 						authToSend=authentication;
 					}
 				}
 				if(metodo.trim().equals("POST"))
 				{
-					if(caminho.trim().equals(URI_USUARIO)||caminho.trim().equals(URI_ENDERECO)||caminho.trim().equals(URI_AVALIACAO)||caminho.trim().equals(URI_PEDIDO))
+					if(checkPath(caminho, URI_USUARIO)||checkPath(caminho, URI_ENDERECO)||checkPath(caminho, URI_AVALIACAO)||checkPath(caminho, URI_PEDIDO))
 					{
 						authToSend=authentication;
 					}
 				}
 				if(metodo.trim().equals("PUT"))
 				{
-					if(caminho.trim().equals(URI_USUARIO)||caminho.trim().equals(URI_ENDERECO)||caminho.trim().equals(URI_PEDIDO))
+					if(checkPath(caminho, URI_USUARIO)||checkPath(caminho, URI_ENDERECO)||checkPath(caminho, URI_PEDIDO))
 					{
 						authToSend=authentication;
 					}
 				}
 				if(metodo.trim().equals("DELETE"))
 				{
-					if(caminho.trim().equals(URI_USUARIO)||caminho.trim().equals(URI_ENDERECO)||caminho.trim().equals(URI_PEDIDO))
+					if(checkPath(caminho, URI_USUARIO)||checkPath(caminho, URI_ENDERECO)||checkPath(caminho, URI_PEDIDO))
 					{
 						authToSend=authentication;
 					}
@@ -115,6 +117,13 @@ public class JWTAuthenticationFilter extends GenericFilterBean implements Serial
 
 		
 		return authToSend;
+	}
+	private boolean checkPath(String url , String pattern)
+	{
+	      Pattern r = Pattern.compile(pattern);
+	      Matcher m = r.matcher(url);
+	  
+		return m.find();
 	}
 
 }

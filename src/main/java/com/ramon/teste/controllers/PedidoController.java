@@ -28,7 +28,8 @@ public class PedidoController {
 	@GetMapping(value = "/{userName}")
 	public Pedido listarTodos(@PathVariable String userName)
 	{
-		Usuario usuario = usuarioDao.findByUserName(userName);
+		String username =userName.replace("-", ".");
+		Usuario usuario = usuarioDao.findByUserName(username);
 		return pedidoDao.findByUsuario(usuario);
 	}
 	
