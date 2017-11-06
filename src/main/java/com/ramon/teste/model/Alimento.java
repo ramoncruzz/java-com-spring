@@ -20,6 +20,8 @@ public class Alimento {
 	private String descricao;
 	@NotNull
 	private boolean disponivel;
+	@NotNull
+	private String categoria;
 
 	public Long getId() {
 		return id;
@@ -51,6 +53,14 @@ public class Alimento {
 
 	public void setDisponivel(boolean disponivel) {
 		this.disponivel = disponivel;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 
 
