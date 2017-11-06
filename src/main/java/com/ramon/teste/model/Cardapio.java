@@ -23,7 +23,7 @@ public class Cardapio {
 	private boolean temporariamenteIndisponivel;
 	private String descricaoCardapio;
 	private String textoDestaque;
-	
+	private String mensagem;
 	@ManyToOne
 	private Alimento destaque;
 	
@@ -103,6 +103,14 @@ public class Cardapio {
 
 	public void setAlimento(List<Alimento> alimento) {
 		this.alimento = alimento;
+	}
+
+	public String getMensagem() {
+		return mensagem;
+	}
+
+	public void setMensagem(String mensagem) {
+		this.mensagem = mensagem;
 	}
 
 	

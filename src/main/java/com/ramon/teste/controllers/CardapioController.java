@@ -22,12 +22,18 @@ public class CardapioController {
 	@Autowired
 	private CardapioDAO cardapioDao;
 	
-	@GetMapping
+	@GetMapping("/todos")
 	public List<Cardapio> listarTodos()
 	{
 		return cardapioDao.findAll();
 	}
-	
+	@GetMapping
+	public Cardapio cardapioCorrente()
+	{
+		Cardapio cardapio = cardapioDao.findFirstByOrderByIdDesc();
+		
+		return cardapio;
+	}
 	@PostMapping
 	public HttpStatus cadastrar(@RequestBody Cardapio cardapio)
 	{

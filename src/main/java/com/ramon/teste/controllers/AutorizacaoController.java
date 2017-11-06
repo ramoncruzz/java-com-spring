@@ -35,6 +35,10 @@ public class AutorizacaoController {
 		
 		Autorizacao a = new Autorizacao();
 		a.setNome("USER");
+		Autorizacao b = new Autorizacao();
+		b.setNome("ADMIN");
+		autorizacaoDao.save(b);
+		
 		if(autorizacaoDao.save(a).getId()>0)
 			return HttpStatus.CREATED;
 		else 

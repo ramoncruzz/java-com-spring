@@ -18,8 +18,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class TokenAuthenticationService {
 
 	// EXPIRATION_TIME = 10 dias
-		//static final long EXPIRATION_TIME = 860_000_000;
-		public final long EXPIRATION_TIME = 600_000;
+		static final long EXPIRATION_TIME = 860_000_000;
+		//public final long EXPIRATION_TIME = 600_000;
 		public final String SECRET = "kverrna";
 		public final String TOKEN_PREFIX = "vitoria";
 		public final String HEADER_STRING = "Authorization";
