@@ -9,12 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ramon.teste.DAO.AlimentoDAO;
-import com.ramon.teste.DAO.BebidaDAO;
-import com.ramon.teste.DAO.CardapioDAO;
+import com.ramon.teste.DAO.*;
 import com.ramon.teste.model.*;
+import com.ramon.teste.security.Autorizacao;
 
-import antlr.collections.List;
 
 @RestController
 @RequestMapping("/")
@@ -26,6 +24,12 @@ public class HomeController {
 	private BebidaDAO bebidaDao;
 	@Autowired
 	private CardapioDAO cardapioDao;
+	@Autowired
+	private PedidoDAO pedidoDao;
+	@Autowired
+	private UsuarioDAO usuarioDao;
+	@Autowired
+	private AutorizacaoDAO autorizacaoDao;
 	
 	@GetMapping
 	@ResponseBody
@@ -219,6 +223,42 @@ public class HomeController {
 		cardapio.setData(new Date());
 		cardapio.setAtivo(true);
 		cardapioDao.save(cardapio);
+		
+		//Carregar PedidoFAke
+		ArrayList<String> listaFake = new ArrayList<>();
+		listaFake.add("Objeto 01");
+		listaFake.add("Objeto 02");
+		listaFake.add("Objeto 03");
+		
+		Endereco end = new Endereco();
+		end.setLogradouro("Logradouro");
+		end.setPontoDeReferencia("Ponto de referencia");
+		end.setTaxaEntrega(0.0);
+		
+		Autorizacao auth = new Autorizacao();
+		auth.setNome("USER");
+		id =autorizacaoDao.save(auth).getId();
+		auth.setId(id);
+		
+		Usuario usuarioFake = new Usuario();
+		usuarioFake.setAtivo(true);
+		usuarioFake.setCpf(11111111);
+		usuarioFake.setNomeCompleto("Usuario Fulano");
+		usuarioFake.setUserName("usuario@usuario.com");
+		usuarioFake.setAutorizacao(auth);
+		id=usuarioDao.save(usuarioFake).getId();
+		usuarioFake.setId(id);
+		
+		Pedido pedidoFake = new Pedido();
+		pedidoFake.setAlimentosEscolhidos(listaFake);
+		pedidoFake.setBebidasEscolhidas(listaFake);
+		pedidoFake.setDataHora(null);
+		pedidoFake.setPrecoFinal(0.0);
+		pedidoFake.setTaxaConveniencia(0.0);
+		pedidoFake.setUsuario(usuarioFake);
+		pedidoFake.setTaxaEntrega(1.0);
+		
+		pedidoDao.save(pedidoFake);
 		
 	}
 }

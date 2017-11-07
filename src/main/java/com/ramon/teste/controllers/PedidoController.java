@@ -1,5 +1,8 @@
 package com.ramon.teste.controllers;
 
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,11 +29,16 @@ public class PedidoController {
 	private UsuarioDAO usuarioDao;
 	
 	@GetMapping(value = "/{userName}")
-	public Pedido listarTodos(@PathVariable String userName)
+	public Pedido listarTodosPorUsuario(@PathVariable String userName)
 	{
 		String username =userName.replace("-", ".");
 		Usuario usuario = usuarioDao.findByUserName(username);
 		return pedidoDao.findByUsuario(usuario);
+	}
+	@GetMapping
+	public List<Pedido> listarTodos()
+	{
+		return pedidoDao.findAll();
 	}
 	
 	@PostMapping
