@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ramon.teste.DAO.*;
+import com.ramon.teste.DAO.util.MarmitaDao;
+import com.ramon.teste.DAO.util.PedidosMobileRequestDAO;
 import com.ramon.teste.model.*;
+import com.ramon.teste.model.util.MarmitaMobileRequest;
+import com.ramon.teste.model.util.PedidosMobileRequest;
 import com.ramon.teste.security.Autorizacao;
 
 
@@ -30,6 +34,10 @@ public class HomeController {
 	private UsuarioDAO usuarioDao;
 	@Autowired
 	private AutorizacaoDAO autorizacaoDao;
+	@Autowired
+	private PedidosMobileRequestDAO pedidosMobileDAO;
+	@Autowired
+	private MarmitaDao marmitaDAO;
 	
 	@GetMapping
 	@ResponseBody
@@ -259,6 +267,29 @@ public class HomeController {
 		pedidoFake.setTaxaEntrega(1.0);
 		
 		pedidoDao.save(pedidoFake);
+		
+		MarmitaMobileRequest marmita = new MarmitaMobileRequest();
+		marmita.setAlimentosEscolhidos(listaFake);
+		id=marmitaDAO.save(marmita).getId();
+		marmita.setId(id);
+		
+		ArrayList<MarmitaMobileRequest> listaMarmita = new ArrayList<>();
+		listaMarmita.add(marmita);
+		
+		PedidosMobileRequest pedidosMobile = new PedidosMobileRequest();
+		pedidosMobile.setBebidas(listaFake);
+		pedidosMobile.setDataHora("11-22-33");
+		pedidosMobile.setEndereco("SQ 11 QQ");
+		pedidosMobile.setMarmitas(listaMarmita);
+		pedidosMobile.setNomeCompleto("Fulano de tal");
+		pedidosMobile.setNumeroPedido("00");
+		pedidosMobile.setPontoReferencia("Rua Magica");
+		pedidosMobile.setPrecoFinal(1.0);
+		pedidosMobile.setRegiaoNome("Bairro");
+		pedidosMobile.setTaxaConveniencia(1);
+		pedidosMobile.setTaxaEntrega(3);
+		id = pedidosMobileDAO.save(pedidosMobile).getId();
+		pedidosMobile.setId(id);
 		
 	}
 }
