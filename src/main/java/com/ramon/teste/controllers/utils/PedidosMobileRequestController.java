@@ -29,6 +29,12 @@ public class PedidosMobileRequestController {
 	{
 		return pedidoMobileDao.findAll();
 	}
+	@GetMapping("/limpa")
+	public HttpStatus limpa()
+	{
+		 pedidoMobileDao.deleteAll();
+		 return HttpStatus.OK;
+	}
 	
 	@PostMapping
 	public HttpStatus postPedido(@RequestBody PedidosMobileRequest pedidos)
