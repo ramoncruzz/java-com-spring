@@ -182,7 +182,7 @@ public class HomeController {
 		
 		//Bebidas 
 		Bebida sucoLaranja = new Bebida();
-		sucoLaranja.setMarca("Restaurante Vitória");
+		sucoLaranja.setMarca("500ml");
 		sucoLaranja.setNome("Suco de Laranja");
 		sucoLaranja.setValor(4.50);
 		sucoLaranja.setEscolhido(true);
@@ -192,7 +192,7 @@ public class HomeController {
 		listaBebidas.add(sucoLaranja);
 		
 		Bebida sucoLimao = new Bebida();
-		sucoLimao.setMarca("Restaurante Vitória");
+		sucoLimao.setMarca("500ml");
 		sucoLimao.setNome("Suco de Limão");
 		sucoLimao.setValor(4.50);
 		sucoLimao.setEscolhido(true);
@@ -201,9 +201,29 @@ public class HomeController {
 		sucoLimao.setId(id);
 		listaBebidas.add(sucoLimao);
 		
+		Bebida sucoManga = new Bebida();
+		sucoManga.setMarca("500ml");
+		sucoManga.setNome("Suco de Manga");
+		sucoManga.setValor(4.50);
+		sucoManga.setEscolhido(true);
+		sucoManga.setDisponivel(true);
+		id=bebidaDao.save(sucoManga).getId();
+		sucoManga.setId(id);
+		listaBebidas.add(sucoManga);
+
+		Bebida sucoAbacaxi = new Bebida();
+		sucoAbacaxi.setMarca("500ml");
+		sucoAbacaxi.setNome("Suco de Abacaxi");
+		sucoAbacaxi.setValor(4.50);
+		sucoAbacaxi.setEscolhido(true);
+		sucoAbacaxi.setDisponivel(true);
+		id=bebidaDao.save(sucoAbacaxi).getId();
+		sucoAbacaxi.setId(id);
+		listaBebidas.add(sucoAbacaxi);
+		
 		Bebida cocacola = new Bebida();
-		cocacola.setMarca("Coca Cola");
-		cocacola.setNome("Coca Cola 500ml");
+		cocacola.setMarca("500ml");
+		cocacola.setNome("Coca Cola");
 		cocacola.setValor(5.50);
 		cocacola.setEscolhido(true);
 		cocacola.setDisponivel(true);
@@ -211,9 +231,39 @@ public class HomeController {
 		cocacola.setId(id);
 		listaBebidas.add(cocacola);
 		
+		Bebida dolly = new Bebida();
+		dolly.setMarca("500ml");
+		dolly.setNome("Dolly Guaraná");
+		dolly.setValor(5.50);
+		dolly.setEscolhido(true);
+		dolly.setDisponivel(true);
+		id=bebidaDao.save(dolly).getId();
+		dolly.setId(id);
+		listaBebidas.add(dolly);
+		
+		Bebida agua = new Bebida();
+		agua.setMarca("500ml");
+		agua.setNome("Água com Gás");
+		agua.setValor(2.50);
+		agua.setEscolhido(true);
+		agua.setDisponivel(true);
+		id=bebidaDao.save(agua).getId();
+		agua.setId(id);
+		listaBebidas.add(agua);
+		
+		Bebida skol = new Bebida();
+		skol.setMarca("500ml");
+		skol.setNome("Skoll");
+		skol.setValor(3.50);
+		skol.setEscolhido(true);
+		skol.setDisponivel(true);
+		id=bebidaDao.save(skol).getId();
+		skol.setId(id);
+		listaBebidas.add(skol);
+		
 		Bebida goianinhoGuarana = new Bebida();
-		goianinhoGuarana.setMarca("Goianinho");
-		goianinhoGuarana.setNome("Goianinho Guaraná 2L");
+		goianinhoGuarana.setMarca("2L");
+		goianinhoGuarana.setNome("Goianinho Guaraná");
 		goianinhoGuarana.setValor(6.50);
 		goianinhoGuarana.setEscolhido(true);
 		goianinhoGuarana.setDisponivel(true);
