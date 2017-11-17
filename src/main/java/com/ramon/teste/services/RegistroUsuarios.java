@@ -18,7 +18,7 @@ public class RegistroUsuarios implements UserService {
 	
 	@Override
 	public Usuario findByUserName(String username) {
-		return usuarioDao.findByUserName(username);
+		return usuarioDao.findByUsername(username);
 	}
 
 	@Override

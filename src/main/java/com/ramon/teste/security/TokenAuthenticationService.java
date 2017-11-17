@@ -58,9 +58,8 @@ public class TokenAuthenticationService {
 					Usuario usuario=null;
 					try
 					{
-						usuario = usuarioDao.findByUserName(user);
+						usuario = usuarioDao.findByUsername(user);
 						usuario.getPassword();
-						autorizacoes.add(usuario.getAutorizacao());
 						
 					}catch (Exception e) {
 						
