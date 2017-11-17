@@ -32,9 +32,10 @@ public class PedidoController {
 	public Pedido listarTodosPorUsuario(@PathVariable String userName)
 	{
 		String username =userName.replace("-", ".");
-		Usuario usuario = usuarioDao.findByUserName(username);
+		Usuario usuario = usuarioDao.findByUsername(username);
 		return pedidoDao.findByUsuario(usuario);
 	}
+	
 	@GetMapping
 	public List<Pedido> listarTodos()
 	{

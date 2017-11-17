@@ -35,7 +35,7 @@ public class UsuarioController {
 	public HttpStatus cadastrar(@RequestBody Usuario usuario)
 	{
 		registro.registerUser(usuario);
-		Usuario u = usuarioDao.findByUserName(usuario.getUserName());
+		Usuario u = usuarioDao.findByUsername(usuario.getUsername());
 		if(u.getId()>0)
 			return HttpStatus.CREATED;
 		else 

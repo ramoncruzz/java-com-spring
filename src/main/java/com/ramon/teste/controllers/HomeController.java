@@ -300,7 +300,7 @@ public class HomeController {
 		
 		Usuario usuarioFake = new Usuario();
 		usuarioFake.setAtivo(true);
-		usuarioFake.setCpf(11111111);
+		usuarioFake.setCpf("11111111");
 		usuarioFake.setNomeCompleto("Usuario Fulano");
 		usuarioFake.setUserName("usuario@usuario.com");
 		usuarioFake.setAutorizacao(auth);
