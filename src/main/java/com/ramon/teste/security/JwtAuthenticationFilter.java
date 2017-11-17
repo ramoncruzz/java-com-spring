@@ -17,6 +17,7 @@ import org.springframework.web.filter.GenericFilterBean;
 
 public class JwtAuthenticationFilter extends GenericFilterBean{
 
+	
 	private String tokenHeader = "Authorization";
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
