@@ -1,41 +1,43 @@
 package com.ramon.teste.model;
 
-import java.util.List;
-
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.ramon.teste.security.Autorizacao;
 
 @Entity
-public class Usuario {
+public class Usuario implements UserDetails {
+	
+	@Transient
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	@ManyToOne
-	private Autorizacao autorizacao;
+	private Autorizacao authorities;
 	
 	@Column(nullable=false)
 	private String nomeCompleto;
 	
-	private Integer cpf;
+	private String cpf;
 	
-	@ElementCollection @Column(length=15)
-	private List<String> telefone;
-	
-	@OneToMany
-	private List<Endereco> endereco;
-	
-	private String userName;
+	private String username;
 	
 	private String password;
+	
 	private boolean ativo;
 
 	public Long getId() {
@@ -46,12 +48,8 @@ public class Usuario {
 		this.id = id;
 	}
 
-	public Autorizacao getAutorizacao() {
-		return autorizacao;
-	}
-
 	public void setAutorizacao(Autorizacao autorizacao) {
-		this.autorizacao = autorizacao;
+		this.authorities = autorizacao;
 	}
 
 	public String getNomeCompleto() {
@@ -62,36 +60,16 @@ public class Usuario {
 		this.nomeCompleto = nomeCompleto;
 	}
 
-	public Integer getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(Integer cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 
-	public List<String> getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(List<String> telefone) {
-		this.telefone = telefone;
-	}
-
-	public List<Endereco> getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(List<Endereco> endereco) {
-		this.endereco = endereco;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
 	public void setUserName(String userName) {
-		this.userName = userName;
+		this.username = userName;
 	}
 
 	public boolean isAtivo() {
@@ -108,6 +86,41 @@ public class Usuario {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Set<GrantedAuthority> roles = new HashSet<>();
+		roles.add(authorities);
+		return roles;
+	}
+
+	@Override
+	public String getUsername() {
+		
+		return username;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		
+		return true;
 	}
 
 
