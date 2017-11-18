@@ -1,7 +1,7 @@
 package com.ramon.teste.controllers;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -278,7 +278,7 @@ public class HomeController {
 		cardapio.setDestaque(destaque);
 		cardapio.setTemporariamenteIndisponivel(false);
 		cardapio.setTextoDestaque("Macarronada Gostosa");
-		cardapio.setData(new Date());
+		cardapio.setData("12/12/2017-11:30");
 		cardapio.setAtivo(true);
 		cardapioDao.save(cardapio);
 		
