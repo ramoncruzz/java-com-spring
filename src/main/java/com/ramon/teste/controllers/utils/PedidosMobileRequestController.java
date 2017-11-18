@@ -2,6 +2,7 @@ package com.ramon.teste.controllers.utils;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ramon.teste.DAO.util.MarmitaDao;
 import com.ramon.teste.DAO.util.PedidosMobileRequestDAO;
+import com.ramon.teste.model.Marmita;
 import com.ramon.teste.model.util.*;
 
 @RestController
@@ -37,19 +39,22 @@ public class PedidosMobileRequestController {
 	}
 	
 	@PostMapping
-	public HttpStatus postPedido(@RequestBody PedidosMobileRequest pedidos)
+	public Long postPedido(@RequestBody PedidosMobileRequest pedidos)
 	{
-		for(MarmitaMobileRequest m: pedidos.getMarmitas())
+		Long numeroPedido = pedidoMobileDao.count();
+		numeroPedido++;
+		for(Marmita m: pedidos.getMarmitas())
 			{
 				Long id=marmitaDao.save(m).getId();
 				m.setId(id);
 			}
+		pedidos.setNumeroPedido(numeroPedido);
 		PedidosMobileRequest p=pedidoMobileDao.save(pedidos);
 		
 		if(p.getId()>0)
-			return HttpStatus.OK;
+			return numeroPedido;
 		else 
-			return HttpStatus.BAD_REQUEST;
+			return 0L;
 		
 	}
 

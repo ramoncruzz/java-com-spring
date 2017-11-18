@@ -10,13 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.ramon.teste.model.Marmita;
+
 @Entity
 public class PedidosMobileRequest {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	private String numeroPedido;
+	private Long numeroPedido;
 	private String dataHora;
 	private double precoFinal;
 	private double taxaEntrega;
@@ -27,14 +29,14 @@ public class PedidosMobileRequest {
 	private String regiaoNome;
 	private String pontoReferencia;
 	@OneToMany
-	private List<MarmitaMobileRequest> marmitas;
+	private List<Marmita> marmitas;
 	@ElementCollection @Column(length=50)
 	private List<String>bebidas;
 	
-	public String getNumeroPedido() {
+	public Long getNumeroPedido() {
 		return numeroPedido;
 	}
-	public void setNumeroPedido(String numeroPedido) {
+	public void setNumeroPedido(Long numeroPedido) {
 		this.numeroPedido = numeroPedido;
 	}
 	public String getDataHora() {
@@ -97,10 +99,10 @@ public class PedidosMobileRequest {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public List<MarmitaMobileRequest> getMarmitas() {
+	public List<Marmita> getMarmitas() {
 		return marmitas;
 	}
-	public void setMarmitas(List<MarmitaMobileRequest> marmitas) {
+	public void setMarmitas(List<Marmita> marmitas) {
 		this.marmitas = marmitas;
 	}
 	public List<String> getBebidas() {

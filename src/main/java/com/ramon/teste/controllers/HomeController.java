@@ -13,7 +13,6 @@ import com.ramon.teste.DAO.*;
 import com.ramon.teste.DAO.util.MarmitaDao;
 import com.ramon.teste.DAO.util.PedidosMobileRequestDAO;
 import com.ramon.teste.model.*;
-import com.ramon.teste.model.util.MarmitaMobileRequest;
 import com.ramon.teste.model.util.PedidosMobileRequest;
 import com.ramon.teste.security.Autorizacao;
 
@@ -28,8 +27,7 @@ public class HomeController {
 	private BebidaDAO bebidaDao;
 	@Autowired
 	private CardapioDAO cardapioDao;
-	@Autowired
-	private PedidoDAO pedidoDao;
+	
 	@Autowired
 	private UsuarioDAO usuarioDao;
 	@Autowired
@@ -307,23 +305,13 @@ public class HomeController {
 		id=usuarioDao.save(usuarioFake).getId();
 		usuarioFake.setId(id);
 		
-		Pedido pedidoFake = new Pedido();
-		pedidoFake.setAlimentosEscolhidos(listaFake);
-		pedidoFake.setBebidasEscolhidas(listaFake);
-		pedidoFake.setDataHora(null);
-		pedidoFake.setPrecoFinal(0.0);
-		pedidoFake.setTaxaConveniencia(0.0);
-		pedidoFake.setUsuario(usuarioFake);
-		pedidoFake.setTaxaEntrega(1.0);
 		
-		pedidoDao.save(pedidoFake);
-		
-		MarmitaMobileRequest marmita = new MarmitaMobileRequest();
+		Marmita marmita = new Marmita();
 		marmita.setAlimentosEscolhidos(listaFake);
 		id=marmitaDAO.save(marmita).getId();
 		marmita.setId(id);
 		
-		ArrayList<MarmitaMobileRequest> listaMarmita = new ArrayList<>();
+		ArrayList<Marmita> listaMarmita = new ArrayList<>();
 		listaMarmita.add(marmita);
 		
 		PedidosMobileRequest pedidosMobile = new PedidosMobileRequest();
@@ -332,7 +320,6 @@ public class HomeController {
 		pedidosMobile.setEndereco("SQ 11 QQ");
 		pedidosMobile.setMarmitas(listaMarmita);
 		pedidosMobile.setNomeCompleto("Fulano de tal");
-		pedidosMobile.setNumeroPedido("00");
 		pedidosMobile.setPontoReferencia("Rua Magica");
 		pedidosMobile.setPrecoFinal(1.0);
 		pedidosMobile.setRegiaoNome("Bairro");

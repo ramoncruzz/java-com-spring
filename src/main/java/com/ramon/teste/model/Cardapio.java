@@ -16,7 +16,6 @@ public class Cardapio {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	private int codigoAtualizacao;
 	private String data; 
 	private boolean ativo;
 	private boolean temporariamenteIndisponivel;
@@ -112,17 +111,6 @@ public class Cardapio {
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
 	}
-
-	public int getCodigoAtualizacao() {
-		return codigoAtualizacao;
-	}
-
-	public void setCodigoAtualizacao(int codigoAtualizacao) {
-		this.codigoAtualizacao = codigoAtualizacao;
-	}
-
-	
-
 	
 	
 }
