@@ -1,6 +1,5 @@
 package com.ramon.teste.model;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -17,13 +16,14 @@ public class Cardapio {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
-	private Date data; 
+	private int codigoAtualizacao;
+	private String data; 
 	private boolean ativo;
 	private boolean temporariamenteIndisponivel;
 	private String descricaoCardapio;
 	private String textoDestaque;
 	private String mensagem;
+	
 	@ManyToOne
 	private Alimento destaque;
 	
@@ -41,11 +41,11 @@ public class Cardapio {
 		this.id = id;
 	}
 
-	public Date getData() {
+	public String getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 
@@ -111,6 +111,14 @@ public class Cardapio {
 
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
+	}
+
+	public int getCodigoAtualizacao() {
+		return codigoAtualizacao;
+	}
+
+	public void setCodigoAtualizacao(int codigoAtualizacao) {
+		this.codigoAtualizacao = codigoAtualizacao;
 	}
 
 	
