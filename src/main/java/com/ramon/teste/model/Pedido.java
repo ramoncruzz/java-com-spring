@@ -33,10 +33,6 @@ public class Pedido {
 	@ElementCollection @Column(length=50)
 	private List<String>bebidas;
 	
-	
-	@ManyToOne
-	private Usuario usuario;
-	
 	@ManyToOne
 	private Avaliacao avaliacao;
 
@@ -142,14 +138,6 @@ public class Pedido {
 
 	public void setBebidas(List<String> bebidas) {
 		this.bebidas = bebidas;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 
 	public Avaliacao getAvaliacao() {

@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ramon.teste.DAO.PedidoDAO;
-import com.ramon.teste.DAO.UsuarioDAO;
 import com.ramon.teste.model.Pedido;
-import com.ramon.teste.model.Usuario;
+
 
 @RestController
 @RequestMapping("/pedido")
@@ -25,15 +24,13 @@ public class PedidoController {
 
 	@Autowired 
 	private PedidoDAO pedidoDao;
-	@Autowired
-	private UsuarioDAO usuarioDao;
+	
 	
 	@GetMapping(value = "/{userName}")
-	public Pedido listarTodosPorUsuario(@PathVariable String userName)
+	public List<Pedido> listarTodosPorUsuario(@PathVariable String userName)
 	{
 		String username =userName.replace("-", ".");
-		Usuario usuario = usuarioDao.findByUsername(username);
-		return pedidoDao.findByUsuario(usuario);
+		return pedidoDao.findByUserName(username);
 	}
 	
 	@GetMapping

@@ -37,6 +37,12 @@ public class HomeController {
 	@Autowired
 	private MarmitaDao marmitaDAO;
 	
+	@Autowired
+	private RegiaoDAO regiaoDao;
+	
+	@Autowired
+	private EnderecoDAO enderecoDao;
+	
 	@GetMapping
 	@ResponseBody
 	public String index()
@@ -51,6 +57,24 @@ public class HomeController {
 		long id=0L;
 		ArrayList<Alimento> listaAlimentos = new ArrayList<Alimento>();
 		ArrayList<Bebida> listaBebidas = new ArrayList<Bebida>();
+		
+		ArrayList<String> listaCep = new ArrayList<>();
+		
+		listaCep.add("cep00");
+		listaCep.add("cep00");
+		listaCep.add("cep00");
+		listaCep.add("cep00");
+		
+		Regiao regiao = new Regiao();
+		regiao.setCep(listaCep);
+		regiao.setNome("Região tribulosa");
+		regiao.setTaxaEntrega(2.5);
+		regiaoDao.save(regiao);
+		
+		Endereco endereco = new Endereco();
+		endereco.setLogradouro("Logradouro");
+		endereco.setRegiao(regiao);
+		enderecoDao.save(endereco);
 		
 		Alimento destaque = new Alimento(); 
 		destaque.setDescricao("Spagett");
@@ -289,7 +313,6 @@ public class HomeController {
 		Endereco end = new Endereco();
 		end.setLogradouro("Logradouro");
 		end.setPontoDeReferencia("Ponto de referencia");
-		end.setTaxaEntrega(0.0);
 		
 		Autorizacao auth = new Autorizacao();
 		auth.setNome("USER");
