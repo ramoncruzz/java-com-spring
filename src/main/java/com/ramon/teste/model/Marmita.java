@@ -1,4 +1,4 @@
-package com.ramon.teste.model.util;
+package com.ramon.teste.model;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 @Entity
-public class MarmitaMobileRequest {
+public class Marmita {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

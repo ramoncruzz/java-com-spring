@@ -2,10 +2,10 @@ package com.ramon.teste.DAO.util;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ramon.teste.model.util.MarmitaMobileRequest;
+import com.ramon.teste.model.Marmita;
 
-public interface MarmitaDao extends JpaRepository<MarmitaMobileRequest, Long>{
+public interface MarmitaDao extends JpaRepository<Marmita, Long>{
 	
-	MarmitaMobileRequest findById(Long id);
+	Marmita findById(Long id);
 
 }

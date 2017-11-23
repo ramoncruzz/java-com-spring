@@ -1,5 +1,6 @@
 package com.ramon.teste.model;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,10 +14,9 @@ public class Endereco {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
+	private String CEP;
 	private String logradouro;
 	private String pontoDeReferencia;
-	private Double taxaEntrega;
 	
 	@ManyToOne
 	private Regiao regiao;
@@ -45,20 +45,20 @@ public class Endereco {
 		this.pontoDeReferencia = pontoDeReferencia;
 	}
 
-	public Double getTaxaEntrega() {
-		return taxaEntrega;
-	}
-
-	public void setTaxaEntrega(Double taxaEntrega) {
-		this.taxaEntrega = taxaEntrega;
-	}
-
 	public Regiao getRegiao() {
 		return regiao;
 	}
 
 	public void setRegiao(Regiao regiao) {
 		this.regiao = regiao;
+	}
+
+	public String getCEP() {
+		return CEP;
+	}
+
+	public void setCEP(String cEP) {
+		CEP = cEP;
 	}
 	
 	
