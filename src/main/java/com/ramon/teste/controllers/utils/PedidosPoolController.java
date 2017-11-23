@@ -20,6 +20,7 @@ public class PedidosPoolController {
 	
 	@Autowired
 	private PedidosPoolDAO poolDao;
+	
 	@Autowired
 	private StatusPedidoController status;
 	
