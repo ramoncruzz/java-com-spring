@@ -1,8 +1,10 @@
 package com.ramon.teste.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,9 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ramon.teste.DAO.*;
 import com.ramon.teste.DAO.util.MarmitaDao;
 import com.ramon.teste.DAO.util.PedidosMobileRequestDAO;
+import com.ramon.teste.DAO.util.ServidorConfiguracoesDAO;
 import com.ramon.teste.model.*;
 import com.ramon.teste.model.util.PedidosMobileRequest;
+import com.ramon.teste.model.util.ServidorConfiguracoes;
 import com.ramon.teste.security.Autorizacao;
+import com.ramon.teste.services.HttpRequests;
 
 
 @RestController
@@ -43,6 +48,9 @@ public class HomeController {
 	@Autowired
 	private EnderecoDAO enderecoDao;
 	
+	@Autowired
+	private ServidorConfiguracoesDAO servidorDao;
+	
 	@GetMapping
 	@ResponseBody
 	public String index()
@@ -51,9 +59,39 @@ public class HomeController {
 		return "Olá";
 	}
 	
+	@GetMapping("/notificacao")
+	public void request()
+	{
+		HttpRequests r = new HttpRequests();
+		try {
+			String tokenServidor="AAAApejE2J8:APA91bHHpo_ILaY9fs2dWG2JBAQKDyAkg2Qu-Cd0xh9SH_BGRHBwrpbYnfpLWuqEZQuaMB0X3s1w-ys9nqmqG5btT7wqvUTQ2-iBkUAEE3rAp-aBSs4w4r7VPcpUbZxs077ZhafuXNxX";
+			String tokenUsuario="fiZnAZtFBys:APA91bGxwT-AAAE8_zurVn85vYXC2nsmnkBQVY3nfnmiUrMITv1y37AfOt6y7p-l6QgvElovUsID0MFOOwsjp3QZ-0ku6PytXGlToHQnyKC3O0Tt1H-k4CDi6790pTHj7CF6-D-9oqlg";
+			String tituloMensagem="OpressorasDetect";
+			String mensagem="Luana Opressora está por perto!";
+			
+			ServidorConfiguracoes srv = servidorDao.findById(1L);
+			r.notificaUsuario(srv.getTokenServer(), tokenUsuario, tituloMensagem, mensagem);
+			
+		} catch (ClientProtocolException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		} catch (JSONException e) {
+			
+			e.printStackTrace();
+		}
+	}
+	
 	@GetMapping("/carregar")
 	public void carregar()
 	{
+		ServidorConfiguracoes srv = new ServidorConfiguracoes();
+		srv.setCodRemetente("712574818463");
+		srv.setTokenServer("AAAApejE2J8:APA91bHHpo_ILaY9fs2dWG2JBAQKDyAkg2Qu-Cd0xh9SH_BGRHBwrpbYnfpLWuqEZQuaMB0X3s1w-ys9nqmqG5btT7wqvUTQ2-iBkUAEE3rAp-aBSs4w4r7VPcpUbZxs077ZhafuXNxX");
+		servidorDao.save(srv);
+		
 		long id=0L;
 		ArrayList<Alimento> listaAlimentos = new ArrayList<Alimento>();
 		ArrayList<Bebida> listaBebidas = new ArrayList<Bebida>();
@@ -350,6 +388,8 @@ public class HomeController {
 		pedidosMobile.setTaxaEntrega(3);
 		id = pedidosMobileDAO.save(pedidosMobile).getId();
 		pedidosMobile.setId(id);
+		
+		
 		
 	}
 }
