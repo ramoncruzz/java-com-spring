@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.ramon.teste.DAO.util.PedidosPoolDAO;
-import com.ramon.teste.model.Pedido;
 import com.ramon.teste.model.util.*;
 
 @RestController
@@ -30,7 +28,7 @@ public class PedidosPoolController {
 		return poolDao.findByEnviadoParaRestauranteFalse();
 	}
 	
-	public HttpStatus recebePedido(Pedido pedido)
+	public HttpStatus recebePedido(PedidosMobileRequest pedido)
 	{
 		PedidosPool p = new PedidosPool();
 		p.setDataHora(" ");

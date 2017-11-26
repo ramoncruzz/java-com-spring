@@ -5,7 +5,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.ramon.teste.model.Pedido;
 
 @Entity
 public class PedidosPool {
@@ -18,7 +17,7 @@ public class PedidosPool {
 	private String dataHoraRecebimentoRestaurante;
 	
 	@ManyToOne
-	private Pedido pedido;
+	private PedidosMobileRequest pedido;
 	
 	public Long getId() {
 		return id;
@@ -44,10 +43,10 @@ public class PedidosPool {
 	public void setDataHoraRecebimentoRestaurante(String dataHoraRecebimentoRestaurante) {
 		this.dataHoraRecebimentoRestaurante = dataHoraRecebimentoRestaurante;
 	}
-	public Pedido getPedido() {
+	public PedidosMobileRequest getPedido() {
 		return pedido;
 	}
-	public void setPedido(Pedido pedido) {
+	public void setPedido(PedidosMobileRequest pedido) {
 		this.pedido = pedido;
 	}
 	

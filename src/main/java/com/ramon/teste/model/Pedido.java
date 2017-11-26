@@ -30,6 +30,7 @@ public class Pedido {
 	
 	@OneToMany
 	private List<Marmita> marmitas;
+	
 	@ElementCollection @Column(length=50)
 	private List<String>bebidas;
 	

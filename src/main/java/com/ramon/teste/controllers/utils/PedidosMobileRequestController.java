@@ -1,5 +1,6 @@
 package com.ramon.teste.controllers.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -56,7 +57,7 @@ public class PedidosMobileRequestController {
 			}
 		pedidos.setNumeroPedido(numeroPedido);
 		PedidosMobileRequest p=pedidoMobileDao.save(pedidos);
-		pool.recebePedido(convertParaPedido(pedidos));
+		pool.recebePedido(pedidos);
 		
 		if(p.getId()>0)
 			return numeroPedido;
@@ -67,8 +68,13 @@ public class PedidosMobileRequestController {
 	
 	private Pedido convertParaPedido(PedidosMobileRequest pedidos)
 	{
+		ArrayList<String> lista = new ArrayList<>();
+		lista.add("Bebida 01");
+		lista.add("Bebida 02");
+		lista.add("Bebida 03");
+		
 		Pedido p = new Pedido();
-		p.setBebidas(pedidos.getBebidas());
+		p.setBebidas(null);
 		p.setMarmitas(pedidos.getMarmitas());
 		p.setDataHora(pedidos.getDataHora());
 		p.setEndereco(pedidos.getEndereco());
