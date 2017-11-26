@@ -66,8 +66,8 @@ public class HomeController {
 		try {
 			String tokenServidor="AAAApejE2J8:APA91bHHpo_ILaY9fs2dWG2JBAQKDyAkg2Qu-Cd0xh9SH_BGRHBwrpbYnfpLWuqEZQuaMB0X3s1w-ys9nqmqG5btT7wqvUTQ2-iBkUAEE3rAp-aBSs4w4r7VPcpUbZxs077ZhafuXNxX";
 			String tokenUsuario="fiZnAZtFBys:APA91bGxwT-AAAE8_zurVn85vYXC2nsmnkBQVY3nfnmiUrMITv1y37AfOt6y7p-l6QgvElovUsID0MFOOwsjp3QZ-0ku6PytXGlToHQnyKC3O0Tt1H-k4CDi6790pTHj7CF6-D-9oqlg";
-			String tituloMensagem="NanáFruts";
-			String mensagem="O Pedido vai atrasar pq o Heitor cagou!";
+			String tituloMensagem="OpressorasDetect";
+			String mensagem="Luana Opressora está por perto!";
 			
 			ServidorConfiguracoes srv = servidorDao.findById(1L);
 			r.notificaUsuario(srv.getTokenServer(), tokenUsuario, tituloMensagem, mensagem);
