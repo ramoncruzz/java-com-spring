@@ -1,0 +1,46 @@
+package com.ramon.teste.controllers.utils;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.sns.AmazonSNSClient;
+import com.amazonaws.services.sns.model.MessageAttributeValue;
+import com.amazonaws.services.sns.model.PublishRequest;
+import com.amazonaws.services.sns.model.PublishResult;
+
+@RestController
+@RequestMapping("/sms")
+public class SMSController {
+	//TODO melhorar uso dessa tecnologia
+	@GetMapping
+	public String enviaTeste()
+	{
+		String ACCESS_KEY="AKIAJ6IVG3WDASEMYSHQ";
+		String SECRET_KEY="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";
+		BasicAWSCredentials credentials = new BasicAWSCredentials(ACCESS_KEY,SECRET_KEY);
+		AmazonSNSClient snsClient = new AmazonSNSClient(credentials).withRegion(Regions.US_EAST_1);
+		String message = "Teste";
+        String phoneNumber = "+5561995616860";
+        Map<String, MessageAttributeValue> smsAttributes = 
+                new HashMap<String, MessageAttributeValue>();
+        
+        return sendSMSMessage(snsClient, message, phoneNumber, smsAttributes).toString();
+	}
+	
+	private  PublishResult sendSMSMessage(AmazonSNSClient snsClient, String message, 
+			String phoneNumber, Map<String, MessageAttributeValue> smsAttributes) {
+	        PublishResult result = snsClient.publish(new PublishRequest()
+	                        .withMessage(message)
+	                        .withPhoneNumber(phoneNumber)
+	                        .withMessageAttributes(smsAttributes));
+	         
+	        return result;
+	}
+
+}
