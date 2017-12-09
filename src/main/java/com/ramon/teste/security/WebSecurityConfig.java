@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //			.antMatchers(HttpMethod.GET,"/usuario").permitAll()
 //			.antMatchers(HttpMethod.GET,"/autorizacao/popular").permitAll()
 //			.antMatchers(HttpMethod.GET,"/pedidosMobile").hasAuthority("USER")
-			.anyRequest().authenticated()
+			//.anyRequest().authenticated()
 			.and()
 			// filtra requisições de login
 			.addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
