@@ -45,11 +45,8 @@ public class RegistroUsuarios implements UserService {
 		
 		user.setPassword(bCrypt.encode(user.getPassword()));
 		user.setAtivo(true);
-		Usuario u = usuarioDao.findByUsername(user.getUsername());
-		if(u!=null)
-			return 0L;
-		else
-			return usuarioDao.saveAndFlush(user).getId();
+		
+		return usuarioDao.saveAndFlush(user).getId();
 		
 	}
 
