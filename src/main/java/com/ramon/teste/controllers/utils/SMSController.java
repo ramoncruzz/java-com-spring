@@ -60,7 +60,8 @@ public class SMSController {
 	public boolean validaCodigo(@RequestBody SMSValidacao sms)
 	{
 		boolean resultado=false;
-		SMSValidacao smsSalvo = smsDao.findByTelefone(sms.getTelefone());
+		List<SMSValidacao>lista =smsDao.findByTelefone(sms.getTelefone()); 
+		SMSValidacao smsSalvo = lista.get(lista.size()-1);
 		
 		if(smsSalvo!=null)
 		{
