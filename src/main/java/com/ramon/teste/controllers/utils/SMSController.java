@@ -4,6 +4,7 @@ package com.ramon.teste.controllers.utils;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import com.ramon.teste.DAO.util.SMSValidacaoDAO;
 import com.ramon.teste.model.util.SMSValidacao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -31,6 +33,12 @@ public class SMSController {
 	
 	@Autowired
 	SMSValidacaoDAO smsDao;
+	
+	@GetMapping
+	public List<SMSValidacao>getSMS()
+	{
+		return smsDao.findAll();
+	}
 	
 	@PostMapping("/gerar-codigo")
 	public String geraCodigo(@RequestBody SMSValidacao sms)
