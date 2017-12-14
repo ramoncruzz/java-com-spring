@@ -9,5 +9,6 @@ import com.ramon.teste.model.util.Logradouro;
 public interface LogradouroDAO  extends JpaRepository<Logradouro, Long>{
 	
 	List<Logradouro> findByDescricaoBairro(String bairro);
+	Logradouro findByCep(String cep);
 
 }

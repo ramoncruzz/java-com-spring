@@ -1,5 +1,6 @@
 package com.ramon.teste.model.util;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +14,7 @@ public class Logradouro {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer idLogradouro;
-	private String CEP;
+	private String cep;
 	private String tipo;
 	private String descricao;
 	private String UF;
@@ -35,12 +36,12 @@ public class Logradouro {
 		this.idLogradouro = idLogradouro;
 	}
 
-	public String getCEP() {
-		return CEP;
+	public String getCep() {
+		return cep;
 	}
 
-	public void setCEP(String cEP) {
-		CEP = cEP;
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 
 	public String getTipo() {
