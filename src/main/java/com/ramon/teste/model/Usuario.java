@@ -39,7 +39,10 @@ public class Usuario implements UserDetails {
 	private String password;
 	
 	private boolean ativo;
-
+	
+	@Transient
+	private String codigoValidacao;
+	
 	public Long getId() {
 		return id;
 	}
@@ -121,6 +124,14 @@ public class Usuario implements UserDetails {
 	public boolean isEnabled() {
 		
 		return true;
+	}
+
+	public String getCodigoValidacao() {
+		return codigoValidacao;
+	}
+
+	public void setCodigoValidacao(String codigoValidacao) {
+		this.codigoValidacao = codigoValidacao;
 	}
 
 

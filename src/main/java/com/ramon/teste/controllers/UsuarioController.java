@@ -45,7 +45,8 @@ public class UsuarioController {
 	@PutMapping
 	public HttpStatus atualizar(@RequestBody Usuario usuario)
 	{
-		Usuario u = usuarioDao.save(usuario);
+		registro.registerUser(usuario);
+		Usuario u = usuarioDao.findByUsername(usuario.getUsername());
 		if(u.getId()>0)
 			return HttpStatus.OK;
 		else 

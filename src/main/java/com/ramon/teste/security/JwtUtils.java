@@ -21,6 +21,7 @@ private static final String secretKey = "j4v4_s3cr3t";
 
 public static String generateToken(Usuario usuario) throws JsonProcessingException{
 	final Long hora = 1000L * 60L * 60L;
+	Long horasValidade=720L;
 	ObjectMapper mapper = new ObjectMapper();
 	String userJson = mapper.writeValueAsString(usuario);
 	Date agora = new Date();
@@ -28,7 +29,7 @@ public static String generateToken(Usuario usuario) throws JsonProcessingExcepti
 	return Jwts.builder().claim("usr", userJson)
 			.setIssuer("com.ramon")
 			.setSubject(usuario.getUsername())
-			.setExpiration(new Date(agora.getTime()+hora))
+			.setExpiration(new Date(agora.getTime()+(hora*horasValidade)))
 			.signWith(SignatureAlgorithm.HS256, secretKey).compact();
 	}
 

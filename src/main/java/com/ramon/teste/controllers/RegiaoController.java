@@ -23,7 +23,7 @@ public class RegiaoController {
 	private RegiaoDAO regiaoDao;
 	
 	@GetMapping
-	public List<Regiao> listarTodos(@RequestBody Regiao regiao)
+	public List<Regiao> listarTodos()
 	{
 		return regiaoDao.findAll();
 	}
