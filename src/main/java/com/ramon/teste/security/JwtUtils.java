@@ -1,4 +1,5 @@
 package com.ramon.teste.security;
+
 import java.io.IOException;
 import java.util.Date;
 
@@ -14,11 +15,9 @@ import com.ramon.teste.model.Usuario;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-
 public class JwtUtils {
-	
-private static final String secretKey = "j4v4_s3cr3t";
 
+private static final String secretKey = "j4v4_s3cr3t";
 public static String generateToken(Usuario usuario) throws JsonProcessingException{
 	final Long hora = 1000L * 60L * 60L;
 	Long horasValidade=720L;
@@ -31,38 +30,39 @@ public static String generateToken(Usuario usuario) throws JsonProcessingExcepti
 			.setSubject(usuario.getUsername())
 			.setExpiration(new Date(agora.getTime()+(hora*horasValidade)))
 			.signWith(SignatureAlgorithm.HS256, secretKey).compact();
+
 	}
 
-	public static UserDetails parseToken(String token) throws JsonParseException, JsonMappingException, IOException
-{
-		UserDetails usuarioRetorno=null;
-try {
-		String json = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("usr",String.class);
-		JSONObject obj = new JSONObject(json);
-		
-		Autorizacao auth = new Autorizacao();
-		JSONArray objeAuthArray = obj.getJSONArray("authorities");
-		JSONObject objAuth = objeAuthArray.getJSONObject(0);
-		auth.setId(objAuth.getLong("id"));
-		auth.setNome(objAuth.getString("authority"));
-		
-		Usuario usuario = new Usuario();
-		usuario.setId(obj.getLong("id"));
-		usuario.setAutorizacao(auth);
-		usuario.setAtivo(obj.getBoolean("ativo"));
-		usuario.setCpf(obj.getString("cpf"));
-		usuario.setNomeCompleto(obj.getString("nomeCompleto"));
-		usuario.setPassword(obj.getString("password"));
-		usuario.setUserName(obj.getString("username"));
-	   
-		usuarioRetorno=usuario;
-	    //{"id":1,"authorities":[{"id":2,"authority":"USER"}],"nomeCompleto":"Ramon Cruz","cpf":"74116665134","username":"ramon@gmail.com","password":"$2a$10$3kbewfr65cJVZ03babhljeakxcUtTcmrLT6WAmMdf2CN2aGbsgegu","ativo":true,"enabled":true,"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true}
-	} catch (Exception e) {
-	
-		e.printStackTrace();
-	} 
-	
-	return usuarioRetorno;
-}
+	public static UserDetails parseToken(String token) throws JsonParseException, JsonMappingException, IOException {
+		UserDetails usuarioRetorno = null;
+		try {
+			String json = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("usr",
+					String.class);
+			JSONObject obj = new JSONObject(json);
+
+			Autorizacao auth = new Autorizacao();
+			JSONArray objeAuthArray = obj.getJSONArray("authorities");
+			JSONObject objAuth = objeAuthArray.getJSONObject(0);
+			auth.setId(objAuth.getLong("id"));
+			auth.setNome(objAuth.getString("authority"));
+
+			Usuario usuario = new Usuario();
+			usuario.setId(obj.getLong("id"));
+			usuario.setAutorizacao(auth);
+			usuario.setAtivo(obj.getBoolean("ativo"));
+			usuario.setCpf(obj.getString("cpf"));
+			usuario.setNomeCompleto(obj.getString("nomeCompleto"));
+			usuario.setPassword(obj.getString("password"));
+			usuario.setUserName(obj.getString("username"));
+
+			usuarioRetorno = usuario;
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return usuarioRetorno;
+	}
 
 }

@@ -42,6 +42,10 @@ public class Usuario implements UserDetails {
 	
 	@Transient
 	private String codigoValidacao;
+
+	@Column(nullable=true)
+	private String tokenPushNotification;
+
 	
 	public Long getId() {
 		return id;
@@ -132,6 +136,15 @@ public class Usuario implements UserDetails {
 
 	public void setCodigoValidacao(String codigoValidacao) {
 		this.codigoValidacao = codigoValidacao;
+	}
+	
+	public String getTokenPushNotification() {
+		return tokenPushNotification;
+	}
+
+	public void setTokenPushNotification(String tokenPushNotification) {
+		this.tokenPushNotification = tokenPushNotification;
+
 	}
 
 

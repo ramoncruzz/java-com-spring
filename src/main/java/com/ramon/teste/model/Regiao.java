@@ -15,6 +15,8 @@ public class Regiao {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
+	private Double taxaEntrega;
+	private boolean regiaoCoberta;
 	
 	@ElementCollection @Column(length=11)
 	private List<String>cep;
@@ -36,6 +38,18 @@ public class Regiao {
 	}
 	public void setCep(List<String> cep) {
 		this.cep = cep;
+	}
+	public Double getTaxaEntrega() {
+		return taxaEntrega;
+	}
+	public void setTaxaEntrega(Double taxaEntrega) {
+		this.taxaEntrega = taxaEntrega;
+	}
+	public boolean isRegiaoCoberta() {
+		return regiaoCoberta;
+	}
+	public void setRegiaoCoberta(boolean regiaoCoberta) {
+		this.regiaoCoberta = regiaoCoberta;
 	}
 	
 

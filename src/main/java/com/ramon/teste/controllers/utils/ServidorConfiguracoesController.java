@@ -1,70 +1,60 @@
-package com.ramon.teste.controllers;
-
-import java.util.List;
+package com.ramon.teste.controllers.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ramon.teste.DAO.RegiaoDAO;
-import com.ramon.teste.model.Regiao;
+import com.ramon.teste.DAO.util.ServidorConfiguracoesDAO;
+import com.ramon.teste.model.util.ServidorConfiguracoes;
 
 @RestController
-@RequestMapping("/regiao")
-public class RegiaoController {
-
+@RequestMapping("/servidor")
+public class ServidorConfiguracoesController {
+	
 	@Autowired
-	private RegiaoDAO regiaoDao;
+	private ServidorConfiguracoesDAO servidorDao;
 	
 	@GetMapping
-	public List<Regiao> listarTodos()
+	public ServidorConfiguracoes buscaServidor()
 	{
-		return regiaoDao.findAll();
-	}
-	
-	@GetMapping("/{cep}")
-	public List<Regiao> buscarPorCep(@PathVariable String cep)
-	{
-		return regiaoDao.findByCepIn(cep);
+		int id= servidorDao.findAll().size();
+		return servidorDao.findById((long) id);
 	}
 	
 	@PostMapping
-	public HttpStatus cadastrar(@RequestBody Regiao regiao)
+	public HttpStatus salvaServidor(@RequestBody ServidorConfiguracoes servidor)
 	{
-		Regiao r = regiaoDao.save(regiao);
-		if(r.getId()>0)
-			return HttpStatus.CREATED;
+		if(servidorDao.save(servidor).getId()>0)
+			return HttpStatus.OK;
 		else 
 			return HttpStatus.BAD_REQUEST;
 	}
 	
 	@PutMapping
-	public HttpStatus atualizar(@RequestBody Regiao regiao)
+	public HttpStatus atualizaServidor(@RequestBody ServidorConfiguracoes servidor)
 	{
-		Regiao r = regiaoDao.save(regiao);
-		if(r.getId()>0)
+		if(servidorDao.save(servidor).getId()>0)
 			return HttpStatus.OK;
 		else 
 			return HttpStatus.BAD_REQUEST;
 	}
 	
 	@DeleteMapping
-	public HttpStatus apagar(@RequestBody Regiao regiao)
+	public HttpStatus apagaServidor(@RequestBody ServidorConfiguracoes servidor)
 	{
 		try
 		{
-			regiaoDao.delete(regiao);
+			servidorDao.delete(servidor);
 			return HttpStatus.OK;
 		}catch (Exception e) {
 			return HttpStatus.BAD_REQUEST;
 		}
 	}
-	
+
 }

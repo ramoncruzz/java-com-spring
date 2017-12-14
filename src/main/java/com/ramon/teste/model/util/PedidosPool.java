@@ -1,14 +1,10 @@
 package com.ramon.teste.model.util;
-
-import java.sql.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.ramon.teste.model.Pedido;
 
 @Entity
 public class PedidosPool {
@@ -17,11 +13,11 @@ public class PedidosPool {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private boolean enviadoParaRestaurante;
-	private Date dataHora;
-	private Date dataHoraRecebimentoRestaurante;
+	private String dataHora;
+	private String dataHoraRecebimentoRestaurante;
 	
 	@ManyToOne
-	private Pedido pedido;
+	private PedidosMobileRequest pedido;
 	
 	public Long getId() {
 		return id;
@@ -35,22 +31,22 @@ public class PedidosPool {
 	public void setEnviadoParaRestaurante(boolean enviadoParaRestaurante) {
 		this.enviadoParaRestaurante = enviadoParaRestaurante;
 	}
-	public Date getDataHora() {
+	public String getDataHora() {
 		return dataHora;
 	}
-	public void setDataHora(Date dataHora) {
+	public void setDataHora(String dataHora) {
 		this.dataHora = dataHora;
 	}
-	public Date getDataHoraRecebimentoRestaurante() {
+	public String getDataHoraRecebimentoRestaurante() {
 		return dataHoraRecebimentoRestaurante;
 	}
-	public void setDataHoraRecebimentoRestaurante(Date dataHoraRecebimentoRestaurante) {
+	public void setDataHoraRecebimentoRestaurante(String dataHoraRecebimentoRestaurante) {
 		this.dataHoraRecebimentoRestaurante = dataHoraRecebimentoRestaurante;
 	}
-	public Pedido getPedido() {
+	public PedidosMobileRequest getPedido() {
 		return pedido;
 	}
-	public void setPedido(Pedido pedido) {
+	public void setPedido(PedidosMobileRequest pedido) {
 		this.pedido = pedido;
 	}
 	

@@ -27,7 +27,7 @@ public class RegistroUsuarios implements UserService {
 	}
 
 	@Override
-	public void registerUser(Usuario user) {
+	public Long registerUser(Usuario user) {
 		
 		Autorizacao busca = authDao.findByNome("USER");
 		if(busca!=null)
@@ -45,7 +45,11 @@ public class RegistroUsuarios implements UserService {
 		
 		user.setPassword(bCrypt.encode(user.getPassword()));
 		user.setAtivo(true);
-		usuarioDao.save(user);
+		Usuario u = usuarioDao.findByUsername(user.getUsername());
+		if(u!=null)
+			return 0L;
+		else
+			return usuarioDao.saveAndFlush(user).getId();
 		
 	}
 

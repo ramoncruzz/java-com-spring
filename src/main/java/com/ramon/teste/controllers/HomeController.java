@@ -1,8 +1,10 @@
 package com.ramon.teste.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ramon.teste.DAO.*;
 import com.ramon.teste.DAO.util.MarmitaDao;
 import com.ramon.teste.DAO.util.PedidosMobileRequestDAO;
+import com.ramon.teste.DAO.util.ServidorConfiguracoesDAO;
 import com.ramon.teste.model.*;
-import com.ramon.teste.model.util.MarmitaMobileRequest;
 import com.ramon.teste.model.util.PedidosMobileRequest;
+import com.ramon.teste.model.util.ServidorConfiguracoes;
 import com.ramon.teste.security.Autorizacao;
+import com.ramon.teste.services.HttpRequests;
 
 
 @RestController
@@ -28,8 +32,7 @@ public class HomeController {
 	private BebidaDAO bebidaDao;
 	@Autowired
 	private CardapioDAO cardapioDao;
-	@Autowired
-	private PedidoDAO pedidoDao;
+	
 	@Autowired
 	private UsuarioDAO usuarioDao;
 	@Autowired
@@ -39,6 +42,15 @@ public class HomeController {
 	@Autowired
 	private MarmitaDao marmitaDAO;
 	
+	@Autowired
+	private RegiaoDAO regiaoDao;
+	
+	@Autowired
+	private EnderecoDAO enderecoDao;
+	
+	@Autowired
+	private ServidorConfiguracoesDAO servidorDao;
+	
 	@GetMapping
 	@ResponseBody
 	public String index()
@@ -47,12 +59,60 @@ public class HomeController {
 		return "Olá";
 	}
 	
+	@GetMapping("/notificacao")
+	public void request()
+	{
+		HttpRequests r = new HttpRequests();
+		try {
+			String tokenServidor="AAAApejE2J8:APA91bHHpo_ILaY9fs2dWG2JBAQKDyAkg2Qu-Cd0xh9SH_BGRHBwrpbYnfpLWuqEZQuaMB0X3s1w-ys9nqmqG5btT7wqvUTQ2-iBkUAEE3rAp-aBSs4w4r7VPcpUbZxs077ZhafuXNxX";
+			String tokenUsuario="fiZnAZtFBys:APA91bGxwT-AAAE8_zurVn85vYXC2nsmnkBQVY3nfnmiUrMITv1y37AfOt6y7p-l6QgvElovUsID0MFOOwsjp3QZ-0ku6PytXGlToHQnyKC3O0Tt1H-k4CDi6790pTHj7CF6-D-9oqlg";
+			String tituloMensagem="OpressorasDetect";
+			String mensagem="Luana Opressora está por perto!";
+			
+			ServidorConfiguracoes srv = servidorDao.findById(1L);
+			r.notificaUsuario(srv.getTokenServer(), tokenUsuario, tituloMensagem, mensagem);
+			
+		} catch (ClientProtocolException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		} catch (JSONException e) {
+			
+			e.printStackTrace();
+		}
+	}
+	
 	@GetMapping("/carregar")
 	public void carregar()
 	{
+		ServidorConfiguracoes srv = new ServidorConfiguracoes();
+		srv.setCodRemetente("712574818463");
+		srv.setTokenServer("AAAApejE2J8:APA91bHHpo_ILaY9fs2dWG2JBAQKDyAkg2Qu-Cd0xh9SH_BGRHBwrpbYnfpLWuqEZQuaMB0X3s1w-ys9nqmqG5btT7wqvUTQ2-iBkUAEE3rAp-aBSs4w4r7VPcpUbZxs077ZhafuXNxX");
+		servidorDao.save(srv);
+		
 		long id=0L;
 		ArrayList<Alimento> listaAlimentos = new ArrayList<Alimento>();
 		ArrayList<Bebida> listaBebidas = new ArrayList<Bebida>();
+		
+		ArrayList<String> listaCep = new ArrayList<>();
+		
+		listaCep.add("cep00");
+		listaCep.add("cep00");
+		listaCep.add("cep00");
+		listaCep.add("cep00");
+		
+		Regiao regiao = new Regiao();
+		regiao.setCep(listaCep);
+		regiao.setNome("Região tribulosa");
+		regiao.setTaxaEntrega(2.5);
+		regiaoDao.save(regiao);
+		
+		Endereco endereco = new Endereco();
+		endereco.setLogradouro("Logradouro");
+		endereco.setRegiao(regiao);
+		enderecoDao.save(endereco);
 		
 		Alimento destaque = new Alimento(); 
 		destaque.setDescricao("Spagett");
@@ -291,7 +351,6 @@ public class HomeController {
 		Endereco end = new Endereco();
 		end.setLogradouro("Logradouro");
 		end.setPontoDeReferencia("Ponto de referencia");
-		end.setTaxaEntrega(0.0);
 		
 		Autorizacao auth = new Autorizacao();
 		auth.setNome("USER");
@@ -307,23 +366,13 @@ public class HomeController {
 		id=usuarioDao.save(usuarioFake).getId();
 		usuarioFake.setId(id);
 		
-		Pedido pedidoFake = new Pedido();
-		pedidoFake.setAlimentosEscolhidos(listaFake);
-		pedidoFake.setBebidasEscolhidas(listaFake);
-		pedidoFake.setDataHora(null);
-		pedidoFake.setPrecoFinal(0.0);
-		pedidoFake.setTaxaConveniencia(0.0);
-		pedidoFake.setUsuario(usuarioFake);
-		pedidoFake.setTaxaEntrega(1.0);
 		
-		pedidoDao.save(pedidoFake);
-		
-		MarmitaMobileRequest marmita = new MarmitaMobileRequest();
+		Marmita marmita = new Marmita();
 		marmita.setAlimentosEscolhidos(listaFake);
 		id=marmitaDAO.save(marmita).getId();
 		marmita.setId(id);
 		
-		ArrayList<MarmitaMobileRequest> listaMarmita = new ArrayList<>();
+		ArrayList<Marmita> listaMarmita = new ArrayList<>();
 		listaMarmita.add(marmita);
 		
 		PedidosMobileRequest pedidosMobile = new PedidosMobileRequest();
@@ -332,7 +381,6 @@ public class HomeController {
 		pedidosMobile.setEndereco("SQ 11 QQ");
 		pedidosMobile.setMarmitas(listaMarmita);
 		pedidosMobile.setNomeCompleto("Fulano de tal");
-		pedidosMobile.setNumeroPedido("00");
 		pedidosMobile.setPontoReferencia("Rua Magica");
 		pedidosMobile.setPrecoFinal(1.0);
 		pedidosMobile.setRegiaoNome("Bairro");
@@ -340,6 +388,8 @@ public class HomeController {
 		pedidosMobile.setTaxaEntrega(3);
 		id = pedidosMobileDAO.save(pedidosMobile).getId();
 		pedidosMobile.setId(id);
+		
+		
 		
 	}
 }

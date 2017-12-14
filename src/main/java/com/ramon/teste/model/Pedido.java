@@ -1,6 +1,5 @@
 package com.ramon.teste.model;
 
-import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
  
 @Entity
 public class Pedido {
@@ -17,31 +17,25 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
 	private String numeroPedido;
+	private String dataHora;
+	private double precoFinal;
+	private double taxaEntrega;
+	private double taxaConveniencia;
+	private String userName;
+	private String nomeCompleto;
+	private String endereco;
+	private String regiaoNome;
+	private String pontoReferencia;
 	
-	private Date dataHora;
+	@OneToMany
+	private List<Marmita> marmitas;
 	
-	@Column(nullable=false)
-	private Double precoFinal;
-	
-	@Column(nullable=false)
-	private Double taxaEntrega;
-	
-	@Column(nullable=false)
-	private Double taxaConveniencia;
-	
-	@ManyToOne
-	private Usuario usuario;
+	@ElementCollection @Column(length=50)
+	private List<String>bebidas;
 	
 	@ManyToOne
 	private Avaliacao avaliacao;
-	
-	@ElementCollection @Column(length=50)
-	private List<String> alimentosEscolhidos;
-	
-	@ElementCollection @Column(length=50)
-	private List<String> bebidasEscolhidas;
 
 	public Long getId() {
 		return id;
@@ -51,44 +45,100 @@ public class Pedido {
 		this.id = id;
 	}
 
-	public Date getDataHora() {
+	public String getNumeroPedido() {
+		return numeroPedido;
+	}
+
+	public void setNumeroPedido(String numeroPedido) {
+		this.numeroPedido = numeroPedido;
+	}
+
+	public String getDataHora() {
 		return dataHora;
 	}
 
-	public void setDataHora(Date dataHora) {
+	public void setDataHora(String dataHora) {
 		this.dataHora = dataHora;
 	}
 
-	public Double getPrecoFinal() {
+	public double getPrecoFinal() {
 		return precoFinal;
 	}
 
-	public void setPrecoFinal(Double precoFinal) {
+	public void setPrecoFinal(double precoFinal) {
 		this.precoFinal = precoFinal;
 	}
 
-	public Double getTaxaEntrega() {
+	public double getTaxaEntrega() {
 		return taxaEntrega;
 	}
 
-	public void setTaxaEntrega(Double taxaEntrega) {
+	public void setTaxaEntrega(double taxaEntrega) {
 		this.taxaEntrega = taxaEntrega;
 	}
 
-	public Double getTaxaConveniencia() {
+	public double getTaxaConveniencia() {
 		return taxaConveniencia;
 	}
 
-	public void setTaxaConveniencia(Double taxaConveniencia) {
+	public void setTaxaConveniencia(double taxaConveniencia) {
 		this.taxaConveniencia = taxaConveniencia;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getNomeCompleto() {
+		return nomeCompleto;
+	}
+
+	public void setNomeCompleto(String nomeCompleto) {
+		this.nomeCompleto = nomeCompleto;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
+	public String getRegiaoNome() {
+		return regiaoNome;
+	}
+
+	public void setRegiaoNome(String regiaoNome) {
+		this.regiaoNome = regiaoNome;
+	}
+
+	public String getPontoReferencia() {
+		return pontoReferencia;
+	}
+
+	public void setPontoReferencia(String pontoReferencia) {
+		this.pontoReferencia = pontoReferencia;
+	}
+
+	public List<Marmita> getMarmitas() {
+		return marmitas;
+	}
+
+	public void setMarmitas(List<Marmita> marmitas) {
+		this.marmitas = marmitas;
+	}
+
+	public List<String> getBebidas() {
+		return bebidas;
+	}
+
+	public void setBebidas(List<String> bebidas) {
+		this.bebidas = bebidas;
 	}
 
 	public Avaliacao getAvaliacao() {
@@ -98,30 +148,8 @@ public class Pedido {
 	public void setAvaliacao(Avaliacao avaliacao) {
 		this.avaliacao = avaliacao;
 	}
-
-	public List<String> getAlimentosEscolhidos() {
-		return alimentosEscolhidos;
-	}
-
-	public void setAlimentosEscolhidos(List<String> alimentosEscolhidos) {
-		this.alimentosEscolhidos = alimentosEscolhidos;
-	}
-
-	public List<String> getBebidasEscolhidas() {
-		return bebidasEscolhidas;
-	}
-
-	public void setBebidasEscolhidas(List<String> bebidasEscolhidas) {
-		this.bebidasEscolhidas = bebidasEscolhidas;
-	}
-
-	public String getNumeroPedido() {
-		return numeroPedido;
-	}
-
-	public void setNumeroPedido(String numeroPedido) {
-		this.numeroPedido = numeroPedido;
-	}
+	
+	
 	
 	
 

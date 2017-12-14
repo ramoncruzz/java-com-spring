@@ -27,6 +27,16 @@ public class CardapioController {
 	{
 		return cardapioDao.findAll();
 	}
+	
+	@GetMapping("/id-corrente")
+	public Long idCorrente()
+	{
+		Cardapio cardapio = cardapioDao.findFirstByOrderByIdDesc();
+		if(cardapio!=null)
+			return cardapio.getId();
+		else
+			return 0L;
+	}
 	@GetMapping
 	public Cardapio cardapioCorrente()
 	{
@@ -34,6 +44,7 @@ public class CardapioController {
 		
 		return cardapio;
 	}
+	
 	@PostMapping
 	public HttpStatus cadastrar(@RequestBody Cardapio cardapio)
 	{
@@ -64,6 +75,11 @@ public class CardapioController {
 		}catch (Exception e) {
 			return HttpStatus.BAD_REQUEST;
 		}
+	}
+	
+	public void atualizarCodigoAtualizacao()
+	{
+		
 	}
 		
 	

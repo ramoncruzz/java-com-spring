@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,9 +35,8 @@ public class UsuarioController {
 	@PostMapping
 	public HttpStatus cadastrar(@RequestBody Usuario usuario)
 	{
-		registro.registerUser(usuario);
-		Usuario u = usuarioDao.findByUsername(usuario.getUsername());
-		if(u.getId()>0)
+		Long id=registro.registerUser(usuario);
+		if(id>0)
 			return HttpStatus.CREATED;
 		else 
 			return HttpStatus.BAD_REQUEST;
@@ -53,11 +53,12 @@ public class UsuarioController {
 			return HttpStatus.BAD_REQUEST;
 	}
 	
-	@DeleteMapping
-	public HttpStatus apagar(@RequestBody Usuario usuario)
+	@DeleteMapping("/{username}")
+	public HttpStatus apagar(@PathVariable String username)
 	{
 		try
 		{
+			Usuario usuario= usuarioDao.findByUsername(username);
 			usuarioDao.delete(usuario);
 			return HttpStatus.OK;
 		}catch (Exception e) {
