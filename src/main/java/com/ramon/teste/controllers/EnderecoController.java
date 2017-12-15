@@ -40,6 +40,7 @@ public class EnderecoController {
 		Endereco endereco = new Endereco();
 		Logradouro logradouro =logradouroDao.findByCep(cep);
 		Regiao regiao=regiaoDao.findByCepIn(cep).get(0);
+		endereco.setId(-1L);
 		endereco.setCEP(cep);
 		endereco.setLogradouro(logradouro.getDescricao());
 		endereco.setRegiao(regiao);
