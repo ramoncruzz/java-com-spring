@@ -44,7 +44,7 @@ public class SMSController {
 	public String geraCodigo(@RequestBody SMSValidacao sms)
 	{
 		String codigo = geraCodigo(6);
-		String codigoFormatado = "Seu código é "+codigo.substring(0, 3)+" " + codigo.substring(3) +" "+sms.getTelefone();
+		String codigoFormatado = "Seu código é "+codigo.substring(0, 3)+" " + codigo.substring(3) +" ";
 		
 		SMSValidacao smsSalvar = new SMSValidacao();
 		smsSalvar.setCodigoValidacao(codigo);
@@ -53,6 +53,8 @@ public class SMSController {
 		
 		SMSValidacao s=smsDao.save(smsSalvar);
 		s.getId();
+		enviaSMS("+55"+sms.getTelefone(), codigoFormatado);
+		
 		return  codigoFormatado;
 	}
 	
@@ -92,14 +94,13 @@ public class SMSController {
     }
 
 	//TODO melhorar uso dessa tecnologia
-	public String enviaTeste()
+	public String enviaSMS(String phoneNumber, String message)
 	{
 		String ACCESS_KEY="AKIAJ6IVG3WDASEMYSHQ";
 		String SECRET_KEY="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";
 		BasicAWSCredentials credentials = new BasicAWSCredentials(ACCESS_KEY,SECRET_KEY);
 		AmazonSNSClient snsClient = new AmazonSNSClient(credentials).withRegion(Regions.US_EAST_1);
-		String message = "Teste";
-        String phoneNumber = "+5561995616860";
+		
         Map<String, MessageAttributeValue> smsAttributes = 
                 new HashMap<String, MessageAttributeValue>();
         
