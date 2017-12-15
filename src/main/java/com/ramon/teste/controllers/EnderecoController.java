@@ -43,6 +43,7 @@ public class EnderecoController {
 		endereco.setCEP(cep);
 		endereco.setLogradouro(logradouro.getDescricao());
 		endereco.setRegiao(regiao);
+		endereco.setBairro(logradouro.getDescricaoBairro());
 		return endereco;
 	}
 

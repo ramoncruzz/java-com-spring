@@ -17,6 +17,7 @@ public class Endereco {
 	private String CEP;
 	private String logradouro;
 	private String pontoDeReferencia;
+	private String bairro;
 	
 	@ManyToOne
 	private Regiao regiao;
@@ -59,6 +60,14 @@ public class Endereco {
 
 	public void setCEP(String cEP) {
 		CEP = cEP;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
 	}
 	
 	
