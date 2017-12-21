@@ -28,7 +28,8 @@ public static String generateToken(Usuario usuario) throws JsonProcessingExcepti
 	return Jwts.builder().claim("usr", userJson)
 			.setIssuer("com.ramon")
 			.setSubject(usuario.getUsername())
-			.setExpiration(new Date(agora.getTime()+(hora*horasValidade)))
+			.setExpiration(new Date(agora.getTime()+(1000L * 60L)))
+			//.setExpiration(new Date(agora.getTime()+(hora*horasValidade)))
 			.signWith(SignatureAlgorithm.HS256, secretKey).compact();
 
 	}
@@ -50,7 +51,6 @@ public static String generateToken(Usuario usuario) throws JsonProcessingExcepti
 			usuario.setId(obj.getLong("id"));
 			usuario.setAutorizacao(auth);
 			usuario.setAtivo(obj.getBoolean("ativo"));
-			usuario.setCpf(obj.getString("cpf"));
 			usuario.setNomeCompleto(obj.getString("nomeCompleto"));
 			usuario.setPassword(obj.getString("password"));
 			usuario.setUserName(obj.getString("username"));
