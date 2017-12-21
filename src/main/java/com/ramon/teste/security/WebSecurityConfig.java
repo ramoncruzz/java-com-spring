@@ -33,6 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().authorizeRequests()
 			.antMatchers("/**").permitAll()
+			.antMatchers(HttpMethod.GET,"/cardapio").hasAnyAuthority("USER","ADMIN","JEDI")
 			.antMatchers(HttpMethod.POST,"/usuario").permitAll()
 //			.antMatchers(HttpMethod.GET,"/usuario").permitAll()
 //			.antMatchers(HttpMethod.GET,"/autorizacao/popular").permitAll()

@@ -1,9 +1,13 @@
 package com.ramon.teste.controllers;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.ramon.teste.DAO.UsuarioDAO;
 import com.ramon.teste.model.Usuario;
+import com.ramon.teste.security.JwtUtils;
 import com.ramon.teste.services.UserService;
 
 @RestController
@@ -41,6 +48,8 @@ public class UsuarioController {
 		else 
 			return HttpStatus.BAD_REQUEST;
 	}
+	
+
 	
 	@PutMapping
 	public HttpStatus atualizar(@RequestBody Usuario usuario)
