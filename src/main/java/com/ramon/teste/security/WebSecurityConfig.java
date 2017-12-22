@@ -36,6 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.GET,"/cardapio").hasAuthority("USER")
 			.antMatchers(HttpMethod.POST,"/usuario").permitAll()
 			.antMatchers(HttpMethod.GET,"/usuario").permitAll()
+			.antMatchers(HttpMethod.PUT,"/usuario").permitAll()
 			.antMatchers(HttpMethod.GET,"/sms").hasAuthority("USER")
 			.antMatchers(HttpMethod.POST,"/sms/gerar-codigo").permitAll()
 			.antMatchers(HttpMethod.POST,"/sms/validar").permitAll()
