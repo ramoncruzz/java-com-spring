@@ -54,12 +54,20 @@ public class UsuarioController {
 	@PutMapping
 	public HttpStatus atualizar(@RequestBody Usuario usuario)
 	{
-		registro.registerUser(usuario);
-		Usuario u = usuarioDao.findByUsername(usuario.getUsername());
-		if(u.getId()>0)
-			return HttpStatus.OK;
-		else 
-			return HttpStatus.BAD_REQUEST;
+		try
+		{
+			Usuario usuarioSalvo = usuarioDao.findByUsername(usuario.getUsername());
+			usuario.setId(usuarioSalvo.getId());
+			Long id=registro.registerUser(usuario);
+			
+			if(id>0)
+				return HttpStatus.OK;
+			else return HttpStatus.BAD_REQUEST;
+				
+		}catch (Exception e) {
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		
 	}
 	
 	@DeleteMapping("/{username}")
