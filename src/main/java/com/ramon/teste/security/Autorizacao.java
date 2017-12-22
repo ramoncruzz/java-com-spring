@@ -1,5 +1,6 @@
 package com.ramon.teste.security;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,7 @@ public class Autorizacao implements GrantedAuthority{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	@Column(unique=true)
 	private String nome;
 	
 	
@@ -34,6 +36,11 @@ public class Autorizacao implements GrantedAuthority{
 		this.nome = nome;
 	}
 
+	public String getNome()
+	{
+		return nome;
+	}
+	
 	@Override
 	public String getAuthority() {
 		return nome;
