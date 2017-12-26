@@ -41,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.POST,"/sms/gerar-codigo").permitAll()
 			.antMatchers(HttpMethod.POST,"/sms/validar").permitAll()
 			.antMatchers(HttpMethod.GET,"/carregar").permitAll()
+			.antMatchers(HttpMethod.GET,"/endereco/**").permitAll()
 //			.antMatchers(HttpMethod.GET,"/usuario").permitAll()
 //			.antMatchers(HttpMethod.GET,"/autorizacao/popular").permitAll()
 //			.antMatchers(HttpMethod.GET,"/pedidosMobile").hasAuthority("USER")
