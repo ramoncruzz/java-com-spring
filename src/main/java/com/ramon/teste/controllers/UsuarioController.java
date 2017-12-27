@@ -78,6 +78,19 @@ public class UsuarioController {
 		
 	}
 	
+	@DeleteMapping("/{id}")
+	public HttpStatus apagarPeloId(@PathVariable Long id)
+	{
+		try
+		{
+			Usuario usuario= usuarioDao.findById(id);
+			usuarioDao.delete(usuario);
+			return HttpStatus.OK;
+		}catch (Exception e) {
+			return HttpStatus.BAD_REQUEST;
+		}
+	}
+	
 	@DeleteMapping("/{username}")
 	public HttpStatus apagar(@PathVariable String username)
 	{
