@@ -78,7 +78,7 @@ public class UsuarioController {
 		
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/id-{id}")
 	public HttpStatus apagarPeloId(@PathVariable Long id)
 	{
 		try
