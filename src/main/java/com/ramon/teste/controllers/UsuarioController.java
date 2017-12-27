@@ -25,6 +25,20 @@ public class UsuarioController {
 	@Autowired
 	UserService registro;
 	
+	@GetMapping("/{username}")
+	public Usuario getUsuarioPorUserName(@PathVariable String username)
+	{
+		try
+		{
+			Usuario usuario= usuarioDao.findByUsername(username);
+			
+			return usuario;
+		}catch (Exception e) {
+			return null;
+		}
+		
+	}
+	
 	@GetMapping
 	public List<Usuario> listarTodos()
 	{
