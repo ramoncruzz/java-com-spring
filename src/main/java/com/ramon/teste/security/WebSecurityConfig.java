@@ -34,6 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable().authorizeRequests()
 //			.antMatchers("/**").permitAll()
 			.antMatchers(HttpMethod.GET,"/cardapio").hasAuthority("USER")
+			.antMatchers(HttpMethod.GET,"/pedidosMobile").hasAuthority("USER")
 			.antMatchers(HttpMethod.GET,"/sms").hasAuthority("USER")
 			.antMatchers(HttpMethod.PUT,"/usuario").hasAuthority("USER")
 			.antMatchers(HttpMethod.GET,"/usuario/**").hasAuthority("USER")
