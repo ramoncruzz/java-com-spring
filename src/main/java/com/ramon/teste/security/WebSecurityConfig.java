@@ -40,6 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.GET,"/usuario/**").hasAuthority("USER")
 			.antMatchers(HttpMethod.POST,"/usuario").permitAll()
 			.antMatchers(HttpMethod.GET,"/usuario").permitAll()
+			.antMatchers(HttpMethod.PUT,"/usuario/recuperar").permitAll()
 			.antMatchers(HttpMethod.POST,"/sms/gerar-codigo").permitAll()
 			.antMatchers(HttpMethod.POST,"/sms/validar").permitAll()
 			.antMatchers(HttpMethod.GET,"/carregar").permitAll()

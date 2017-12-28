@@ -78,6 +78,28 @@ public class UsuarioController {
 		
 	}
 	
+	@PutMapping("/recuperar")
+	public HttpStatus recuperar(@RequestBody Usuario usuario)
+	{
+		try
+		{	
+			Usuario usuarioSalvo = usuarioDao.findByUsername(usuario.getUsername());
+			Long idSalvo = usuarioSalvo.getId();
+			String nomeCompleto = usuarioSalvo.getNomeCompleto();
+			usuario.setId(idSalvo);
+			usuario.setNomeCompleto(nomeCompleto);
+			Long id=registro.registerUser(usuario);
+			
+			if(id>0)
+				return HttpStatus.OK;
+			else return HttpStatus.BAD_REQUEST;
+				
+		}catch (Exception e) {
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		
+	}
+	
 	@DeleteMapping("/id-{id}")
 	public HttpStatus apagarPeloId(@PathVariable Long id)
 	{
