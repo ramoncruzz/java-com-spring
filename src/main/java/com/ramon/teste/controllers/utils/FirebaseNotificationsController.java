@@ -3,6 +3,8 @@ package com.ramon.teste.controllers.utils;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import com.ramon.teste.DAO.UsuarioDAO;
 import com.ramon.teste.DAO.util.FirebaseNotificationsDAO;
 import com.ramon.teste.DAO.util.ServidorConfiguracoesDAO;
 import com.ramon.teste.helpers.StringData;
@@ -43,6 +49,33 @@ public class FirebaseNotificationsController {
 	@PostMapping
 	public HttpStatus enviaNotificacaoFireBase(@RequestBody FirebaseNotifications mensagem) {
 		try {
+			
+			HttpRequests r = new HttpRequests();
+			ServidorConfiguracoes srv = servidorDao.findById(1L);
+			r.notificaUsuario(srv.getTokenServer(), mensagem.getTokenUsuario(), mensagem.getTituloMensagem(), mensagem.getMensagem());
+			mensagem.setDataEnvioMensagem(StringData.getStringData());
+			firebaseDao.save(mensagem);
+			return HttpStatus.OK;
+
+		} 
+			catch (ClientProtocolException e) {
+			e.printStackTrace();
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		}catch (Exception e) {
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+
+	}
+	
+	public HttpStatus enviaNotificacaoFireBase(FirebaseNotifications mensagem,ServidorConfiguracoesDAO servidorDao) {
+		try {
+			
 			HttpRequests r = new HttpRequests();
 			ServidorConfiguracoes srv = servidorDao.findById(1L);
 			r.notificaUsuario(srv.getTokenServer(), mensagem.getTokenUsuario(), mensagem.getTituloMensagem(), mensagem.getMensagem());

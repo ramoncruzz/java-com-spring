@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ramon.teste.DAO.UsuarioDAO;
 import com.ramon.teste.DAO.util.PedidosPoolDAO;
+import com.ramon.teste.DAO.util.ServidorConfiguracoesDAO;
 import com.ramon.teste.helpers.StringData;
 import com.ramon.teste.model.Usuario;
 import com.ramon.teste.model.util.*;
@@ -34,7 +35,7 @@ public class PedidosPoolController {
 		return poolDao.findByEnviadoParaRestauranteFalse();
 	}
 	
-	public HttpStatus recebePedido(PedidosMobileRequest pedido)
+	public HttpStatus recebePedido(PedidosMobileRequest pedido,ServidorConfiguracoesDAO servidorDao)
 	{
 		try
 		{
@@ -51,7 +52,7 @@ public class PedidosPoolController {
 			mensagem.setTituloMensagem("Pedido Enviado");
 			mensagem.setTokenUsuario(usuario.getTokenPushNotification());
 			
-			firebaseController.enviaNotificacaoFireBase(mensagem);
+			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao);
 			
 			if(poolDao.save(p).getId()>0)
 				return HttpStatus.OK;
