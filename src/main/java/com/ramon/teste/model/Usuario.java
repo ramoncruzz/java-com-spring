@@ -33,7 +33,7 @@ public class Usuario implements UserDetails {
 	private String nomeCompleto;
 	
 	private String cpf;
-	
+	@Column(unique=true)
 	private String username;
 	
 	private String password;

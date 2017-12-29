@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ramon.teste.DAO.UsuarioDAO;
+import com.ramon.teste.DAO.util.FirebaseNotificationsDAO;
 import com.ramon.teste.DAO.util.PedidosPoolDAO;
 import com.ramon.teste.DAO.util.ServidorConfiguracoesDAO;
 import com.ramon.teste.helpers.StringData;
@@ -35,7 +36,7 @@ public class PedidosPoolController {
 		return poolDao.findByEnviadoParaRestauranteFalse();
 	}
 	
-	public HttpStatus recebePedido(PedidosMobileRequest pedido,ServidorConfiguracoesDAO servidorDao)
+	public HttpStatus recebePedido(PedidosMobileRequest pedido,ServidorConfiguracoesDAO servidorDao,FirebaseNotificationsDAO firebaseDao)
 	{
 		try
 		{
@@ -48,11 +49,11 @@ public class PedidosPoolController {
 			FirebaseNotificationsController firebaseController = new FirebaseNotificationsController();
 			FirebaseNotifications mensagem = new FirebaseNotifications();
 			
-			mensagem.setMensagem("Olá "+usuario.getNomeCompleto()+", seu pedido foi enviado para o Restaurante, em breve você avisaremos o recebimento.");
+			mensagem.setMensagem("Olá "+usuario.getNomeCompleto()+", seu pedido foi enviado para o Restaurante, em breve avisaremos você sobre o recebimento.");
 			mensagem.setTituloMensagem("Pedido Enviado");
 			mensagem.setTokenUsuario(usuario.getTokenPushNotification());
 			
-			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao);
+			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao);
 			
 			if(poolDao.save(p).getId()>0)
 				return HttpStatus.OK;

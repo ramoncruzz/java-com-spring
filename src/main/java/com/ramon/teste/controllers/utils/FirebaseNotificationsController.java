@@ -73,7 +73,7 @@ public class FirebaseNotificationsController {
 
 	}
 	
-	public HttpStatus enviaNotificacaoFireBase(FirebaseNotifications mensagem,ServidorConfiguracoesDAO servidorDao) {
+	public HttpStatus enviaNotificacaoFireBase(FirebaseNotifications mensagem,ServidorConfiguracoesDAO servidorDao,FirebaseNotificationsDAO firebaseDao) {
 		try {
 			
 			HttpRequests r = new HttpRequests();

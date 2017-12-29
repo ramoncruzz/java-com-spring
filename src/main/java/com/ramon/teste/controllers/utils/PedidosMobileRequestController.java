@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ramon.teste.DAO.PedidoDAO;
+import com.ramon.teste.DAO.util.FirebaseNotificationsDAO;
 import com.ramon.teste.DAO.util.MarmitaDao;
 import com.ramon.teste.DAO.util.PedidosMobileRequestDAO;
 import com.ramon.teste.DAO.util.ServidorConfiguracoesDAO;
@@ -34,6 +35,8 @@ public class PedidosMobileRequestController {
 	private MarmitaDao marmitaDao;
 	@Autowired
 	private ServidorConfiguracoesDAO servidorDao;
+	@Autowired
+	private FirebaseNotificationsDAO firebaseDao;
 	
 	@GetMapping
 	public List<PedidosMobileRequest> getTodos()
@@ -60,7 +63,7 @@ public class PedidosMobileRequestController {
 			}
 		pedidos.setNumeroPedido(numeroPedido);
 		PedidosMobileRequest p=pedidoMobileDao.save(pedidos);
-		pool.recebePedido(pedidos,servidorDao);
+		pool.recebePedido(pedidos,servidorDao,firebaseDao);
 		
 		if(p.getId()>0)
 			return numeroPedido;
