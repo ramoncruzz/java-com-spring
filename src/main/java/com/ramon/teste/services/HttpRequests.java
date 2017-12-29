@@ -40,7 +40,7 @@ public class HttpRequests {
 		if(response.getStatusLine().getStatusCode()==200)
 			return HttpStatus.OK;
 		else
-			return HttpStatus.BAD_GATEWAY;
+			return HttpStatus.INTERNAL_SERVER_ERROR;
 		
 	}
 	

@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ramon.teste.DAO.UsuarioDAO;
 import com.ramon.teste.DAO.util.PedidosPoolDAO;
+import com.ramon.teste.helpers.StringData;
+import com.ramon.teste.model.Usuario;
 import com.ramon.teste.model.util.*;
 
 @RestController
@@ -18,6 +22,8 @@ public class PedidosPoolController {
 	
 	@Autowired
 	private PedidosPoolDAO poolDao;
+	@Autowired
+	private UsuarioDAO usuarioDao;
 	
 	@Autowired
 	private StatusPedidoController status;
@@ -30,15 +36,32 @@ public class PedidosPoolController {
 	
 	public HttpStatus recebePedido(PedidosMobileRequest pedido)
 	{
-		PedidosPool p = new PedidosPool();
-		p.setDataHora(" ");
-		p.setPedido(pedido);
-		p.setEnviadoParaRestaurante(false);
+		try
+		{
+			PedidosPool p = new PedidosPool();
+			p.setDataHora(StringData.getStringData());
+			p.setPedido(pedido);
+			p.setEnviadoParaRestaurante(false);
+			
+			Usuario usuario = usuarioDao.findByUsername(pedido.getUserName());
+			FirebaseNotificationsController firebaseController = new FirebaseNotificationsController();
+			FirebaseNotifications mensagem = new FirebaseNotifications();
+			
+			mensagem.setMensagem("Olá "+usuario.getNomeCompleto()+", seu pedido foi enviado para o Restaurante, em breve você avisaremos o recebimento.");
+			mensagem.setTituloMensagem("Pedido Enviado");
+			mensagem.setTokenUsuario(usuario.getTokenPushNotification());
+			
+			firebaseController.enviaNotificacaoFireBase(mensagem);
+			
+			if(poolDao.save(p).getId()>0)
+				return HttpStatus.OK;
+			else
+				return HttpStatus.INTERNAL_SERVER_ERROR;
+		}catch (Exception e) {
+			// TODO: handle exception
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		}
 		
-		if(poolDao.save(p).getId()>0)
-			return HttpStatus.OK;
-		else
-			return HttpStatus.BAD_REQUEST;
 	}
 	
 	@PutMapping
@@ -48,6 +71,16 @@ public class PedidosPoolController {
 		if(p.isEnviadoParaRestaurante())
 		 {
 			status.enviaNotificaoRecebimentoNoRestaurante(pedidoPool.getPedido());
+			Usuario usuario = usuarioDao.findByUsername(pedidoPool.getPedido().getUserName());
+			FirebaseNotificationsController firebaseController = new FirebaseNotificationsController();
+			FirebaseNotifications mensagem = new FirebaseNotifications();
+			
+			mensagem.setMensagem("Olá "+usuario.getNomeCompleto()+", seu pedido foi enviado para o Restaurante, em breve você avisaremos o recebimento.");
+			mensagem.setTituloMensagem("Pedido Enviado");
+			mensagem.setTokenUsuario(usuario.getTokenPushNotification());
+			
+			firebaseController.enviaNotificacaoFireBase(mensagem);
+			
 			return HttpStatus.OK;
 		 }
 		else 

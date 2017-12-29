@@ -15,6 +15,7 @@ import com.ramon.teste.DAO.*;
 import com.ramon.teste.DAO.util.MarmitaDao;
 import com.ramon.teste.DAO.util.PedidosMobileRequestDAO;
 import com.ramon.teste.DAO.util.ServidorConfiguracoesDAO;
+import com.ramon.teste.helpers.StringData;
 import com.ramon.teste.model.*;
 import com.ramon.teste.model.util.PedidosMobileRequest;
 import com.ramon.teste.model.util.ServidorConfiguracoes;
@@ -64,7 +65,7 @@ public class HomeController {
 	{
 		HttpRequests r = new HttpRequests();
 		try {
-			String tokenServidor="AAAApejE2J8:APA91bHHpo_ILaY9fs2dWG2JBAQKDyAkg2Qu-Cd0xh9SH_BGRHBwrpbYnfpLWuqEZQuaMB0X3s1w-ys9nqmqG5btT7wqvUTQ2-iBkUAEE3rAp-aBSs4w4r7VPcpUbZxs077ZhafuXNxX";
+			//String tokenServidor="AAAApejE2J8:APA91bHHpo_ILaY9fs2dWG2JBAQKDyAkg2Qu-Cd0xh9SH_BGRHBwrpbYnfpLWuqEZQuaMB0X3s1w-ys9nqmqG5btT7wqvUTQ2-iBkUAEE3rAp-aBSs4w4r7VPcpUbZxs077ZhafuXNxX";
 			String tokenUsuario="fiZnAZtFBys:APA91bGxwT-AAAE8_zurVn85vYXC2nsmnkBQVY3nfnmiUrMITv1y37AfOt6y7p-l6QgvElovUsID0MFOOwsjp3QZ-0ku6PytXGlToHQnyKC3O0Tt1H-k4CDi6790pTHj7CF6-D-9oqlg";
 			String tituloMensagem="OpressorasDetect";
 			String mensagem="Luana Opressora está por perto!";
@@ -88,8 +89,8 @@ public class HomeController {
 	public void carregar()
 	{
 		ServidorConfiguracoes srv = new ServidorConfiguracoes();
-		srv.setCodRemetente("712574818463");
-		srv.setTokenServer("AAAApejE2J8:APA91bHHpo_ILaY9fs2dWG2JBAQKDyAkg2Qu-Cd0xh9SH_BGRHBwrpbYnfpLWuqEZQuaMB0X3s1w-ys9nqmqG5btT7wqvUTQ2-iBkUAEE3rAp-aBSs4w4r7VPcpUbZxs077ZhafuXNxX");
+		srv.setCodRemetente("153101293432");
+		srv.setTokenServer("AAAAI6WMV3g:APA91bFe5AyDOh9KO5CyviIcoRZXYWApuC9wCKYg8_1PiVfadlm6f8Bf9akeyc58_moy9v6RekJPAw6KgK1gVu6rZUxsA2uhYKIA225ra7Ov_mCKgeUD-qDgBtUA7_X5DUTJcf3FncLE");
 		servidorDao.save(srv);
 		
 		long id=0L;
@@ -98,9 +99,6 @@ public class HomeController {
 		
 		ArrayList<String> listaCep = new ArrayList<>();
 		
-		listaCep.add("cep00");
-		listaCep.add("cep00");
-		listaCep.add("cep00");
 		listaCep.add("cep00");
 		
 		Regiao regiao = new Regiao();
@@ -130,6 +128,7 @@ public class HomeController {
 		arroz.setNome("Arroz Branco");
 		id=alimentoDao.save(arroz).getId();
 		arroz.setId(id);
+		arroz.setModaDaCasa(true);
 		listaAlimentos.add(arroz);
 		
 		Alimento arrozColorido = new Alimento(); 
@@ -139,6 +138,7 @@ public class HomeController {
 		arrozColorido.setNome("Arroz Colorido");
 		id=alimentoDao.save(arrozColorido).getId();
 		arrozColorido.setId(id);
+		arrozColorido.setModaDaCasa(false);
 		listaAlimentos.add(arrozColorido);
 		
 		Alimento feijaoPreto = new Alimento(); 
@@ -148,6 +148,7 @@ public class HomeController {
 		feijaoPreto.setNome("Feijão Preto");
 		id=alimentoDao.save(feijaoPreto).getId();
 		feijaoPreto.setId(id);
+		feijaoPreto.setModaDaCasa(true);
 		listaAlimentos.add(feijaoPreto);
 		
 		Alimento feijaoTropeiro = new Alimento(); 
@@ -157,6 +158,7 @@ public class HomeController {
 		feijaoTropeiro.setNome("Feijão Preto");
 		id=alimentoDao.save(feijaoTropeiro).getId();
 		feijaoTropeiro.setId(id);
+		feijaoTropeiro.setModaDaCasa(false);
 		listaAlimentos.add(feijaoTropeiro);
 		
 		Alimento aboboraCozida = new Alimento(); 
@@ -166,6 +168,7 @@ public class HomeController {
 		aboboraCozida.setNome("Abobora Cozida");
 		id=alimentoDao.save(aboboraCozida).getId();
 		aboboraCozida.setId(id);
+		aboboraCozida.setModaDaCasa(true);
 		listaAlimentos.add(aboboraCozida);
 		
 		Alimento pureBatata = new Alimento(); 
@@ -175,6 +178,7 @@ public class HomeController {
 		pureBatata.setNome("Purê de Batatas");
 		id=alimentoDao.save(pureBatata).getId();
 		pureBatata.setId(id);
+		pureBatata.setModaDaCasa(true);
 		listaAlimentos.add(pureBatata);
 		
 		Alimento carneBovina = new Alimento(); 
@@ -184,6 +188,7 @@ public class HomeController {
 		carneBovina.setNome("Carne Bovina");
 		id=alimentoDao.save(carneBovina).getId();
 		carneBovina.setId(id);
+		carneBovina.setModaDaCasa(true);
 		listaAlimentos.add(carneBovina);
 		
 		Alimento costelaBovina = new Alimento(); 
@@ -193,6 +198,7 @@ public class HomeController {
 		costelaBovina.setNome("Costela Bovina");
 		id=alimentoDao.save(costelaBovina).getId();
 		costelaBovina.setId(id);
+		costelaBovina.setModaDaCasa(false);
 		listaAlimentos.add(costelaBovina);
 		
 		Alimento costelaSuina = new Alimento(); 
@@ -202,6 +208,7 @@ public class HomeController {
 		costelaSuina.setNome("Costela Suina");
 		id=alimentoDao.save(costelaSuina).getId();
 		costelaSuina.setId(id);
+		costelaSuina.setModaDaCasa(false);
 		listaAlimentos.add(costelaSuina);
 		
 		Alimento linguicaSuina = new Alimento(); 
@@ -211,6 +218,7 @@ public class HomeController {
 		linguicaSuina.setNome("Linguiça Suina");
 		id=alimentoDao.save(linguicaSuina).getId();
 		linguicaSuina.setId(id);
+		linguicaSuina.setModaDaCasa(true);
 		listaAlimentos.add(linguicaSuina);
 		
 		Alimento saladaTomate = new Alimento(); 
@@ -220,6 +228,7 @@ public class HomeController {
 		saladaTomate.setNome("Salada de Tomate");
 		id=alimentoDao.save(saladaTomate).getId();
 		saladaTomate.setId(id);
+		saladaTomate.setModaDaCasa(true);
 		listaAlimentos.add(saladaTomate);
 		
 		Alimento saladaAlface = new Alimento(); 
@@ -229,6 +238,7 @@ public class HomeController {
 		saladaAlface.setNome("Salada de Alface");
 		id=alimentoDao.save(saladaAlface).getId();
 		saladaAlface.setId(id);
+		saladaAlface.setModaDaCasa(true);
 		listaAlimentos.add(saladaAlface);
 		
 		Alimento salpicao = new Alimento(); 
@@ -238,6 +248,7 @@ public class HomeController {
 		salpicao.setNome("Salpicão");
 		id=alimentoDao.save(salpicao).getId();
 		salpicao.setId(id);
+		salpicao.setModaDaCasa(false);
 		listaAlimentos.add(salpicao);
 		
 		//Bebidas 
@@ -338,7 +349,7 @@ public class HomeController {
 		cardapio.setDestaque(destaque);
 		cardapio.setTemporariamenteIndisponivel(false);
 		cardapio.setTextoDestaque("Macarronada Gostosa");
-		cardapio.setData("12/12/2017-11:30");
+		cardapio.setData(StringData.getStringData());
 		cardapio.setAtivo(true);
 		cardapioDao.save(cardapio);
 		

@@ -21,6 +21,8 @@ public class Alimento {
 	@NotNull
 	private boolean disponivel;
 	@NotNull
+	private boolean modaDaCasa;
+	
 	private String categoria;
 
 	public Long getId() {
@@ -61,6 +63,14 @@ public class Alimento {
 
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
+	}
+
+	public boolean isModaDaCasa() {
+		return modaDaCasa;
+	}
+
+	public void setModaDaCasa(boolean modaDaCasa) {
+		this.modaDaCasa = modaDaCasa;
 	}
 
 
