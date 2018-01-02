@@ -17,7 +17,7 @@ import com.ramon.teste.DAO.RegiaoDAO;
 import com.ramon.teste.model.Regiao;
 
 @RestController
-@RequestMapping("/regiao")
+@RequestMapping("/v0/regiao")
 public class RegiaoController {
 
 	@Autowired

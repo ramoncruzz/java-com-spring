@@ -18,7 +18,8 @@ public class PedidosMobileRequest {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	private Long numeroPedido;
+	private double valorTroco;
+	private String numeroPedido;
 	private String dataHora;
 	private double precoFinal;
 	private double taxaEntrega;
@@ -31,12 +32,13 @@ public class PedidosMobileRequest {
 	@OneToMany
 	private List<Marmita> marmitas;
 	@ElementCollection @Column(length=50)
+	
 	private List<String>bebidas;
 	
-	public Long getNumeroPedido() {
+	public String getNumeroPedido() {
 		return numeroPedido;
 	}
-	public void setNumeroPedido(Long numeroPedido) {
+	public void setNumeroPedido(String numeroPedido) {
 		this.numeroPedido = numeroPedido;
 	}
 	public String getDataHora() {
@@ -110,6 +112,12 @@ public class PedidosMobileRequest {
 	}
 	public void setBebidas(List<String> bebidas) {
 		this.bebidas = bebidas;
+	}
+	public double getValorTroco() {
+		return valorTroco;
+	}
+	public void setValorTroco(double valorTroco) {
+		this.valorTroco = valorTroco;
 	}
 	 
 	

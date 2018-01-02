@@ -13,14 +13,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ramon.teste.DAO.CardapioDAO;
+import com.ramon.teste.controllers.utils.StatusPedidoController;
 import com.ramon.teste.model.Cardapio;
 
 @RestController
-@RequestMapping("/cardapio")
+@RequestMapping("/v0/cardapio")
 public class CardapioController {
 
 	@Autowired
 	private CardapioDAO cardapioDao;
+	
+	@Autowired
+	private StatusPedidoController statusController;
 	
 	@GetMapping("/todos")
 	public List<Cardapio> listarTodos()
@@ -37,6 +41,7 @@ public class CardapioController {
 		else
 			return 0L;
 	}
+	
 	@GetMapping
 	public Cardapio cardapioCorrente()
 	{
@@ -50,7 +55,10 @@ public class CardapioController {
 	{
 		Cardapio c = cardapioDao.save(cardapio);
 		if(c.getId()>0)
-			return HttpStatus.CREATED;
+			{
+				statusController.enviaNotificacaoTodosUsuarios("Cardápio do Dia", "Hoje temos como destaque do dia "+cardapio.getDestaque().getNome()+" e muito mais.. Você pode já pode fazer seu pedido.");
+				return HttpStatus.CREATED;
+			}
 		else 
 			return HttpStatus.BAD_REQUEST;
 	}

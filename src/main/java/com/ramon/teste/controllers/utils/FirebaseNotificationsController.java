@@ -2,9 +2,6 @@ package com.ramon.teste.controllers.utils;
 
 import java.io.IOException;
 import java.util.List;
-
-import javax.servlet.ServletContext;
-
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-
-import com.ramon.teste.DAO.UsuarioDAO;
 import com.ramon.teste.DAO.util.FirebaseNotificationsDAO;
 import com.ramon.teste.DAO.util.ServidorConfiguracoesDAO;
 import com.ramon.teste.helpers.StringData;
@@ -28,7 +21,7 @@ import com.ramon.teste.model.util.ServidorConfiguracoes;
 import com.ramon.teste.services.HttpRequests;
 
 @RestController
-@RequestMapping("/firebaseNotifications")
+@RequestMapping("/v0/firebaseNotifications")
 public class FirebaseNotificationsController {
 
 	@Autowired

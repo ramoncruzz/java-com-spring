@@ -11,7 +11,7 @@ import com.ramon.teste.model.util.Logradouro;
 import com.ramon.teste.DAO.util.LogradouroDAO;
 
 @RestController
-@RequestMapping("/logradouro")
+@RequestMapping("/v0/logradouro")
 public class LogradouroController {
 
 	@Autowired

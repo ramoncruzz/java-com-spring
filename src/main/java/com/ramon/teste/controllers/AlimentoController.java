@@ -16,7 +16,7 @@ import com.ramon.teste.DAO.AlimentoDAO;
 import com.ramon.teste.model.Alimento;
 
 @RestController
-@RequestMapping("/alimento")
+@RequestMapping("/v0/alimento")
 public class AlimentoController {
  
 	@Autowired

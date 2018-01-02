@@ -14,6 +14,7 @@ public class StatusPedido {
 	private String username;
 	private Long idPedido;
 	private String numeroPedido;
+	private String datahoraEnvioPeloUsuario;
 	private String dataHoraRecebimentoNoRestaurante;
 	private String dataHoraSaidaParaEntrega;
 	
@@ -52,6 +53,12 @@ public class StatusPedido {
 	}
 	public void setDataHoraSaidaParaEntrega(String dataHoraSaidaParaEntrega) {
 		this.dataHoraSaidaParaEntrega = dataHoraSaidaParaEntrega;
+	}
+	public String getDatahoraEnvioPeloUsuario() {
+		return datahoraEnvioPeloUsuario;
+	}
+	public void setDatahoraEnvioPeloUsuario(String datahoraEnvioPeloUsuario) {
+		this.datahoraEnvioPeloUsuario = datahoraEnvioPeloUsuario;
 	}
 	
 	

@@ -14,7 +14,7 @@ import com.ramon.teste.DAO.EntregadorDAO;
 import com.ramon.teste.model.Entregador;
 
 @RestController
-@RequestMapping("/entregador")
+@RequestMapping("/v0/entregador")
 public class EntregadorController {
 
 	@Autowired

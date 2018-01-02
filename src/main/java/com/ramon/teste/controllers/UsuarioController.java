@@ -17,7 +17,7 @@ import com.ramon.teste.model.Usuario;
 import com.ramon.teste.services.UserService;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/v0/usuario")
 public class UsuarioController {
 
 	@Autowired

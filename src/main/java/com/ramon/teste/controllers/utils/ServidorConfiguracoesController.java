@@ -14,7 +14,7 @@ import com.ramon.teste.DAO.util.ServidorConfiguracoesDAO;
 import com.ramon.teste.model.util.ServidorConfiguracoes;
 
 @RestController
-@RequestMapping("/servidor")
+@RequestMapping("/v0/servidor")
 public class ServidorConfiguracoesController {
 	
 	@Autowired

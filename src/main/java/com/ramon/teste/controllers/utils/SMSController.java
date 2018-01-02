@@ -27,7 +27,7 @@ import com.amazonaws.services.sns.model.PublishResult;
 
 
 @RestController
-@RequestMapping("/sms")
+@RequestMapping("/v0/sms")
 public class SMSController {
 
 	

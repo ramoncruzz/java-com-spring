@@ -14,7 +14,7 @@ import com.ramon.teste.DAO.AvaliacaoDAO;
 import com.ramon.teste.model.Avaliacao;
 
 @RestController
-@RequestMapping("/avaliacao")
+@RequestMapping("/v0/avaliacao")
 public class AvaliacaoController {
 
 	@Autowired

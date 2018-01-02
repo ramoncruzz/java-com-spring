@@ -24,7 +24,7 @@ import com.ramon.teste.services.HttpRequests;
 
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/v0")
 public class HomeController {
 
 	@Autowired
@@ -85,6 +85,243 @@ public class HomeController {
 		}
 	}
 	
+	@GetMapping("/carregar/bebidas-alimentos")
+	public void carregarAlimentosBebidas()
+	{
+		ArrayList<Alimento> listaAlimentos = new ArrayList<Alimento>();
+		ArrayList<Bebida> listaBebidas = new ArrayList<Bebida>();
+		long id=0L;
+		
+		Alimento destaque = new Alimento(); 
+		destaque.setDescricao("Spagett");
+		destaque.setDisponivel(true);
+		destaque.setCategoria("Acompanhamento");
+		destaque.setNome("Macarronada");
+		id=alimentoDao.save(destaque).getId();
+		destaque.setId(id);
+		listaAlimentos.add(destaque);
+		
+		Alimento arroz = new Alimento(); 
+		arroz.setDescricao("Arroz Branco");
+		arroz.setDisponivel(true);
+		arroz.setCategoria("Acompanhamento");
+		arroz.setNome("Arroz Branco");
+		id=alimentoDao.save(arroz).getId();
+		arroz.setId(id);
+		arroz.setModaDaCasa(true);
+		listaAlimentos.add(arroz);
+		
+		Alimento arrozColorido = new Alimento(); 
+		arrozColorido.setDescricao("Arroz Colorido");
+		arrozColorido.setDisponivel(true);
+		arrozColorido.setCategoria("Acompanhamento");
+		arrozColorido.setNome("Arroz Colorido");
+		id=alimentoDao.save(arrozColorido).getId();
+		arrozColorido.setId(id);
+		arrozColorido.setModaDaCasa(false);
+		listaAlimentos.add(arrozColorido);
+		
+		Alimento feijaoPreto = new Alimento(); 
+		feijaoPreto.setDescricao("Feijão Preto");
+		feijaoPreto.setDisponivel(true);
+		feijaoPreto.setCategoria("Acompanhamento");
+		feijaoPreto.setNome("Feijão Preto");
+		id=alimentoDao.save(feijaoPreto).getId();
+		feijaoPreto.setId(id);
+		feijaoPreto.setModaDaCasa(true);
+		listaAlimentos.add(feijaoPreto);
+		
+		Alimento feijaoTropeiro = new Alimento(); 
+		feijaoTropeiro.setDescricao("Feijão Preto");
+		feijaoTropeiro.setDisponivel(true);
+		feijaoTropeiro.setCategoria("Acompanhamento");
+		feijaoTropeiro.setNome("Feijão Preto");
+		id=alimentoDao.save(feijaoTropeiro).getId();
+		feijaoTropeiro.setId(id);
+		feijaoTropeiro.setModaDaCasa(false);
+		listaAlimentos.add(feijaoTropeiro);
+		
+		Alimento aboboraCozida = new Alimento(); 
+		aboboraCozida.setDescricao("Abobora Cozida");
+		aboboraCozida.setDisponivel(true);
+		aboboraCozida.setCategoria("Acompanhamento");
+		aboboraCozida.setNome("Abobora Cozida");
+		id=alimentoDao.save(aboboraCozida).getId();
+		aboboraCozida.setId(id);
+		aboboraCozida.setModaDaCasa(true);
+		listaAlimentos.add(aboboraCozida);
+		
+		Alimento pureBatata = new Alimento(); 
+		pureBatata.setDescricao("Purê de Batatas");
+		pureBatata.setDisponivel(true);
+		pureBatata.setCategoria("Acompanhamento");
+		pureBatata.setNome("Purê de Batatas");
+		id=alimentoDao.save(pureBatata).getId();
+		pureBatata.setId(id);
+		pureBatata.setModaDaCasa(true);
+		listaAlimentos.add(pureBatata);
+		
+		Alimento carneBovina = new Alimento(); 
+		carneBovina.setDescricao("Carne Bovina");
+		carneBovina.setDisponivel(true);
+		carneBovina.setCategoria("Churrasco");
+		carneBovina.setNome("Carne Bovina");
+		id=alimentoDao.save(carneBovina).getId();
+		carneBovina.setId(id);
+		carneBovina.setModaDaCasa(true);
+		listaAlimentos.add(carneBovina);
+		
+		Alimento costelaBovina = new Alimento(); 
+		costelaBovina.setDescricao("Costela Bovina");
+		costelaBovina.setDisponivel(true);
+		costelaBovina.setCategoria("Churrasco");
+		costelaBovina.setNome("Costela Bovina");
+		id=alimentoDao.save(costelaBovina).getId();
+		costelaBovina.setId(id);
+		costelaBovina.setModaDaCasa(false);
+		listaAlimentos.add(costelaBovina);
+		
+		Alimento costelaSuina = new Alimento(); 
+		costelaSuina.setDescricao("Costela Suina");
+		costelaSuina.setDisponivel(true);
+		costelaSuina.setCategoria("Churrasco");
+		costelaSuina.setNome("Costela Suina");
+		id=alimentoDao.save(costelaSuina).getId();
+		costelaSuina.setId(id);
+		costelaSuina.setModaDaCasa(false);
+		listaAlimentos.add(costelaSuina);
+		
+		Alimento linguicaSuina = new Alimento(); 
+		linguicaSuina.setDescricao("Linguiça Suina");
+		linguicaSuina.setDisponivel(true);
+		linguicaSuina.setCategoria("Churrasco");
+		linguicaSuina.setNome("Linguiça Suina");
+		id=alimentoDao.save(linguicaSuina).getId();
+		linguicaSuina.setId(id);
+		linguicaSuina.setModaDaCasa(true);
+		listaAlimentos.add(linguicaSuina);
+		
+		Alimento saladaTomate = new Alimento(); 
+		saladaTomate.setDescricao("Salada de Tomate");
+		saladaTomate.setDisponivel(true);
+		saladaTomate.setCategoria("Saladas");
+		saladaTomate.setNome("Salada de Tomate");
+		id=alimentoDao.save(saladaTomate).getId();
+		saladaTomate.setId(id);
+		saladaTomate.setModaDaCasa(true);
+		listaAlimentos.add(saladaTomate);
+		
+		Alimento saladaAlface = new Alimento(); 
+		saladaAlface.setDescricao("Salada de Alface");
+		saladaAlface.setDisponivel(true);
+		saladaAlface.setCategoria("Saladas");
+		saladaAlface.setNome("Salada de Alface");
+		id=alimentoDao.save(saladaAlface).getId();
+		saladaAlface.setId(id);
+		saladaAlface.setModaDaCasa(true);
+		listaAlimentos.add(saladaAlface);
+		
+		Alimento salpicao = new Alimento(); 
+		salpicao.setDescricao("Salpicão");
+		salpicao.setDisponivel(true);
+		salpicao.setCategoria("Saladas");
+		salpicao.setNome("Salpicão");
+		id=alimentoDao.save(salpicao).getId();
+		salpicao.setId(id);
+		salpicao.setModaDaCasa(false);
+		listaAlimentos.add(salpicao);
+		
+		//Bebidas 
+		Bebida sucoLaranja = new Bebida();
+		sucoLaranja.setMarca("500ml");
+		sucoLaranja.setNome("Suco de Laranja");
+		sucoLaranja.setValor(4.50);
+		sucoLaranja.setEscolhido(true);
+		sucoLaranja.setDisponivel(true);
+		id=bebidaDao.save(sucoLaranja).getId();
+		sucoLaranja.setId(id);
+		listaBebidas.add(sucoLaranja);
+		
+		Bebida sucoLimao = new Bebida();
+		sucoLimao.setMarca("500ml");
+		sucoLimao.setNome("Suco de Limão");
+		sucoLimao.setValor(4.50);
+		sucoLimao.setEscolhido(true);
+		sucoLimao.setDisponivel(true);
+		id=bebidaDao.save(sucoLimao).getId();
+		sucoLimao.setId(id);
+		listaBebidas.add(sucoLimao);
+		
+		Bebida sucoManga = new Bebida();
+		sucoManga.setMarca("500ml");
+		sucoManga.setNome("Suco de Manga");
+		sucoManga.setValor(4.50);
+		sucoManga.setEscolhido(true);
+		sucoManga.setDisponivel(true);
+		id=bebidaDao.save(sucoManga).getId();
+		sucoManga.setId(id);
+		listaBebidas.add(sucoManga);
+
+		Bebida sucoAbacaxi = new Bebida();
+		sucoAbacaxi.setMarca("500ml");
+		sucoAbacaxi.setNome("Suco de Abacaxi");
+		sucoAbacaxi.setValor(4.50);
+		sucoAbacaxi.setEscolhido(true);
+		sucoAbacaxi.setDisponivel(true);
+		id=bebidaDao.save(sucoAbacaxi).getId();
+		sucoAbacaxi.setId(id);
+		listaBebidas.add(sucoAbacaxi);
+		
+		Bebida cocacola = new Bebida();
+		cocacola.setMarca("500ml");
+		cocacola.setNome("Coca Cola");
+		cocacola.setValor(5.50);
+		cocacola.setEscolhido(true);
+		cocacola.setDisponivel(true);
+		id=bebidaDao.save(cocacola).getId();
+		cocacola.setId(id);
+		listaBebidas.add(cocacola);
+		
+		Bebida dolly = new Bebida();
+		dolly.setMarca("500ml");
+		dolly.setNome("Dolly Guaraná");
+		dolly.setValor(5.50);
+		dolly.setEscolhido(true);
+		dolly.setDisponivel(true);
+		id=bebidaDao.save(dolly).getId();
+		dolly.setId(id);
+		listaBebidas.add(dolly);
+		
+		Bebida agua = new Bebida();
+		agua.setMarca("500ml");
+		agua.setNome("Água com Gás");
+		agua.setValor(2.50);
+		agua.setEscolhido(true);
+		agua.setDisponivel(true);
+		id=bebidaDao.save(agua).getId();
+		agua.setId(id);
+		listaBebidas.add(agua);
+		
+		Bebida skol = new Bebida();
+		skol.setMarca("500ml");
+		skol.setNome("Skoll");
+		skol.setValor(3.50);
+		skol.setEscolhido(true);
+		skol.setDisponivel(true);
+		id=bebidaDao.save(skol).getId();
+		skol.setId(id);
+		listaBebidas.add(skol);
+		
+		Bebida goianinhoGuarana = new Bebida();
+		goianinhoGuarana.setMarca("2L");
+		goianinhoGuarana.setNome("Goianinho Guaraná");
+		goianinhoGuarana.setValor(6.50);
+		goianinhoGuarana.setEscolhido(true);
+		goianinhoGuarana.setDisponivel(true);
+		id=bebidaDao.save(goianinhoGuarana).getId();
+		goianinhoGuarana.setId(id);
+		listaBebidas.add(goianinhoGuarana);
+	}
 	@GetMapping("/carregar")
 	public void carregar()
 	{

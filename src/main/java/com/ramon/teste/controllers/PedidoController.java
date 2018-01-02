@@ -19,7 +19,7 @@ import com.ramon.teste.model.Pedido;
 
 
 @RestController
-@RequestMapping("/pedido")
+@RequestMapping("/v0/pedido")
 public class PedidoController {
 
 	@Autowired 

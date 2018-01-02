@@ -19,7 +19,7 @@ import com.ramon.teste.model.Usuario;
 import com.ramon.teste.model.util.*;
 
 @RestController
-@RequestMapping("/pedidospool")
+@RequestMapping("/v0/pedidospool")
 public class PedidosPoolController {
 	
 	@Autowired
@@ -29,6 +29,12 @@ public class PedidosPoolController {
 	
 	@Autowired
 	private StatusPedidoController status;
+	
+	@Autowired
+	private ServidorConfiguracoesDAO servidorDao;
+	
+	@Autowired 
+	private FirebaseNotificationsDAO firebaseDao;
 	
 	@GetMapping
 	public List<PedidosPool> getPedidosNaoRecebidos()
@@ -46,14 +52,8 @@ public class PedidosPoolController {
 			p.setEnviadoParaRestaurante(false);
 			
 			Usuario usuario = usuarioDao.findByUsername(pedido.getUserName());
-			FirebaseNotificationsController firebaseController = new FirebaseNotificationsController();
-			FirebaseNotifications mensagem = new FirebaseNotifications();
 			
-			mensagem.setMensagem("Olá "+usuario.getNomeCompleto()+", seu pedido foi enviado para o Restaurante, em breve avisaremos você sobre o recebimento.");
-			mensagem.setTituloMensagem("Pedido Enviado");
-			mensagem.setTokenUsuario(usuario.getTokenPushNotification());
-			
-			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao);
+			status.envaNotificacaoRecebimentoNoServidor(pedido, servidorDao, firebaseDao, usuario);
 			
 			if(poolDao.save(p).getId()>0)
 				return HttpStatus.OK;
@@ -72,16 +72,8 @@ public class PedidosPoolController {
 		PedidosPool p= poolDao.saveAndFlush(pedidoPool);
 		if(p.isEnviadoParaRestaurante())
 		 {
-			status.enviaNotificaoRecebimentoNoRestaurante(pedidoPool.getPedido());
 			Usuario usuario = usuarioDao.findByUsername(pedidoPool.getPedido().getUserName());
-			FirebaseNotificationsController firebaseController = new FirebaseNotificationsController();
-			FirebaseNotifications mensagem = new FirebaseNotifications();
-			
-			mensagem.setMensagem("Olá "+usuario.getNomeCompleto()+", seu pedido foi enviado para o Restaurante, em breve você avisaremos o recebimento.");
-			mensagem.setTituloMensagem("Pedido Enviado");
-			mensagem.setTokenUsuario(usuario.getTokenPushNotification());
-			
-			firebaseController.enviaNotificacaoFireBase(mensagem);
+			status.enviaNotificaoRecebimentoNoRestaurante(pedidoPool.getPedido(),servidorDao, firebaseDao, usuario);
 			
 			return HttpStatus.OK;
 		 }

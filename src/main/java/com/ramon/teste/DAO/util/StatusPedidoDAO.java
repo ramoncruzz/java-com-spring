@@ -11,4 +11,6 @@ public interface StatusPedidoDAO  extends JpaRepository<StatusPedido, Long>{
 	StatusPedido findById(Long id);
 	List<StatusPedido> findByUsername(String username);
 	StatusPedido findByUsernameAndIdPedido(String username,Long idPedido);
+	StatusPedido findByNumeroPedido(String numeroPedido);
+	
 }

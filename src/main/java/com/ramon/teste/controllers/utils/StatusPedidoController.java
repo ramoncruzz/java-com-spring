@@ -1,28 +1,28 @@
 package com.ramon.teste.controllers.utils;
 
-import java.io.IOException;
 import java.util.List;
 
-import org.apache.http.client.ClientProtocolException;
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ramon.teste.DAO.UsuarioDAO;
+import com.ramon.teste.DAO.util.FirebaseNotificationsDAO;
 import com.ramon.teste.DAO.util.ServidorConfiguracoesDAO;
 import com.ramon.teste.DAO.util.StatusPedidoDAO;
-import com.ramon.teste.model.Pedido;
+import com.ramon.teste.helpers.StringData;
+import com.ramon.teste.model.Usuario;
+import com.ramon.teste.model.util.FirebaseNotifications;
 import com.ramon.teste.model.util.PedidosMobileRequest;
-import com.ramon.teste.model.util.ServidorConfiguracoes;
 import com.ramon.teste.model.util.StatusPedido;
-import com.ramon.teste.services.HttpRequests;
 
 @RestController
-@RequestMapping("/statuspedido")
+@RequestMapping("/v0/statuspedido")
 public class StatusPedidoController {
 
 	@Autowired
@@ -32,7 +32,10 @@ public class StatusPedidoController {
 	private StatusPedidoDAO statusDao;
 	
 	@Autowired
-	private ServidorConfiguracoesDAO serverDao;
+	private ServidorConfiguracoesDAO servidorDao;
+	
+	@Autowired 
+	private FirebaseNotificationsDAO firebaseDao;
 	
 	@GetMapping
 	public List<StatusPedido> getTodosStatus()
@@ -40,52 +43,123 @@ public class StatusPedidoController {
 		return statusDao.findAll();
 	}
 	
-	@PostMapping("/recebimento")
-	public HttpStatus enviaNotificaoRecebimentoNoRestaurante(PedidosMobileRequest pedido)
+	@GetMapping("/numero-pedido-{numeroPedido}")
+	public StatusPedido getStatusPorPedido(@PathVariable String numeroPedido)
 	{
-		StatusPedido statusLog = new StatusPedido();
-		statusLog.setDataHoraRecebimentoNoRestaurante(" ");
-		statusLog.setIdPedido(pedido.getId());
-		statusLog.setUsername(pedido.getUserName());
-		statusLog.setNumeroPedido(pedido.getNumeroPedido().toString());
-		statusDao.save(statusLog);
-		
-		enviaPushNotification( "Pedido recebido no restaurante", "Aguarte que em breve enviaremos uma mensagem avisando que o entregador está indo até a sua residência.");
-		return HttpStatus.OK;
+		StatusPedido status = statusDao.findByNumeroPedido(numeroPedido);
+		return status;
 	}
 	
-	@PostMapping("/entrega")
-	public HttpStatus enviaNotificacaoSaidaParaEntrega(Pedido pedido)
+	@GetMapping("/username-{username}")
+	public List<StatusPedido> getStatusPorUsuario(@PathVariable String username)
 	{
-		StatusPedido statusLog = statusDao.findByUsernameAndIdPedido(pedido.getUserName(), pedido.getId());
-		statusLog.setDataHoraSaidaParaEntrega("");
-		statusDao.save(statusLog);
-		
-		String token = usuarioDao.findByUsername(pedido.getUserName()).getTokenPushNotification();
-		enviaPushNotification( "Pedido saiu para entrega", "Nosso entregador já está indo entregar seu pedido. A qualquer momento ele lhe chamará");
-		return HttpStatus.OK;
+		List<StatusPedido> status = statusDao.findByUsername(username);
+		return status;
+	}
+	
+	public void envaNotificacaoRecebimentoNoServidor(PedidosMobileRequest pedido,ServidorConfiguracoesDAO servidorDao,FirebaseNotificationsDAO firebaseDao,Usuario usuario)
+	{
+		try
+		{
+			StatusPedido statusLog = new StatusPedido();
+			statusLog.setDatahoraEnvioPeloUsuario(StringData.getStringData());
+			statusLog.setIdPedido(pedido.getId());
+			statusLog.setUsername(pedido.getUserName());
+			statusLog.setNumeroPedido(pedido.getNumeroPedido().toString());
+			statusDao.saveAndFlush(statusLog);
+			
+			FirebaseNotificationsController firebaseController = new FirebaseNotificationsController();
+			FirebaseNotifications mensagem = new FirebaseNotifications();
+			
+			mensagem.setMensagem("Olá "+usuario.getNomeCompleto()+", seu pedido foi enviado para o Restaurante, em breve avisaremos você sobre o recebimento.");
+			mensagem.setTituloMensagem("Pedido Enviado");
+			mensagem.setTokenUsuario(usuario.getTokenPushNotification());
+			
+			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao);	
+		}catch (Exception e) {}
 		
 	}
 	
-	private void enviaPushNotification(String titulo, String mensagem)
+	public HttpStatus enviaNotificaoRecebimentoNoRestaurante(PedidosMobileRequest pedido,ServidorConfiguracoesDAO servidorDao,FirebaseNotificationsDAO firebaseDao,Usuario usuario)
 	{
-		ServidorConfiguracoes srv = serverDao.findById(1L);
-		String tokenUsuario="fiZnAZtFBys:APA91bGxwT-AAAE8_zurVn85vYXC2nsmnkBQVY3nfnmiUrMITv1y37AfOt6y7p-l6QgvElovUsID0MFOOwsjp3QZ-0ku6PytXGlToHQnyKC3O0Tt1H-k4CDi6790pTHj7CF6-D-9oqlg";
-		
-		HttpRequests request = new HttpRequests();
-		try {
-			request.notificaUsuario(srv.getTokenServer(), tokenUsuario, titulo, mensagem);
-		} catch (ClientProtocolException e) {
+		try
+		{
+			String numeroPedido=pedido.getNumeroPedido();
+			StatusPedido statusLog = statusDao.findByNumeroPedido(numeroPedido);
+			statusLog.setDataHoraRecebimentoNoRestaurante(StringData.getStringData());
+			statusLog.setIdPedido(pedido.getId());
+			statusLog.setUsername(pedido.getUserName());
+			statusLog.setNumeroPedido(pedido.getNumeroPedido().toString());
+			statusDao.saveAndFlush(statusLog);
 			
-			e.printStackTrace();
-		} catch (IOException e) {
+			FirebaseNotificationsController firebaseController = new FirebaseNotificationsController();
+			FirebaseNotifications mensagem = new FirebaseNotifications();
 			
-			e.printStackTrace();
-		} catch (JSONException e) {
-	
-			e.printStackTrace();
+			mensagem.setMensagem("Olá "+usuario.getNomeCompleto()+", seu pedido foi recebido no Restaurante Vitória, em breve nosso entregador irá até o endereço informado. Assim que ele sair nós avisaremos.");
+			mensagem.setTituloMensagem("Pedido Enviado");
+			mensagem.setTokenUsuario(usuario.getTokenPushNotification());
+			
+			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao);
+			return HttpStatus.OK;
+			
+		}catch (Exception e) {
+			return HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		
 	}
 	
+	public void enviaNotificacaoTodosUsuarios(String titulo,String mensagemTexto)
+	{
+		try
+		{
+			List<Usuario>listaTodosUsuarios = usuarioDao.findAll();
+			FirebaseNotificationsController firebaseController = new FirebaseNotificationsController();
+			
+			if(listaTodosUsuarios!=null)
+			{
+				for(Usuario usuario: listaTodosUsuarios)
+				{
+					FirebaseNotifications mensagem = new FirebaseNotifications();
+					
+					mensagem.setMensagem("Olá "+usuario.getNomeCompleto()+ ", tudo bem? "+mensagemTexto);
+					mensagem.setTituloMensagem(titulo);
+					mensagem.setTokenUsuario(usuario.getTokenPushNotification());
+					
+					firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao);
+				}
+			}
+			
+		}catch (Exception e) {
+			
+		}
+	}
+	
+	@PostMapping("/saida-entrega")
+	public HttpStatus enviaNotificacaoSaidaParaEntrega(@RequestBody String numeroPedido)
+	{
+		try
+		{
+			String limpo =numeroPedido.replace("\n", "");
+			System.out.println(limpo);
+			StatusPedido statusLog = statusDao.findByNumeroPedido(limpo);
+			statusLog.setDataHoraSaidaParaEntrega(StringData.getStringData());
+			statusDao.save(statusLog);
+			
+			Usuario usuario = usuarioDao.findByUsername(statusLog.getUsername());
+			FirebaseNotificationsController firebaseController = new FirebaseNotificationsController();
+			FirebaseNotifications mensagem = new FirebaseNotifications();
+			
+			mensagem.setMensagem("Olá "+usuario.getNomeCompleto()+", Nosso entregador já está indo entregar seu pedido. A qualquer momento ele lhe chamará.");
+			mensagem.setTituloMensagem("Pedido saiu para entrega");
+			mensagem.setTokenUsuario(usuario.getTokenPushNotification());
+			
+			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao);
+		
+			return HttpStatus.OK;
+		}catch (Exception e) {
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		
+		
+	}
 }

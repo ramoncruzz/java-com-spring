@@ -20,7 +20,7 @@ import com.ramon.teste.model.Regiao;
 import com.ramon.teste.model.util.Logradouro;
 
 @RestController
-@RequestMapping("/endereco")
+@RequestMapping("/v0/endereco")
 public class EnderecoController {
 
 	@Autowired

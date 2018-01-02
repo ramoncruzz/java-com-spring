@@ -16,7 +16,7 @@ import com.ramon.teste.DAO.AutorizacaoDAO;
 import com.ramon.teste.security.Autorizacao;
 
 @RestController
-@RequestMapping("/autorizacao")
+@RequestMapping("/v0/autorizacao")
 public class AutorizacaoController {
 	
 	@Autowired

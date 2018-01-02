@@ -11,7 +11,7 @@ import com.ramon.teste.DAO.util.CidadeDAO;
 import com.ramon.teste.model.util.Cidade;
 
 @RestController
-@RequestMapping("/cidade")
+@RequestMapping("/v0/cidade")
 public class CidadeController {
 
 	@Autowired
