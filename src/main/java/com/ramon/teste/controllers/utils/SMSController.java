@@ -59,27 +59,14 @@ public class SMSController {
 		s.getId();
 		// enviaSMS("+55"+sms.getTelefone(), codigoFormatado);
 		
-		enviaSMSAPITotalVoice(sms.getTelefone(),codigoFormatado);
+	//	enviaSMSAPITotalVoice(sms.getTelefone(),codigoFormatado);
 		
 			return codigoFormatado;
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
-		catch(Exception ex)
-		{
-			return null;
-		}
-		
 	}
 
 	@PostMapping("/validar")
