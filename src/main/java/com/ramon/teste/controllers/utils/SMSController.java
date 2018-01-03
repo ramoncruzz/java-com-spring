@@ -59,7 +59,7 @@ public class SMSController {
 		s.getId();
 		// enviaSMS("+55"+sms.getTelefone(), codigoFormatado);
 		
-	//	enviaSMSAPITotalVoice(sms.getTelefone(),codigoFormatado);
+		enviaSMSAPITotalVoice(sms.getTelefone(),codigoFormatado);
 		
 			return codigoFormatado;
 		} catch (Exception e) {
