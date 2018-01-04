@@ -12,6 +12,7 @@ public class ServidorConfiguracoes {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String tokenServer;
+	private String tokenResponsavelImpressaoPedidos;
 	private String codRemetente;
 	private String applicationIdAndroid;
 	private String applicationIdiOS;
@@ -45,6 +46,12 @@ public class ServidorConfiguracoes {
 	}
 	public void setApplicationIdiOS(String applicationIdiOS) {
 		this.applicationIdiOS = applicationIdiOS;
+	}
+	public String getTokenResponsavelImpressaoPedidos() {
+		return tokenResponsavelImpressaoPedidos;
+	}
+	public void setTokenResponsavelImpressaoPedidos(String tokenResponsavelImpressaoPedidos) {
+		this.tokenResponsavelImpressaoPedidos = tokenResponsavelImpressaoPedidos;
 	}
 	
 }

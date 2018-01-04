@@ -4,13 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ramon.teste.DAO.UsuarioDAO;
 import com.ramon.teste.DAO.util.ServidorConfiguracoesDAO;
+import com.ramon.teste.model.Usuario;
 import com.ramon.teste.model.util.ServidorConfiguracoes;
 
 @RestController
@@ -19,6 +22,8 @@ public class ServidorConfiguracoesController {
 	
 	@Autowired
 	private ServidorConfiguracoesDAO servidorDao;
+	@Autowired
+	private UsuarioDAO usuarioDao;
 	
 	@GetMapping
 	public ServidorConfiguracoes buscaServidor()
@@ -34,6 +39,24 @@ public class ServidorConfiguracoesController {
 			return HttpStatus.OK;
 		else 
 			return HttpStatus.BAD_REQUEST;
+	}
+	
+	@PostMapping("/token-impressora")
+	public HttpStatus salvaIdResponsavelImpressoesPedidos(@RequestBody String username)
+	{
+		try
+		{
+			String limpo =username.replace("\n", "");
+			ServidorConfiguracoes srv =this.buscaServidor();
+			Usuario user =usuarioDao.findByUsername(limpo);
+			String token = user.getTokenPushNotification();
+			srv.setTokenResponsavelImpressaoPedidos(token);
+			servidorDao.save(srv);
+			return HttpStatus.OK;
+		}catch (Exception e) {
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		
 	}
 	
 	@PutMapping

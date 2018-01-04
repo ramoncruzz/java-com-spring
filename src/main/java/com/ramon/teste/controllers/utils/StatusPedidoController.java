@@ -19,6 +19,7 @@ import com.ramon.teste.helpers.StringData;
 import com.ramon.teste.model.Usuario;
 import com.ramon.teste.model.util.FirebaseNotifications;
 import com.ramon.teste.model.util.PedidosMobileRequest;
+import com.ramon.teste.model.util.ServidorConfiguracoes;
 import com.ramon.teste.model.util.StatusPedido;
 
 @RestController
@@ -75,7 +76,19 @@ public class StatusPedidoController {
 			mensagem.setTituloMensagem("Pedido Enviado");
 			mensagem.setTokenUsuario(usuario.getTokenPushNotification());
 			
-			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao);	
+			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao);
+			
+			//Avisa Ao responsavel por imprimir os pedidos 
+			int id= servidorDao.findAll().size();
+			ServidorConfiguracoes srv= servidorDao.findById((long) id);
+			
+			FirebaseNotifications mensagem2 = new FirebaseNotifications();
+			mensagem2.setTituloMensagem("PEDIDO NOVO");
+			mensagem2.setMensagem("Pedido n: "+pedido.getNumeroPedido());
+			mensagem2.setTokenUsuario(srv.getTokenResponsavelImpressaoPedidos());
+			
+			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao);
+			
 		}catch (Exception e) {}
 		
 	}
