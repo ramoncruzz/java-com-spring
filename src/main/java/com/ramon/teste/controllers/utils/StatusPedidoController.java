@@ -89,7 +89,9 @@ public class StatusPedidoController {
 			
 			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao);
 			
-		}catch (Exception e) {}
+		}catch (Exception e) {
+			
+		}
 		
 	}
 	
