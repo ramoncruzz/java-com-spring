@@ -42,6 +42,12 @@ public class PedidosPoolController {
 		return poolDao.findByEnviadoParaRestauranteFalse();
 	}
 	
+	@GetMapping("/limpa")
+	public HttpStatus limpa()
+	{
+		 poolDao.deleteAll();
+		 return HttpStatus.OK;
+	}
 	
 	public HttpStatus recebePedido(PedidosMobileRequest pedido,ServidorConfiguracoesDAO servidorDao,FirebaseNotificationsDAO firebaseDao)
 	{

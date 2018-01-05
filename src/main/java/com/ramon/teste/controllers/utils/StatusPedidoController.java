@@ -83,8 +83,14 @@ public class StatusPedidoController {
 			ServidorConfiguracoes srv= servidorDao.findById((long) id);
 			
 			FirebaseNotifications mensagem2 = new FirebaseNotifications();
+			
+			String p1 =pedido.getNumeroPedido().substring(0, 8);
+	        String p2 =pedido.getNumeroPedido().substring(8, 10);
+	        String p3 =pedido.getNumeroPedido().substring(10, 12);
+	        String p4 =pedido.getNumeroPedido().substring(12, 15);
+	        
 			mensagem2.setTituloMensagem("PEDIDO NOVO");
-			mensagem2.setMensagem("Pedido n: "+pedido.getNumeroPedido());
+			mensagem2.setMensagem("Pedido n: "+p1 +" "+p2+" "+p3+" "+p4);
 			mensagem2.setTokenUsuario(srv.getTokenResponsavelImpressaoPedidos());
 			
 			firebaseController.enviaNotificacaoFireBase(mensagem2,servidorDao,firebaseDao);
