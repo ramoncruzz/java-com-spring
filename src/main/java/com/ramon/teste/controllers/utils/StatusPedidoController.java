@@ -87,7 +87,7 @@ public class StatusPedidoController {
 			mensagem2.setMensagem("Pedido n: "+pedido.getNumeroPedido());
 			mensagem2.setTokenUsuario(srv.getTokenResponsavelImpressaoPedidos());
 			
-			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao);
+			firebaseController.enviaNotificacaoFireBase(mensagem2,servidorDao,firebaseDao);
 			
 		}catch (Exception e) {
 			
