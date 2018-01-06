@@ -76,7 +76,7 @@ public class StatusPedidoController {
 			mensagem.setTituloMensagem("Pedido Enviado");
 			mensagem.setTokenUsuario(usuario.getTokenPushNotification());
 			
-			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao);
+			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao,"nPedido",pedido.getNumeroPedido());
 			
 			//Avisa Ao responsavel por imprimir os pedidos 
 			int id= servidorDao.findAll().size();
@@ -120,7 +120,7 @@ public class StatusPedidoController {
 			mensagem.setTituloMensagem("Pedido Enviado");
 			mensagem.setTokenUsuario(usuario.getTokenPushNotification());
 			
-			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao);
+			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao,"nPedido",pedido.getNumeroPedido());
 			return HttpStatus.OK;
 			
 		}catch (Exception e) {
@@ -175,7 +175,7 @@ public class StatusPedidoController {
 			mensagem.setTokenUsuario(usuario.getTokenPushNotification());
 			
 			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao);
-		
+			
 			return HttpStatus.OK;
 		}catch (Exception e) {
 			return HttpStatus.INTERNAL_SERVER_ERROR;

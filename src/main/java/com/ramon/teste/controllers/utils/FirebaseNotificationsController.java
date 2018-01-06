@@ -66,6 +66,29 @@ public class FirebaseNotificationsController {
 
 	}
 	
+	@DeleteMapping
+	public HttpStatus deletaFirebaseConfiguracoes(FirebaseNotifications mensagem) {
+		try {
+			firebaseDao.delete((long)mensagem.getIdFirebaseNotifications());
+			return HttpStatus.OK;
+
+		} catch (Exception e) {
+
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+	}
+
+	@PutMapping
+	public HttpStatus atualizaFirebaseConfiguracoes(FirebaseNotifications mensagem) {
+		try {
+		return HttpStatus.INTERNAL_SERVER_ERROR;
+
+		} catch (Exception e) {
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+
+	}
+	
 	public HttpStatus enviaNotificacaoFireBase(FirebaseNotifications mensagem,ServidorConfiguracoesDAO servidorDao,FirebaseNotificationsDAO firebaseDao) {
 		try {
 			
@@ -91,29 +114,31 @@ public class FirebaseNotificationsController {
 		}
 
 	}
-
-	@DeleteMapping
-	public HttpStatus deletaFirebaseConfiguracoes(FirebaseNotifications mensagem) {
+	
+	public HttpStatus enviaNotificacaoFireBase(FirebaseNotifications mensagem,ServidorConfiguracoesDAO servidorDao,FirebaseNotificationsDAO firebaseDao,String chaveParamentro,String conteudoParametro) {
 		try {
-			firebaseDao.delete((long)mensagem.getIdFirebaseNotifications());
+			
+			HttpRequests r = new HttpRequests();
+			ServidorConfiguracoes srv = servidorDao.findById(1L);
+			r.notificaUsuario(srv.getTokenServer(), mensagem.getTokenUsuario(), mensagem.getTituloMensagem(), mensagem.getMensagem(),chaveParamentro,conteudoParametro);
+			mensagem.setDataEnvioMensagem(StringData.getStringData());
+			firebaseDao.save(mensagem);
 			return HttpStatus.OK;
 
-		} catch (Exception e) {
-
+		} 
+			catch (ClientProtocolException e) {
+			e.printStackTrace();
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		}catch (Exception e) {
 			return HttpStatus.INTERNAL_SERVER_ERROR;
 		}
-	}
-
-	@PutMapping
-	public HttpStatus atualizaFirebaseConfiguracoes(FirebaseNotifications mensagem) {
-		try {
-		return HttpStatus.INTERNAL_SERVER_ERROR;
-
-		} catch (Exception e) {
-			return HttpStatus.INTERNAL_SERVER_ERROR;
-		}
 
 	}
-
 
 }

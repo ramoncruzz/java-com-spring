@@ -41,5 +41,33 @@ public class HttpRequests {
 			return HttpStatus.INTERNAL_SERVER_ERROR;
 		
 	}
+	
+	public HttpStatus notificaUsuario(String tokenServidor,String tokenUsuario,String tituloMensagem,String mensagem,String chaveParamentro,String ConteudoParametro)throws ClientProtocolException, IOException, JSONException 
+	{
+		String charset = "UTF-8";
+		HttpClient httpclient = HttpClients.createDefault();
+		HttpPost httppost = new HttpPost(urlFCM);
+		httppost.addHeader("Authorization","key="+tokenServidor);
+		httppost.addHeader("Content-Type", "application/json");
+		
+		JSONObject json = new JSONObject();
+		JSONObject data = new JSONObject();
+
+		data.put("title", tituloMensagem);
+		data.put("message", mensagem);
+
+		json.put("to",tokenUsuario);
+		json.put("data", data);
+
+		httppost.setEntity(new StringEntity(json.toString(),charset));
+		HttpResponse response = httpclient.execute(httppost);
+		
+		if(response.getStatusLine().getStatusCode()==200)
+			return HttpStatus.OK;
+		else
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		
+	}
+	
 
 }
