@@ -1,5 +1,7 @@
 package com.ramon.teste.controllers.utils;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ramon.teste.DAO.CardapioDAO;
 import com.ramon.teste.DAO.UsuarioDAO;
 import com.ramon.teste.DAO.util.FirebaseNotificationsDAO;
 import com.ramon.teste.DAO.util.PedidosPoolDAO;
 import com.ramon.teste.DAO.util.ServidorConfiguracoesDAO;
 import com.ramon.teste.helpers.StringData;
+import com.ramon.teste.model.Cardapio;
 import com.ramon.teste.model.Usuario;
 import com.ramon.teste.model.util.*;
 
@@ -35,6 +39,9 @@ public class PedidosPoolController {
 	
 	@Autowired 
 	private FirebaseNotificationsDAO firebaseDao;
+	
+	@Autowired
+	private CardapioDAO cardapioDao;
 	
 	@GetMapping
 	public List<PedidosPool> getPedidosNaoRecebidos()
@@ -76,16 +83,34 @@ public class PedidosPoolController {
 	@PutMapping
 	public HttpStatus sinalizaRecebimentoDoPedidoNoRestaurante(@RequestBody PedidosPool pedidoPool)
 	{
-		PedidosPool p= poolDao.saveAndFlush(pedidoPool);
-		if(p.isEnviadoParaRestaurante())
-		 {
-			Usuario usuario = usuarioDao.findByUsername(pedidoPool.getPedido().getUserName());
-			status.enviaNotificaoRecebimentoNoRestaurante(pedidoPool.getPedido(),servidorDao, firebaseDao, usuario);
-			
-			return HttpStatus.OK;
-		 }
-		else 
-		return HttpStatus.BAD_REQUEST;
+		try
+		{
+			PedidosPool p= poolDao.saveAndFlush(pedidoPool);
+			if(p.isEnviadoParaRestaurante())
+			 {
+				Cardapio cardapio= cardapioDao.findFirstByOrderByIdDesc();
+				Usuario usuario = usuarioDao.findByUsername(pedidoPool.getPedido().getUserName());
+				
+				ZoneId sp = ZoneId.of("America/Sao_Paulo");
+		        int hora = LocalDateTime.now(sp).getHour();
+		        int minutos = LocalDateTime.now(sp).getMinute();
+				
+				if(cardapio.getHoraInicioEntregas()>=hora)
+					if(cardapio.getMinutoInicioEntregas()>=minutos)
+						status.enviaNotificaoRecebimentoNoRestaurante(pedidoPool.getPedido(),servidorDao, firebaseDao, usuario,false,"");
+					else
+						status.enviaNotificaoRecebimentoNoRestaurante(pedidoPool.getPedido(),servidorDao, firebaseDao, usuario,true,cardapio.getHoraInicioEntregas()+":"+cardapio.getMinutoInicioEntregas());
+				else
+					status.enviaNotificaoRecebimentoNoRestaurante(pedidoPool.getPedido(),servidorDao, firebaseDao, usuario,true,cardapio.getHoraInicioEntregas()+":"+cardapio.getMinutoInicioEntregas());
+				
+				return HttpStatus.OK;
+			 }
+			else 
+				return HttpStatus.BAD_REQUEST;
+		}catch (Exception ex) {
+			return HttpStatus.BAD_REQUEST;
+		}
+		
 		
 	}
 	

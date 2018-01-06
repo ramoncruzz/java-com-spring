@@ -21,6 +21,9 @@ public class Cardapio {
 	private String descricaoCardapio;
 	private String textoDestaque;
 	private String mensagem;
+	private int horaInicioEntregas;
+	private int minutoInicioEntregas;
+	
 	
 	@ManyToOne
 	private Alimento destaque;
@@ -109,6 +112,22 @@ public class Cardapio {
 
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
+	}
+
+	public int getHoraInicioEntregas() {
+		return horaInicioEntregas;
+	}
+
+	public void setHoraInicioEntregas(int horaInicioEntregas) {
+		this.horaInicioEntregas = horaInicioEntregas;
+	}
+
+	public int getMinutoInicioEntregas() {
+		return minutoInicioEntregas;
+	}
+
+	public void setMinutoInicioEntregas(int minutoInicioEntregas) {
+		this.minutoInicioEntregas = minutoInicioEntregas;
 	}
 
 	

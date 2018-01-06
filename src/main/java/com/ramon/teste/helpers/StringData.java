@@ -1,15 +1,17 @@
 package com.ramon.teste.helpers;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class StringData {
 
 	public static String getStringData() {
-		int ano = Calendar.getInstance().get(Calendar.YEAR);
-		int mes = Calendar.getInstance().get(Calendar.MONTH) + 1;
-		int dia = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-		int hora = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-		int minuto = Calendar.getInstance().get(Calendar.MINUTE);
+		ZoneId sp = ZoneId.of("America/Sao_Paulo");
+		int ano = LocalDateTime.now(sp).getYear();
+		int mes = LocalDateTime.now(sp).getMonth().getValue();
+		int dia = LocalDateTime.now(sp).getDayOfMonth();
+		int hora = LocalDateTime.now(sp).getHour();
+		int minuto = LocalDateTime.now(sp).getMinute();
 
 		String data = "" + ((dia < 10) ? "0" + dia : dia) + "/" + ((mes < 10) ? "0" + mes : mes) + "/"
 				+ ((ano < 10) ? "0" + ano : ano) + "-" + ((hora < 10) ? "0" + hora : hora) + ":"
@@ -19,11 +21,12 @@ public class StringData {
 	}
 
 	public static String getDataHoraNumeros() {
-		int ano = Calendar.getInstance().get(Calendar.YEAR);
-		int mes = Calendar.getInstance().get(Calendar.MONTH) + 1;
-		int dia = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-		int hora = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-		int minuto = Calendar.getInstance().get(Calendar.MINUTE);
+		ZoneId sp = ZoneId.of("America/Sao_Paulo");
+		int ano = LocalDateTime.now(sp).getYear();
+		int mes = LocalDateTime.now(sp).getMonth().getValue();
+		int dia = LocalDateTime.now(sp).getDayOfMonth();
+		int hora = LocalDateTime.now(sp).getHour();
+		int minuto = LocalDateTime.now(sp).getMinute();
 
 		String data = "" + ((dia < 10) ? "0" + dia : dia) + ((mes < 10) ? "0" + mes : mes)
 				+ ((ano < 10) ? "0" + ano : ano) + ((hora < 10) ? "0" + hora : hora)

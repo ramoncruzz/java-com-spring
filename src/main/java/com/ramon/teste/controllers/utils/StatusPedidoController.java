@@ -1,6 +1,9 @@
 package com.ramon.teste.controllers.utils;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ramon.teste.DAO.CardapioDAO;
 import com.ramon.teste.DAO.UsuarioDAO;
 import com.ramon.teste.DAO.util.FirebaseNotificationsDAO;
 import com.ramon.teste.DAO.util.ServidorConfiguracoesDAO;
@@ -101,7 +105,7 @@ public class StatusPedidoController {
 		
 	}
 	
-	public HttpStatus enviaNotificaoRecebimentoNoRestaurante(PedidosMobileRequest pedido,ServidorConfiguracoesDAO servidorDao,FirebaseNotificationsDAO firebaseDao,Usuario usuario)
+	public HttpStatus enviaNotificaoRecebimentoNoRestaurante(PedidosMobileRequest pedido,ServidorConfiguracoesDAO servidorDao,FirebaseNotificationsDAO firebaseDao,Usuario usuario, boolean pedidoAntecipado,String horarioInicioEntregas)
 	{
 		try
 		{
@@ -116,8 +120,14 @@ public class StatusPedidoController {
 			FirebaseNotificationsController firebaseController = new FirebaseNotificationsController();
 			FirebaseNotifications mensagem = new FirebaseNotifications();
 			
-			mensagem.setMensagem("Olá "+usuario.getNomeCompleto()+", seu pedido foi recebido no Restaurante Vitória, em breve nosso entregador irá até o endereço informado. Assim que ele sair nós avisaremos.");
-			mensagem.setTituloMensagem("Pedido Enviado");
+			
+			if(pedidoAntecipado)
+				mensagem.setMensagem("Olá "+usuario.getNomeCompleto()+", seu pedido foi recebido no Restaurante Vitória. Nós iniciaremos as entregas as "+horarioInicioEntregas+". Assim que inciar um entregador levará o seu pedido até o endereço informado. Nós avisaremos ;) ");
+			else 
+				mensagem.setMensagem("Olá "+usuario.getNomeCompleto()+", seu pedido foi recebido no Restaurante Vitória, em breve nosso entregador irá até o endereço cadastrado. Assim que ele sair nós avisaremos.");
+				
+			
+			mensagem.setTituloMensagem("Pedido Recebido");
 			mensagem.setTokenUsuario(usuario.getTokenPushNotification());
 			
 			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao,"nPedido",pedido.getNumeroPedido());
@@ -175,6 +185,35 @@ public class StatusPedidoController {
 			mensagem.setTokenUsuario(usuario.getTokenPushNotification());
 			
 			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao);
+			
+			return HttpStatus.OK;
+		}catch (Exception e) {
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		
+		
+	}
+	
+	@PostMapping("/agredecimento")
+	public HttpStatus enviaNotificacaoAgradecimentoParaEntrega(@RequestBody String numeroPedido)
+	{
+		try
+		{
+			String limpo =numeroPedido.replace("\n", "");
+			System.out.println(limpo);
+			StatusPedido statusLog = statusDao.findByNumeroPedido(limpo);
+			statusLog.setDataHoraSaidaParaEntrega(StringData.getStringData());
+			statusDao.save(statusLog);
+			
+			Usuario usuario = usuarioDao.findByUsername(statusLog.getUsername());
+			FirebaseNotificationsController firebaseController = new FirebaseNotificationsController();
+			FirebaseNotifications mensagem = new FirebaseNotifications();
+			
+			mensagem.setMensagem("Olá "+usuario.getNomeCompleto()+", tudo bem? Obrigado por comprar conosco. =)");
+			mensagem.setTituloMensagem("Obrigado "+usuario.getNomeCompleto()+" S2 ");
+			mensagem.setTokenUsuario(usuario.getTokenPushNotification());
+			
+			firebaseController.enviaNotificacaoFireBase(mensagem,servidorDao,firebaseDao,"recebimento","pedidoEntregue");
 			
 			return HttpStatus.OK;
 		}catch (Exception e) {
