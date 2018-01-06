@@ -42,7 +42,7 @@ public class HttpRequests {
 		
 	}
 	
-	public HttpStatus notificaUsuario(String tokenServidor,String tokenUsuario,String tituloMensagem,String mensagem,String chaveParamentro,String ConteudoParametro)throws ClientProtocolException, IOException, JSONException 
+	public HttpStatus notificaUsuario(String tokenServidor,String tokenUsuario,String tituloMensagem,String mensagem,String chaveParamentro,String conteudoParametro)throws ClientProtocolException, IOException, JSONException 
 	{
 		String charset = "UTF-8";
 		HttpClient httpclient = HttpClients.createDefault();
@@ -55,6 +55,7 @@ public class HttpRequests {
 
 		data.put("title", tituloMensagem);
 		data.put("message", mensagem);
+		data.put(chaveParamentro, conteudoParametro);
 
 		json.put("to",tokenUsuario);
 		json.put("data", data);
