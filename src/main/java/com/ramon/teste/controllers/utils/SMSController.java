@@ -57,9 +57,8 @@ public class SMSController {
 
 		SMSValidacao s = smsDao.save(smsSalvar);
 		s.getId();
-		// enviaSMS("+55"+sms.getTelefone(), codigoFormatado);
 		
-		enviaSMSAPITotalVoice(sms.getTelefone(),codigoFormatado);
+		//enviaSMSAPITotalVoice(sms.getTelefone(),codigoFormatado);
 		
 			return codigoFormatado;
 		} catch (Exception e) {
