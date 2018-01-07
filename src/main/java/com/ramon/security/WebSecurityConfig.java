@@ -32,11 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().authorizeRequests()
-//			.antMatchers("/**").permitAll()
 			.antMatchers(HttpMethod.GET,"/v0/firebaseNotifications").hasAuthority("USER")
 			.antMatchers(HttpMethod.POST,"/v0/firebaseNotifications").hasAuthority("USER")
-			.antMatchers(HttpMethod.GET,"/v0/cardapio").hasAuthority("USER")
-			.antMatchers(HttpMethod.GET,"/v0/pedidosMobile").hasAuthority("USER")
 			.antMatchers(HttpMethod.GET,"/v0/sms").hasAuthority("USER")
 			.antMatchers(HttpMethod.PUT,"/v0/usuario").hasAuthority("USER")
 			.antMatchers(HttpMethod.GET,"/v0/usuario/**").hasAuthority("USER")
@@ -45,14 +42,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.PUT,"/v0/usuario/recuperar").permitAll()
 			.antMatchers(HttpMethod.POST,"/v0/sms/gerar-codigo").permitAll()
 			.antMatchers(HttpMethod.POST,"/v0/sms/validar").permitAll()
-			.antMatchers(HttpMethod.GET,"/v0/carregar").permitAll()
-			.antMatchers(HttpMethod.GET,"/v0/endereco/**").permitAll()
-			.antMatchers(HttpMethod.GET,"/v0/pedidospool/**").hasAuthority("USER")
-			.antMatchers(HttpMethod.POST,"/v0/pedidospool/**").hasAuthority("USER")
-			.antMatchers(HttpMethod.PUT,"/v0/pedidospool/**").hasAuthority("USER")
-//			.antMatchers(HttpMethod.GET,"/usuario").permitAll()
-//			.antMatchers(HttpMethod.GET,"/autorizacao/popular").permitAll()
-//			.antMatchers(HttpMethod.GET,"/pedidosMobile").hasAuthority("USER")
 			.anyRequest().authenticated()
 			.and()
 			// filtra requisições de login
