@@ -56,7 +56,7 @@ public class CardapioController {
 		Cardapio c = cardapioDao.save(cardapio);
 		if(c.getId()>0)
 			{
-				statusController.enviaNotificacaoTodosUsuarios("Cardápio do Dia", "Hoje temos como destaque do dia "+cardapio.getDestaque().getNome()+" e muito mais.. Você pode já pode fazer seu pedido.");
+				statusController.enviaNotificacaoTodosUsuarios("Cardápio do Dia", "Hoje temos como destaque do dia "+cardapio.getTextoDestaque()+" e muito mais.. Você pode já pode fazer seu pedido.");
 				return HttpStatus.CREATED;
 			}
 		else 
