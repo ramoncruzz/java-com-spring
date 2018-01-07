@@ -1,9 +1,6 @@
 package com.ramon.teste.controllers.utils;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ramon.teste.DAO.CardapioDAO;
 import com.ramon.teste.DAO.UsuarioDAO;
 import com.ramon.teste.DAO.util.FirebaseNotificationsDAO;
 import com.ramon.teste.DAO.util.ServidorConfiguracoesDAO;

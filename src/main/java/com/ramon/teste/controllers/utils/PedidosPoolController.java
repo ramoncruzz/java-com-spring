@@ -95,13 +95,13 @@ public class PedidosPoolController {
 		        int hora = LocalDateTime.now(sp).getHour();
 		        int minutos = LocalDateTime.now(sp).getMinute();
 				
-				if(cardapio.getHoraInicioEntregas()>=hora)
-					if(cardapio.getMinutoInicioEntregas()>=minutos)
+				if(hora>cardapio.getHoraInicioEntregas())
+					status.enviaNotificaoRecebimentoNoRestaurante(pedidoPool.getPedido(),servidorDao, firebaseDao, usuario,false,"");
+				else 
+					if(minutos>=cardapio.getMinutoInicioEntregas() && cardapio.getHoraInicioEntregas()==hora)
 						status.enviaNotificaoRecebimentoNoRestaurante(pedidoPool.getPedido(),servidorDao, firebaseDao, usuario,false,"");
-					else
-						status.enviaNotificaoRecebimentoNoRestaurante(pedidoPool.getPedido(),servidorDao, firebaseDao, usuario,true,cardapio.getHoraInicioEntregas()+":"+cardapio.getMinutoInicioEntregas());
 				else
-					status.enviaNotificaoRecebimentoNoRestaurante(pedidoPool.getPedido(),servidorDao, firebaseDao, usuario,true,cardapio.getHoraInicioEntregas()+":"+cardapio.getMinutoInicioEntregas());
+					status.enviaNotificaoRecebimentoNoRestaurante(pedidoPool.getPedido(),servidorDao, firebaseDao, usuario,true,cardapio.getHoraInicioEntregas()+":"+((cardapio.getMinutoInicioEntregas()<10)?"0"+cardapio.getMinutoInicioEntregas():cardapio.getMinutoInicioEntregas()));
 				
 				return HttpStatus.OK;
 			 }

@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.ramon.teste.DAO.CardapioDAO;
 import com.ramon.teste.DAO.util.FirebaseNotificationsDAO;
 import com.ramon.teste.DAO.util.MarmitaDao;
 import com.ramon.teste.DAO.util.PedidosMobileRequestDAO;
