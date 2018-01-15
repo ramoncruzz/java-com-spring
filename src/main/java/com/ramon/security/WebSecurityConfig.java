@@ -32,6 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().authorizeRequests()
+			.antMatchers(HttpMethod.GET,"/v0").permitAll()
+			.antMatchers(HttpMethod.GET,"/v0/**").permitAll()
+			.antMatchers(HttpMethod.POST,"/v0/**").permitAll()
 			.antMatchers(HttpMethod.GET,"/v0/firebaseNotifications").hasAuthority("USER")
 			.antMatchers(HttpMethod.POST,"/v0/firebaseNotifications").hasAuthority("USER")
 			.antMatchers(HttpMethod.GET,"/v0/sms").hasAuthority("USER")
