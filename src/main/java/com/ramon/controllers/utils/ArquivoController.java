@@ -71,7 +71,7 @@ public class ArquivoController {
 			arquivo.setDiretorio(splitted[0]);
 			arquivo.setNome(UUID.randomUUID().toString());
 			arquivo.setTipo(splitted[2]);
-			arquivo.setLink(mainLink+"/"+bucket+"/"+arquivo.getDiretorio()+"/"+arquivo.getFullPathToSave());
+			arquivo.setLink(mainLink+"/"+bucket+"/"+arquivo.getFullPathToSave());
 		}
 		if(splitted.length==2)
 		{
