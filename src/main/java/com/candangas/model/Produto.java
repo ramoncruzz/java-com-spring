@@ -1,5 +1,6 @@
 package com.candangas.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,7 @@ public class Produto {
 	private Long id;
 	private String nome;
 	private String descricao;
+	@Column(unique=true)
 	private String codigoReferencia;
 	private String genero;
 	private String indicadoPara;
@@ -27,7 +29,7 @@ public class Produto {
 	private String linkImagemMedia;
 	private String linkImagemPequena;
 	private double preco;
-	private double precoPrmocional;
+	private double precoPormocional;
 	
 	public Long getId() {
 		return id;
@@ -113,11 +115,11 @@ public class Produto {
 	public void setPreco(double preco) {
 		this.preco = preco;
 	}
-	public double getPrecoPrmocional() {
-		return precoPrmocional;
+	public double getPrecoPromocional() {
+		return precoPormocional;
 	}
-	public void setPrecoPrmocional(double precoPrmocional) {
-		this.precoPrmocional = precoPrmocional;
+	public void setPrecoPromocional(double precoPormocional) {
+		this.precoPormocional = precoPormocional;
 	}
 	public String getLinkImagemGrande() {
 		return linkImagemGrande;

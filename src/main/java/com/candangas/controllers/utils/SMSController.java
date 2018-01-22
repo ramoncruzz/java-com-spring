@@ -126,7 +126,6 @@ public class SMSController {
 
 	public void enviaSMSAPITotalVoice(String numeroDestino,String mensagemTexto) throws ClientProtocolException, IOException, JSONException,Exception {
 	
-	
 		JSONObject mensagem = new JSONObject();
 		ServidorConfiguracoes servidor = servidorDao.findFirstByOrderByIdDesc();
 		mensagem.put("numero_destino", numeroDestino);
@@ -146,7 +145,8 @@ public class SMSController {
         StringEntity json = new StringEntity(mensagem.toString());
         httpPost.setEntity(json);
         
-        HttpResponse response = httpClient.execute(httpPost);
+        @SuppressWarnings("unused")
+		HttpResponse response = httpClient.execute(httpPost);
         
 	}
 

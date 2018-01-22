@@ -36,6 +36,7 @@ public class Usuario implements UserDetails {
 	private String telefoneFixo;
 	private String telefoneCelular;
 	private String cpf;
+	private String tipo;
 	
 	@Column(unique=true)
 	private String username;
@@ -224,6 +225,14 @@ public class Usuario implements UserDetails {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 

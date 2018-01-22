@@ -1,6 +1,8 @@
 package com.candangas.model;
 
 import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +19,7 @@ public class Catalogo {
 	private Long id;
 	private String nome;
 	private String descricao;
+	@Column(unique=true)
 	private String codigoReferencia;
 	private boolean ativo;
 	private boolean exibir;

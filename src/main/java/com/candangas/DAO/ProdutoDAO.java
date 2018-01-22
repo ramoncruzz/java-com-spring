@@ -6,4 +6,5 @@ import com.candangas.model.Produto;
 
 public interface ProdutoDAO  extends JpaRepository<Produto, Long>{
 
+	Produto findByCodigoReferencia(String codigoReferencia);
 }
