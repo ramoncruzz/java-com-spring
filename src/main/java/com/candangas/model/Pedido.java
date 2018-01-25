@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.candangas.helpers.JsonString;
+
 @Entity
 public class Pedido {
 	
@@ -101,5 +103,8 @@ public class Pedido {
 		this.finalizado = finalizado;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return JsonString.geraJsonString(this);
+	}
 }

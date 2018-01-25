@@ -9,6 +9,9 @@ import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import com.candangas.helpers.AtributoJson;
+import com.candangas.helpers.JsonString;
+
 
 @Entity
 public class Autorizacao implements GrantedAuthority{
@@ -21,8 +24,7 @@ public class Autorizacao implements GrantedAuthority{
 	@Column(unique=true)
 	private String nome;
 	
-	
-
+	@AtributoJson
 	public Long getId() {
 		return id;
 	}
@@ -35,7 +37,8 @@ public class Autorizacao implements GrantedAuthority{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	
+	@AtributoJson
 	public String getNome()
 	{
 		return nome;
@@ -47,6 +50,9 @@ public class Autorizacao implements GrantedAuthority{
 	}
 
 	
-	
+	@Override
+	public String toString() {
+		return JsonString.geraJsonString(this);
+	}
 
 }

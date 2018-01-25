@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.candangas.helpers.JsonString;
 @Entity
 public class EmpresaInformacoes {
 
@@ -66,5 +68,9 @@ public class EmpresaInformacoes {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	@Override
+	public String toString() {
+		return JsonString.geraJsonString(this);
 	}
 }

@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import com.candangas.helpers.JsonString;
+
 @Entity
 public class UsuarioInformacoes {
 
@@ -52,6 +54,9 @@ public class UsuarioInformacoes {
 		this.telefone = telefone;
 	}
 
-	
+	@Override
+	public String toString() {
+		return JsonString.geraJsonString(this);
+	}
 	
 }

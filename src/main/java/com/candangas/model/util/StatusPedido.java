@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.candangas.helpers.JsonString;
+
 @Entity
 public class StatusPedido {
 	
@@ -50,5 +52,8 @@ public class StatusPedido {
 		this.statusComData = statusComData;
 	}
 	
-
+	@Override
+	public String toString() {
+		return JsonString.geraJsonString(this);
+	}
 }

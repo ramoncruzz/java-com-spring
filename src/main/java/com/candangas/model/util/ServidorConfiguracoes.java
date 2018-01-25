@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.candangas.helpers.JsonString;
+
 @Entity
 public class ServidorConfiguracoes {
 	
@@ -69,4 +71,8 @@ public class ServidorConfiguracoes {
 		this.accesTokenTotalVoiceSMS = accesTokenTotalVoiceSMS;
 	}
 	
+	@Override
+	public String toString() {
+		return JsonString.geraJsonString(this);
+	}
 }

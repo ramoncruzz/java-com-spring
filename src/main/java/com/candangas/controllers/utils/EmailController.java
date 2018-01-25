@@ -27,23 +27,6 @@ public class EmailController {
 	@Value("${spring.mail.username}")
 	private String emailRementente;
 	
-	@GetMapping
-	public String sendMail() {
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        message.setText("Hello from Spring Boot Application");
-        message.setTo("kverrna@gmail.com");
-        message.setFrom("kverrna@gmail.com");
-
-        try {
-            mailSender.send(message);
-            return "Email enviado com sucesso!";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Erro ao enviar email.";
-        }
-    }
-	
 	@PostMapping("/gerar-codigo")
 	private String gerarCodigo(@RequestBody EmailValidacao emailValidacao)
 	{

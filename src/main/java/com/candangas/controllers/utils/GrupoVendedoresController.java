@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.candangas.DAO.util.GrupoVendedoresDAO;
-import com.candangas.helpers.ErrosMensagens;
+import com.candangas.helpers.JsonString;
 import com.candangas.model.util.GrupoVendedores;
 
 @RestController
@@ -51,11 +51,11 @@ public class GrupoVendedoresController {
 				return resposta.toString();
 			} catch (JSONException e) {
 				
-				return ErrosMensagens.erroMensagem("erro", e.getMessage());
+				return JsonString.jsonErroMensagem( e.getMessage());
 				
 			}
 			catch (Exception e) {
-				return ErrosMensagens.erroMensagem("erro", e.getMessage());
+				return JsonString.jsonErroMensagem( e.getMessage());
 			}
 	}
 	
@@ -70,11 +70,11 @@ public class GrupoVendedoresController {
 				return resposta.toString();
 			} catch (JSONException e) {
 				
-				return ErrosMensagens.erroMensagem("erro", e.getMessage());
+				return JsonString.jsonErroMensagem( e.getMessage());
 				
 			}
 			catch (Exception e) {
-				return ErrosMensagens.erroMensagem("erro", e.getMessage());
+				return JsonString.jsonErroMensagem( e.getMessage());
 			}
 	}
 	
@@ -88,10 +88,10 @@ public class GrupoVendedoresController {
 				return resposta.toString();
 			} catch (JSONException e) {
 				
-				return ErrosMensagens.erroMensagem("erro", e.getMessage());
+				return JsonString.jsonErroMensagem( e.getMessage());
 			}
 			catch (Exception e) {
-				return ErrosMensagens.erroMensagem("erro", e.getMessage());
+				return JsonString.jsonErroMensagem( e.getMessage());
 			}
 	}
 

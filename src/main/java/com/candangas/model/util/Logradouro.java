@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.candangas.helpers.JsonString;
+
 @Entity
 public class Logradouro {
 
@@ -115,4 +117,8 @@ public class Logradouro {
 		this.cidade = cidade;
 	}
 	
+	@Override
+	public String toString() {
+		return JsonString.geraJsonString(this);
+	}
 }

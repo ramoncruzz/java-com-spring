@@ -1,7 +1,5 @@
 package com.candangas.controllers;
 
-
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,9 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.candangas.DAO.UsuarioDAO;
+import com.candangas.helpers.JsonString;
 import com.candangas.model.Usuario;
 import com.candangas.services.UserService;
 
@@ -26,40 +25,47 @@ public class UsuarioController {
 	@Autowired
 	UserService registro;
 	
-	@GetMapping("/{username}")
-	public Usuario getUsuarioPorUserName(@PathVariable String username)
+	@GetMapping(value="/{username}",produces="application/json")
+	public String getUsuarioPorUserName(@PathVariable String username)
 	{
 		try
 		{
 			Usuario usuario= usuarioDao.findByUsername(username);
-			
-			return usuario;
+			return usuario.toString();
 		}catch (Exception e) {
-			return null;
+			return JsonString.jsonErroMensagem( e.getMessage());
 		}
 		
 	}
 	
-	@GetMapping
-	public List<Usuario> listarTodos()
+	@GetMapping(produces="application/json")
+	public String listarTodos()
 	{
-		return usuarioDao.findAll();
+		try {
+			return JsonString.geraJsonArray(usuarioDao.findAll());
+		}catch (Exception e) {
+			// TODO: handle exception
+			return JsonString.jsonErroMensagem( e.getMessage());
+		}
+		
 	}
 	
-	@PostMapping
-	public HttpStatus cadastrar(@RequestBody Usuario usuario)
+	@PostMapping(produces="application/json")
+	@ResponseStatus(HttpStatus.CREATED)
+	public String cadastrar(@RequestBody Usuario usuario)
 	{
-		Long id=registro.registerUser(usuario);
-		if(id>0)
-			return HttpStatus.CREATED;
-		else 
-			return HttpStatus.BAD_REQUEST;
+		try
+		{
+			Long id=registro.registerUser(usuario);
+			return JsonString.geraJsonCreatedUpdated(id);
+		}catch (Exception e) {
+			// TODO: handle exception
+			return JsonString.jsonErroMensagem( e.getMessage());
+		}
 	}
-	
-
-	
-	@PutMapping
-	public HttpStatus atualizar(@RequestBody Usuario usuario)
+		
+	@PutMapping(produces="application/json")
+	public String atualizar(@RequestBody Usuario usuario)
 	{
 		try
 		{
@@ -69,18 +75,16 @@ public class UsuarioController {
 			usuario.setId(idSalvo);
 			Long id=registro.registerUser(usuario);
 			
-			if(id>0)
-				return HttpStatus.OK;
-			else return HttpStatus.BAD_REQUEST;
+			return JsonString.geraJsonCreatedUpdated(id);
 				
 		}catch (Exception e) {
-			return HttpStatus.INTERNAL_SERVER_ERROR;
+			return JsonString.jsonErroMensagem( e.getMessage());
 		}
 		
 	}
 	
-	@PutMapping("/recuperar")
-	public HttpStatus recuperar(@RequestBody Usuario usuario)
+	@PutMapping(value="/recuperar",produces="application/json")
+	public String recuperar(@RequestBody Usuario usuario)
 	{
 		try
 		{	
@@ -93,39 +97,37 @@ public class UsuarioController {
 			usuario.setSobreNome(sobrenome);
 			Long id=registro.registerUser(usuario);
 			
-			if(id>0)
-				return HttpStatus.OK;
-			else return HttpStatus.BAD_REQUEST;
+			return JsonString.geraJsonCreatedUpdated(id);
 				
 		}catch (Exception e) {
-			return HttpStatus.INTERNAL_SERVER_ERROR;
+			return JsonString.jsonErroMensagem( e.getMessage());
 		}
 		
 	}
 	
-	@DeleteMapping("/id-{id}")
-	public HttpStatus apagarPeloId(@PathVariable Long id)
+	@DeleteMapping(value="/id-{id}",produces="application/json")
+	public String apagarPeloId(@PathVariable Long id)
 	{
 		try
 		{
 			Usuario usuario= usuarioDao.findById(id);
 			usuarioDao.delete(usuario);
-			return HttpStatus.OK;
+			return JsonString.geraJsonOK();
 		}catch (Exception e) {
-			return HttpStatus.BAD_REQUEST;
+			return JsonString.jsonErroMensagem( e.getMessage()); 
 		}
 	}
 	
-	@DeleteMapping("/{username}")
-	public HttpStatus apagar(@PathVariable String username)
+	@DeleteMapping(value="/{username}",produces="application/json")
+	public String apagar(@PathVariable String username)
 	{
 		try
 		{
 			Usuario usuario= usuarioDao.findByUsername(username);
 			usuarioDao.delete(usuario);
-			return HttpStatus.OK;
+			return JsonString.geraJsonOK();
 		}catch (Exception e) {
-			return HttpStatus.BAD_REQUEST;
+			return JsonString.jsonErroMensagem( e.getMessage());
 		}
 	}
 		

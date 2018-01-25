@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.candangas.helpers.JsonString;
+
 @Entity
 public class Cidade {
 	@Id
@@ -45,5 +47,8 @@ public class Cidade {
 	public void setDdd(String ddd) {
 		this.ddd = ddd;
 	}
-	
+	@Override
+	public String toString() {
+		return JsonString.geraJsonString(this);
+	}
 }

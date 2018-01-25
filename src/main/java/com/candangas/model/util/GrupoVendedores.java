@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.candangas.helpers.JsonString;
 import com.candangas.model.Usuario;
 
 @Entity
@@ -39,4 +40,8 @@ public class GrupoVendedores {
 		this.vendedores = vendedores;
 	}
 
+	@Override
+	public String toString() {
+		return JsonString.geraJsonString(this);
+	}
 }

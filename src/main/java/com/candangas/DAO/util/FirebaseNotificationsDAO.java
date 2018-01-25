@@ -6,5 +6,5 @@ import com.candangas.model.util.FirebaseNotifications;
 
 public interface FirebaseNotificationsDAO extends JpaRepository<FirebaseNotifications, Long> {
 
-	FirebaseNotifications findByIdFirebaseNotifications(Integer idFirebaseNotifications);
+	FirebaseNotifications findByIdFirebaseNotifications(Long idFirebaseNotifications);
 }

@@ -1,7 +1,5 @@
 package com.candangas.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,9 +8,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.candangas.DAO.AutorizacaoDAO;
+import com.candangas.helpers.JsonString;
 import com.candangas.security.Autorizacao;
 
 @RestController
@@ -22,60 +22,77 @@ public class AutorizacaoController {
 	@Autowired
 	private AutorizacaoDAO autorizacaoDao;
 	
-	@GetMapping
-	public List<Autorizacao> listarTodos()
+	@GetMapping(produces="application/json")
+	public String listarTodos()
 	{
-		return autorizacaoDao.findAll();
-	}
-	
-	@GetMapping
-	@RequestMapping("/popular")
-	public HttpStatus popular()
-	{
-		
-		Autorizacao a = new Autorizacao();
-		a.setNome("USER");
-		Autorizacao b = new Autorizacao();
-		b.setNome("ADMIN");
-		autorizacaoDao.save(b);
-		
-		if(autorizacaoDao.save(a).getId()>0)
-			return HttpStatus.CREATED;
-		else 
-			return HttpStatus.BAD_REQUEST;
-	}
-	
-	@PostMapping
-	public HttpStatus cadastrar(@RequestBody Autorizacao auth)
-	{
-		Autorizacao a= autorizacaoDao.save(auth);
-		if(a.getId()>0)
-			return HttpStatus.CREATED;
-		else 
-			return HttpStatus.BAD_REQUEST;
+		try {
+			return JsonString.geraJsonArray(autorizacaoDao.findAll());
+		}catch (Exception e) {
+			// TODO: handle exception
+			return JsonString.jsonErroMensagem(e.getMessage());
+		}
 		
 	}
 	
-	@PutMapping
-	public HttpStatus atualizar(@RequestBody Autorizacao auth)
+	@GetMapping(value="/criar-autorizacoes-padrao",produces="application/json")
+	@ResponseStatus(HttpStatus.CREATED)
+	public String popular()
 	{
-		Autorizacao a= autorizacaoDao.save(auth);
-		if(a.getId()>0)
-			return HttpStatus.OK;
-		else 
-			return HttpStatus.BAD_REQUEST;
+		try
+		{
+			Autorizacao a = new Autorizacao();
+			a.setNome("USER");
+			autorizacaoDao.save(a);
+			Autorizacao b = new Autorizacao();
+			b.setNome("ADMIN");
+			autorizacaoDao.save(b);
+			
+			return JsonString.geraJsonArray(autorizacaoDao.findAll());
+		}catch (Exception e) {
+			// TODO: handle exception
+			return JsonString.jsonErroMensagem(e.getMessage());
+		}
+		
 	}
 	
-	@DeleteMapping
-	public HttpStatus apagar(@RequestBody Autorizacao auth)
+	@PostMapping(produces="application/json")
+	@ResponseStatus(HttpStatus.CREATED)
+	public String cadastrar(@RequestBody Autorizacao auth)
+	{
+		try
+		{
+			Autorizacao a= autorizacaoDao.save(auth);
+			return JsonString.geraJsonCreatedUpdated(a.getId());
+		}catch (Exception e) {
+			return JsonString.jsonErroMensagem(e.getMessage());
+		}
+		
+	}
+	
+	@PutMapping(produces="application/json")
+	public String atualizar(@RequestBody Autorizacao auth)
+	{
+		try {
+			Autorizacao a= autorizacaoDao.save(auth);
+			return JsonString.geraJsonCreatedUpdated(a.getId());
+		}catch (Exception e) {
+			// TODO: handle exception
+			return JsonString.jsonErroMensagem(e.getMessage());
+			
+		}
+
+	}
+	
+	@DeleteMapping(produces="application/json")
+	public String apagar(@RequestBody Autorizacao auth)
 	{
 		try
 		{
 			autorizacaoDao.delete(auth);
-			return HttpStatus.OK;
+			return JsonString.geraJsonOK();
 		}catch (Exception e) {
 			
-			return HttpStatus.BAD_REQUEST;
+			return JsonString.jsonErroMensagem(e.getMessage());
 		}
 		
 		

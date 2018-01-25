@@ -14,6 +14,7 @@ import javax.persistence.Transient;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.candangas.helpers.JsonString;
 import com.candangas.model.util.Endereco;
 import com.candangas.security.Autorizacao;
 
@@ -235,5 +236,8 @@ public class Usuario implements UserDetails {
 		this.tipo = tipo;
 	}
 
-
+	@Override
+	public String toString() {
+		return JsonString.geraJsonString(this);
+	}
 }

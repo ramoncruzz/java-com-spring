@@ -1,7 +1,6 @@
 package com.candangas.controllers.utils;
 
 import java.io.IOException;
-import java.util.List;
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +9,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.candangas.DAO.UsuarioDAO;
 import com.candangas.DAO.util.FirebaseNotificationsDAO;
 import com.candangas.DAO.util.ServidorConfiguracoesDAO;
+import com.candangas.helpers.JsonString;
 import com.candangas.helpers.StringData;
 import com.candangas.model.Usuario;
 import com.candangas.model.util.FirebaseNotifications;
@@ -35,45 +34,36 @@ public class FirebaseNotificationsController {
 	@Autowired
 	private UsuarioDAO usuarioDao;
 	
-	@GetMapping
-	public List<FirebaseNotifications> getFirebaseObject() {
+	@GetMapping(produces="application/json")
+	public String getFirebaseObject() {
 		try {
-			return firebaseDao.findAll();
+			return JsonString.geraJsonArray(firebaseDao.findAll());
 		} catch (Exception e) {
-			return null;
+			return JsonString.jsonErroMensagem( e.getMessage());
 		}
 
 	}
 	
-	@PostMapping
-	public HttpStatus enviaNotificacaoFireBase(@RequestBody FirebaseNotifications mensagem) {
+	@PostMapping(produces="application/json")
+	@ResponseStatus(HttpStatus.CREATED)
+	public String enviaNotificacaoFireBase(@RequestBody FirebaseNotifications mensagem) {
 		try {
 			
 			HttpRequests r = new HttpRequests();
 			ServidorConfiguracoes srv = servidorDao.findById(1L);
 			r.notificaUsuario(srv.getTokenServer(), mensagem.getTokenUsuario(), mensagem.getTituloMensagem(), mensagem.getMensagem());
 			mensagem.setDataEnvioMensagem(StringData.getStringData());
-			firebaseDao.save(mensagem);
-			return HttpStatus.OK;
-
-		} 
-			catch (ClientProtocolException e) {
-			e.printStackTrace();
-			return HttpStatus.INTERNAL_SERVER_ERROR;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return HttpStatus.INTERNAL_SERVER_ERROR;
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return HttpStatus.INTERNAL_SERVER_ERROR;
+			FirebaseNotifications f= firebaseDao.save(mensagem);
+			return JsonString.geraJsonCreatedUpdated(f.getIdFirebaseNotifications());
 		}catch (Exception e) {
-			return HttpStatus.INTERNAL_SERVER_ERROR;
+			return JsonString.jsonErroMensagem( e.getMessage());
 		}
 
 	}
 	
-	@PostMapping("/{username}")
-	public HttpStatus enviaNotificacaoParaUsuario(@RequestBody FirebaseNotifications mensagem, @PathVariable String username)
+	@PostMapping(value="/{username}",produces="application/json")
+	@ResponseStatus(HttpStatus.CREATED)
+	public String enviaNotificacaoParaUsuario(@RequestBody FirebaseNotifications mensagem, @PathVariable String username)
 	{
 		try
 		{
@@ -83,34 +73,22 @@ public class FirebaseNotificationsController {
 			String tokenUsuario = usuario.getTokenPushNotification();
 			mensagem.setTokenUsuario(tokenUsuario);
 			r.notificaUsuario(srv.getTokenServer(), mensagem.getTokenUsuario(), mensagem.getTituloMensagem(), mensagem.getMensagem());
-			
-			return HttpStatus.OK;
+			FirebaseNotifications f= firebaseDao.save(mensagem);
+			return JsonString.geraJsonCreatedUpdated(f.getIdFirebaseNotifications());
 		}catch (Exception e) {
-			return HttpStatus.INTERNAL_SERVER_ERROR;
+			return JsonString.jsonErroMensagem( e.getMessage());
 		}
 	}
 	
-	@DeleteMapping
-	public HttpStatus deletaFirebaseConfiguracoes(FirebaseNotifications mensagem) {
+	@DeleteMapping(produces="application/json")
+	public String deletaFirebaseConfiguracoes(FirebaseNotifications mensagem) {
 		try {
 			firebaseDao.delete((long)mensagem.getIdFirebaseNotifications());
-			return HttpStatus.OK;
+			return JsonString.geraJsonOK();
 
 		} catch (Exception e) {
-
-			return HttpStatus.INTERNAL_SERVER_ERROR;
+			return JsonString.jsonErroMensagem( e.getMessage());
 		}
-	}
-
-	@PutMapping
-	public HttpStatus atualizaFirebaseConfiguracoes(FirebaseNotifications mensagem) {
-		try {
-		return HttpStatus.INTERNAL_SERVER_ERROR;
-
-		} catch (Exception e) {
-			return HttpStatus.INTERNAL_SERVER_ERROR;
-		}
-
 	}
 	
 	public HttpStatus enviaNotificacaoFireBase(FirebaseNotifications mensagem,ServidorConfiguracoesDAO servidorDao,FirebaseNotificationsDAO firebaseDao) {

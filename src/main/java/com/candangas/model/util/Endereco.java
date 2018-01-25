@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.candangas.helpers.JsonString;
+
 @Entity
 public class Endereco {
 	
@@ -56,6 +58,9 @@ public class Endereco {
 	public void setCidade(Cidade cidade) {
 		this.cidade = cidade;
 	}
-	
+	@Override
+	public String toString() {
+		return JsonString.geraJsonString(this);
+	}
 	
 }
