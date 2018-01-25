@@ -1,6 +1,4 @@
 package com.candangas.model.util;
-
-
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,7 +38,5 @@ public class GrupoVendedores {
 	public void setVendedores(List<Usuario> vendedores) {
 		this.vendedores = vendedores;
 	}
-	
-	
 
 }
