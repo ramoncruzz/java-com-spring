@@ -1,9 +1,7 @@
 package com.candangas.controllers.utils;
 
-import java.util.List;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.candangas.DAO.util.GrupoVendedoresDAO;
 import com.candangas.helpers.JsonString;
@@ -23,37 +22,38 @@ public class GrupoVendedoresController {
 	@Autowired
 	private GrupoVendedoresDAO grupoDao;
 	
-	@GetMapping
-	public List<GrupoVendedores> listaTodos()
+	@GetMapping(produces="application/json")
+	public String listaTodos()
 	{
-		return grupoDao.findAll();
+		try {
+		return JsonString.geraJsonArray(grupoDao.findAll());
+		}catch (Exception e) {
+			// TODO: handle exception
+			return JsonString.jsonErroMensagem(e.getMessage());
+		}
 	}
 	
-	@GetMapping("/{nome}")
-	public GrupoVendedores buscaGrupo(@PathVariable String nome)
+	@GetMapping(value="/{nome}", produces="application/json")
+	public String buscaGrupo(@PathVariable String nome)
 	{
 		try {    
-			   return grupoDao.findByNome(nome);
+			   GrupoVendedores g =grupoDao.findByNome(nome);
+			   return JsonString.geraJsonString(g);
 			} catch (Exception e) {
 			
-				return null;
+				return JsonString.jsonErroMensagem(e.getMessage());
 			}	
 	}
 	
-	@PostMapping
+	@PostMapping(produces="application/json")
+	@ResponseStatus(HttpStatus.CREATED)
 	public String cadastraGrupo(@RequestBody GrupoVendedores grupo)
 	{
-		JSONObject resposta = new JSONObject();
+		
 		try {
 				GrupoVendedores g=grupoDao.save(grupo);
-			    resposta.put("status", "OK");
-			    resposta.put("id", g.getId());
-				return resposta.toString();
-			} catch (JSONException e) {
-				
-				return JsonString.jsonErroMensagem( e.getMessage());
-				
-			}
+				return JsonString.geraJsonCreatedUpdated(g.getId());
+		}
 			catch (Exception e) {
 				return JsonString.jsonErroMensagem( e.getMessage());
 			}
@@ -62,17 +62,12 @@ public class GrupoVendedoresController {
 	@PutMapping(produces="application/json")
 	public String atualizarGrupo(@RequestBody GrupoVendedores grupo)
 	{
-		JSONObject resposta = new JSONObject();
+		
 		try {
 				GrupoVendedores g=grupoDao.save(grupo);
-			    resposta.put("status", "OK");
-			    resposta.put("id", g.getId());
-				return resposta.toString();
-			} catch (JSONException e) {
-				
-				return JsonString.jsonErroMensagem( e.getMessage());
-				
-			}
+				return JsonString.geraJsonCreatedUpdated(g.getId());
+		}
+			
 			catch (Exception e) {
 				return JsonString.jsonErroMensagem( e.getMessage());
 			}
@@ -81,15 +76,10 @@ public class GrupoVendedoresController {
 	@DeleteMapping(produces="application/json")
 	public String apagarGrupo(GrupoVendedores grupo)
 	{
-		JSONObject resposta = new JSONObject();
-		try {
+	try {
 				grupoDao.delete(grupo);
-			    resposta.put("status", "OK");
-				return resposta.toString();
-			} catch (JSONException e) {
-				
-				return JsonString.jsonErroMensagem( e.getMessage());
-			}
+			    return JsonString.geraJsonOK();
+		}
 			catch (Exception e) {
 				return JsonString.jsonErroMensagem( e.getMessage());
 			}

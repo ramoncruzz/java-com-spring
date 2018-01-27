@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.candangas.DAO.UsuarioDAO;
 import com.candangas.DAO.util.ServidorConfiguracoesDAO;
+import com.candangas.helpers.JsonString;
 import com.candangas.model.Usuario;
 import com.candangas.model.util.ServidorConfiguracoes;
 
@@ -24,58 +26,83 @@ public class ServidorConfiguracoesController {
 	@Autowired
 	private UsuarioDAO usuarioDao;
 	
-	@GetMapping
-	public ServidorConfiguracoes buscaServidor()
-	{
-		int id= servidorDao.findAll().size();
-		return servidorDao.findById((long) id);
-	}
-	
-	@PostMapping
-	public HttpStatus salvaServidor(@RequestBody ServidorConfiguracoes servidor)
-	{
-		if(servidorDao.save(servidor).getId()>0)
-			return HttpStatus.OK;
-		else 
-			return HttpStatus.BAD_REQUEST;
-	}
-	
-	@PostMapping("/token-impressora")
-	public HttpStatus salvaIdResponsavelImpressoesPedidos(@RequestBody String username)
+	@GetMapping(produces="application/json")
+	public String buscaServidor()
 	{
 		try
 		{
-			String limpo =username.replace("\n", "");
-			ServidorConfiguracoes srv =this.buscaServidor();
-			Usuario user =usuarioDao.findByUsername(limpo);
-			String token = user.getTokenPushNotification();
-			srv.setTokenResponsavelRecebimentoPedidos(token);
-			servidorDao.save(srv);
-			return HttpStatus.OK;
+			int id= servidorDao.findAll().size();
+			ServidorConfiguracoes srv= servidorDao.findById((long) id);
+			return JsonString.geraJsonString(srv);
 		}catch (Exception e) {
-			return HttpStatus.INTERNAL_SERVER_ERROR;
+			// TODO: handle exception
+			return JsonString.jsonErroMensagem(e.getMessage());
 		}
 		
 	}
 	
-	@PutMapping
-	public HttpStatus atualizaServidor(@RequestBody ServidorConfiguracoes servidor)
+	@PostMapping(produces="application/json")
+	@ResponseStatus(HttpStatus.CREATED)
+	public String salvaServidor(@RequestBody ServidorConfiguracoes servidor)
 	{
-		if(servidorDao.save(servidor).getId()>0)
-			return HttpStatus.OK;
-		else 
-			return HttpStatus.BAD_REQUEST;
+		try
+		{
+			if(servidorDao.save(servidor).getId()>0)
+				return JsonString.geraJsonOK();
+			else 
+				return JsonString.jsonErroMensagem("Não foi possível salvar as informaçoes.");
+		}catch (Exception e) {
+			// TODO: handle exception
+			return JsonString.jsonErroMensagem(e.getMessage());
+		}
+		
+		
 	}
 	
-	@DeleteMapping
-	public HttpStatus apagaServidor(@RequestBody ServidorConfiguracoes servidor)
+	@PostMapping(value="/token-impressora",produces="applicaton/json")
+	public String salvaIdResponsavelImpressoesPedidos(@RequestBody String username)
+	{
+		try
+		{
+			String limpo =username.replace("\n", "");
+			int id= servidorDao.findAll().size();
+			ServidorConfiguracoes srv= servidorDao.findById((long) id);
+			Usuario user =usuarioDao.findByUsername(limpo);
+			String token = user.getTokenPushNotification();
+			srv.setTokenResponsavelRecebimentoPedidos(token);
+			servidorDao.save(srv);
+			return JsonString.geraJsonOK();
+		}catch (Exception e) {
+			return JsonString.jsonErroMensagem(e.getMessage());
+		}
+		
+	}
+	
+	@PutMapping(produces="application/json")
+	public String atualizaServidor(@RequestBody ServidorConfiguracoes servidor)
+	{
+		try
+		{
+			if(servidorDao.save(servidor).getId()>0)
+				return JsonString.geraJsonOK();
+			else 
+				return JsonString.jsonErroMensagem("Não foi possível atualizar as informaçoes.");
+		}catch (Exception e) {
+			// TODO: handle exception
+			return JsonString.jsonErroMensagem(e.getMessage());
+		}
+		
+	}
+	
+	@DeleteMapping(produces="application/json")
+	public String  apagaServidor(@RequestBody ServidorConfiguracoes servidor)
 	{
 		try
 		{
 			servidorDao.delete(servidor);
-			return HttpStatus.OK;
+			return JsonString.geraJsonOK();
 		}catch (Exception e) {
-			return HttpStatus.BAD_REQUEST;
+			return JsonString.jsonErroMensagem(e.getMessage());
 		}
 	}
 

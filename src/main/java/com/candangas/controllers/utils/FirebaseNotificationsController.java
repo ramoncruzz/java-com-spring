@@ -1,8 +1,5 @@
 package com.candangas.controllers.utils;
 
-import java.io.IOException;
-import org.apache.http.client.ClientProtocolException;
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -91,54 +88,34 @@ public class FirebaseNotificationsController {
 		}
 	}
 	
-	public HttpStatus enviaNotificacaoFireBase(FirebaseNotifications mensagem,ServidorConfiguracoesDAO servidorDao,FirebaseNotificationsDAO firebaseDao) {
+	public String enviaNotificacaoFireBase(FirebaseNotifications mensagem,ServidorConfiguracoesDAO servidorDao,FirebaseNotificationsDAO firebaseDao) {
 		try {
 			
 			HttpRequests r = new HttpRequests();
 			ServidorConfiguracoes srv = servidorDao.findById(1L);
 			r.notificaUsuario(srv.getTokenServer(), mensagem.getTokenUsuario(), mensagem.getTituloMensagem(), mensagem.getMensagem());
 			mensagem.setDataEnvioMensagem(StringData.getStringData());
-			firebaseDao.save(mensagem);
-			return HttpStatus.OK;
+			FirebaseNotifications f =firebaseDao.save(mensagem);
+			
+			return JsonString.geraJsonCreatedUpdated(f.getIdFirebaseNotifications());
 
-		} 
-			catch (ClientProtocolException e) {
-			e.printStackTrace();
-			return HttpStatus.INTERNAL_SERVER_ERROR;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return HttpStatus.INTERNAL_SERVER_ERROR;
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return HttpStatus.INTERNAL_SERVER_ERROR;
 		}catch (Exception e) {
-			return HttpStatus.INTERNAL_SERVER_ERROR;
+			return JsonString.jsonErroMensagem(e.getMessage());
 		}
-
 	}
 	
-	public HttpStatus enviaNotificacaoFireBase(FirebaseNotifications mensagem,ServidorConfiguracoesDAO servidorDao,FirebaseNotificationsDAO firebaseDao,String chaveParamentro,String conteudoParametro) {
+	public String enviaNotificacaoFireBase(FirebaseNotifications mensagem,ServidorConfiguracoesDAO servidorDao,FirebaseNotificationsDAO firebaseDao,String chaveParamentro,String conteudoParametro) {
 		try {
 			
 			HttpRequests r = new HttpRequests();
 			ServidorConfiguracoes srv = servidorDao.findById(1L);
 			r.notificaUsuario(srv.getTokenServer(), mensagem.getTokenUsuario(), mensagem.getTituloMensagem(), mensagem.getMensagem(),chaveParamentro,conteudoParametro);
 			mensagem.setDataEnvioMensagem(StringData.getStringData());
-			firebaseDao.save(mensagem);
-			return HttpStatus.OK;
+			FirebaseNotifications f =firebaseDao.save(mensagem);
+			return JsonString.geraJsonCreatedUpdated(f.getIdFirebaseNotifications());
 
-		} 
-			catch (ClientProtocolException e) {
-			e.printStackTrace();
-			return HttpStatus.INTERNAL_SERVER_ERROR;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return HttpStatus.INTERNAL_SERVER_ERROR;
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return HttpStatus.INTERNAL_SERVER_ERROR;
 		}catch (Exception e) {
-			return HttpStatus.INTERNAL_SERVER_ERROR;
+			return JsonString.jsonErroMensagem(e.getMessage());
 		}
 
 	}
