@@ -44,9 +44,7 @@ public class Usuario implements UserDetails {
 	
 	private String password;
 	
-	private String linkImagemGrande;
-	private String linkImagemMedia;
-	private String linkImagemPequena;
+	private String linkfotoUsuario;
 	
 	@ManyToOne
 	private Endereco endereco;
@@ -160,28 +158,12 @@ public class Usuario implements UserDetails {
 
 	}
 
-	public String getLinkImagemGrande() {
-		return linkImagemGrande;
+	public String getLinkfotoUsuario() {
+		return linkfotoUsuario;
 	}
 
-	public void setLinkImagemGrande(String linkImagemGrande) {
-		this.linkImagemGrande = linkImagemGrande;
-	}
-
-	public String getLinkImagemMedia() {
-		return linkImagemMedia;
-	}
-
-	public void setLinkImagemMedia(String linkImagemMedia) {
-		this.linkImagemMedia = linkImagemMedia;
-	}
-
-	public String getLinkImagemPequena() {
-		return linkImagemPequena;
-	}
-
-	public void setLinkImagemPequena(String linkImagemPequena) {
-		this.linkImagemPequena = linkImagemPequena;
+	public void setLinkfotoUsuario(String linkfotoUsuario) {
+		this.linkfotoUsuario = linkfotoUsuario;
 	}
 
 	public String getSobreNome() {

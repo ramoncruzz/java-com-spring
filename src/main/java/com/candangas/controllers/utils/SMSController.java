@@ -30,6 +30,7 @@ import com.amazonaws.services.sns.model.PublishRequest;
 import com.amazonaws.services.sns.model.PublishResult;
 import com.candangas.DAO.util.SMSValidacaoDAO;
 import com.candangas.DAO.util.ServidorConfiguracoesDAO;
+import com.candangas.helpers.JsonString;
 import com.candangas.model.util.SMSValidacao;
 import com.candangas.model.util.ServidorConfiguracoes;
 
@@ -48,11 +49,11 @@ public class SMSController {
 		return smsDao.findAll();
 	}
 
-	@PostMapping("/gerar-codigo")
+	@PostMapping(value="/gerar-codigo",produces="application/json")
 	public String geraCodigo(@RequestBody SMSValidacao sms) {
 		try {
 		String codigo = geraCodigo(6);
-		String codigoFormatado = "Olá, Seu código  do App Restaurante Vitória é " + codigo.substring(0, 3) + " " + codigo.substring(3) + " ";
+		String codigoFormatado = "Seu código  do Aplicativo As Candangas  é " + codigo.substring(0, 3) + " " + codigo.substring(3) + " ";
 
 		SMSValidacao smsSalvar = new SMSValidacao();
 		smsSalvar.setCodigoValidacao(codigo);
@@ -62,18 +63,19 @@ public class SMSController {
 		SMSValidacao s = smsDao.save(smsSalvar);
 		s.getId();
 		
-		enviaSMSAPITotalVoice(sms.getTelefone(),codigoFormatado);
+		//enviaSMSAPITotalVoice(sms.getTelefone(),codigoFormatado);
 		
-			return codigoFormatado;
+			return JsonString.geraJsonOKWithMensage(codigoFormatado);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
+			return JsonString.jsonErroMensagem(e.getMessage());
 		}
 	}
 
-	@PostMapping("/validar")
-	public boolean validaCodigo(@RequestBody SMSValidacao sms) {
+	@PostMapping(value="/validar",produces="application/json")
+	public String  validaCodigo(@RequestBody SMSValidacao sms) {
+		
 		boolean resultado = false;
 		List<SMSValidacao> lista = smsDao.findByTelefone(sms.getTelefone());
 		SMSValidacao smsSalvo = lista.get(lista.size() - 1);
@@ -88,8 +90,11 @@ public class SMSController {
 			}
 		} else
 			resultado = false;
-
-		return resultado;
+		
+		if(resultado)
+			return JsonString.geraJsonOK();
+		 else
+			return JsonString.jsonErroMensagem("Código inválido!");
 	}
 
 	private String geraCodigo(int len) {
