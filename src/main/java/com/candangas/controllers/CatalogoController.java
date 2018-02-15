@@ -1,6 +1,5 @@
 package com.candangas.controllers;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -53,7 +52,7 @@ public class CatalogoController {
 		{
 			return JsonString.geraJsonArray(catalogoDao.findByNome(nome));
 		}catch (Exception e) {
-			return null;
+			return JsonString.jsonErroMensagem( e.getMessage());
 		}
 	}
 	
@@ -61,14 +60,10 @@ public class CatalogoController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public String cadastrar(@RequestBody Catalogo catalogo)
 	{
-		JSONObject resposta = new JSONObject();
 		try
 		{
-			Catalogo c = catalogoDao.save(catalogo);
-			 resposta.put("status", "OK");
-			 resposta.put("id", c.getId());
-			 
-			return resposta.toString();
+			Catalogo c = catalogoDao.save(catalogo); 
+			return JsonString.geraJsonCreatedUpdated(c.getId());
 		}catch (Exception e) {
 			// TODO: handle exception
 			return JsonString.jsonErroMensagem( e.getMessage());

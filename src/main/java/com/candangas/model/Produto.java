@@ -30,8 +30,10 @@ public class Produto {
 	private String linkImagemGrande;
 	private String linkImagemMedia;
 	private String linkImagemPequena;
+	private String linkSiteVendas;
 	private double preco;
 	private double precoPormocional;
+	private boolean ativo;
 	
 	@AtributoJson
 	public Long getId() {
@@ -160,6 +162,30 @@ public class Produto {
 		this.linkImagemPequena = linkImagemPequena;
 	}
 	
+	@AtributoJson
+	public String getLinkSiteVendas() {
+		return linkSiteVendas;
+	}
+	public void setLinkSiteVendas(String linkSiteVendas) {
+		this.linkSiteVendas = linkSiteVendas;
+	}
+	@AtributoJson
+	public double getPrecoPormocional() {
+		return precoPormocional;
+	}
+	public void setPrecoPormocional(double precoPormocional) {
+		this.precoPormocional = precoPormocional;
+	}
+	
+	@AtributoJson
+	public boolean isAtivo() {
+		return ativo;
+	}
+	
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
 	@Override
 	public String toString() {
 		return JsonString.geraJsonString(this);

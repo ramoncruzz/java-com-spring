@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.candangas.helpers.AtributoJson;
 import com.candangas.helpers.JsonString;
 
 
@@ -19,36 +20,42 @@ public class Arquivo {
 	private String tipo;
 	private String link;
 	
+	@AtributoJson
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	@AtributoJson
 	public String getDiretorio() {
 		return diretorio;
 	}
 	public void setDiretorio(String diretorio) {
 		this.diretorio = diretorio;
 	}
+	@AtributoJson
 	public String getNome() {
 		return nome;
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	@AtributoJson
 	public String getTipo() {
 		return tipo;
 	}
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+	@AtributoJson
 	public String getLink() {
 		return link;
 	}
 	public void setLink(String link) {
 		this.link = link;
 	}
+	@AtributoJson
 	public String getFullPathToSave()
 	{
 		if(this.diretorio!=null)

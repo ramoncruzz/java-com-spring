@@ -59,8 +59,8 @@ public class ArquivoController {
 			fos.close();
 			if(file!=null)
 				s3Services.uploadFile(arquivoInf.getFullPathToSave(),file);
-			arquivoDao.save(arquivoInf);
-			return arquivoInf.toString();
+			Arquivo arquivoSalvo =arquivoDao.save(arquivoInf);
+			return JsonString.geraJsonString(arquivoSalvo);
 			
 		} catch (IOException e) {
 			return JsonString.jsonErroMensagem( e.getMessage());

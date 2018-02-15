@@ -11,17 +11,17 @@ public class JsonString {
 		{
 			Class<?> classe = o.getClass();
 			StringBuilder jsonString = new StringBuilder("{");
+			jsonString.append("\"sucess\":");
+			jsonString.append(true);
+			jsonString.append(",");
 			int tamanho = contaQtdGetValidos(o);
 			int contador=1;
 			for(Method m : classe.getMethods())
 			{
-				
 					if(isGetter(m))
 					{
-						
 						if(m.isAnnotationPresent(AtributoJson.class))
 						{
-							
 							if(m.getReturnType()==String.class && m.invoke(o)!=null)
 							{
 								jsonString.append("\"");
@@ -69,7 +69,6 @@ public class JsonString {
 			// TODO: handle exception
 			throw new RuntimeException("Problema ao gerar jsonString",e);
 		}
-		
 	}
 	
 	public static String geraJsonArray(Object o)
@@ -106,6 +105,7 @@ public class JsonString {
 		jsonString.append("}");
 		return jsonString.toString();
 	}
+	 
 public static String geraJsonOK() {
 		
 		StringBuilder jsonString = new StringBuilder("{");
