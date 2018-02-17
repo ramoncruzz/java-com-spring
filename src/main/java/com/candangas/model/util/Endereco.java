@@ -25,6 +25,8 @@ public class Endereco {
 	private String nomeCidade;
 	@Transient
 	private Integer codIbgeCidde;
+	@Transient
+	private Integer idCidade;
 	
 	@ManyToOne
 	private Cidade cidade;
@@ -89,6 +91,14 @@ public class Endereco {
 	@Override
 	public String toString() {
 		return JsonString.geraJsonString(this);
+	}
+	
+	@AtributoJson
+	public Integer getIdCidade() {
+		return idCidade;
+	}
+	public void setIdCidade(Integer idCidade) {
+		this.idCidade = idCidade;
 	}
 	
 	

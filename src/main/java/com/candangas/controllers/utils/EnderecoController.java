@@ -53,6 +53,7 @@ public class EnderecoController {
 				endereco.setBairro(logradouro.getDescricaoBairro());
 				endereco.setNomeCidade(logradouro.getCidade().getDescricao());
 				endereco.setCodIbgeCidde(logradouro.getCidade().getCodigoIbge());
+				endereco.setIdCidade(logradouro.getCidade().getIdCidade());
 				
 				return JsonString.geraJsonString(endereco);
 			}else

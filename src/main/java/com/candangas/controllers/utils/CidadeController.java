@@ -18,8 +18,6 @@ import com.candangas.DAO.util.CidadeDAO;
 import com.candangas.helpers.JsonString;
 import com.candangas.model.util.Cidade;
 
-import antlr.collections.List;
-
 @RestController
 @RequestMapping("/v0/cidade")
 public class CidadeController {
