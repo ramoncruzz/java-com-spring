@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.candangas.DAO.UsuarioDAO;
+import com.candangas.DAO.util.EnderecoDAO;
 import com.candangas.helpers.JsonString;
 import com.candangas.model.Usuario;
+import com.candangas.model.util.Endereco;
 import com.candangas.services.UserService;
 
 @RestController
@@ -24,6 +26,9 @@ public class UsuarioController {
 	private UsuarioDAO usuarioDao;
 	@Autowired
 	UserService registro;
+	
+	@Autowired
+	private EnderecoDAO enderecoDao;
 	
 	@GetMapping(value="/{username}",produces="application/json")
 	public String getUsuarioPorUserName(@PathVariable String username)
@@ -56,7 +61,13 @@ public class UsuarioController {
 	{
 		try
 		{
+			if(usuario.getIdEndereco()>0)
+			{
+				Endereco endereco = enderecoDao.findById(usuario.getIdEndereco());
+				usuario.setEndereco(endereco);
+			}
 			Long id=registro.registerUser(usuario);
+			
 			return JsonString.geraJsonCreatedUpdated(id);
 		}catch (Exception e) {
 
