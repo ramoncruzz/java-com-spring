@@ -44,11 +44,32 @@ public class RegistroUsuarios implements UserService {
 		}
 		String hash =bCrypt.encode(user.getPassword());
 		user.setPassword(hash);
+		
+		return usuarioDao.saveAndFlush(user).getId();
+		
+	}
+
+	@Override
+	public Long registerAdminUser(Usuario user) {
+		Autorizacao busca = authDao.findByNome("ADMIN");
+		if(busca!=null)
+		{
+			user.setAutorizacao(busca);
+		}else
+		{
+			Autorizacao auth = new Autorizacao();
+			auth.setNome("ADMIN");
+			long id =authDao.save(auth).getId();
+			auth.setId(id);
+			user.setAutorizacao(auth);
+			
+		}
+		String hash =bCrypt.encode(user.getPassword());
+		user.setPassword(hash);
 		user.setAtivo(true);
 		
 		
 		return usuarioDao.saveAndFlush(user).getId();
-		
 	}
 
 }

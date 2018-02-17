@@ -14,6 +14,7 @@ import javax.persistence.Transient;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.candangas.helpers.AtributoJson;
 import com.candangas.helpers.JsonString;
 import com.candangas.model.util.Endereco;
 import com.candangas.security.Autorizacao;
@@ -28,9 +29,6 @@ public class Usuario implements UserDetails {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
-	private Autorizacao authorities;
-	
 	@Column(nullable=false)
 	private String nome;
 	private String sobreNome;
@@ -38,6 +36,9 @@ public class Usuario implements UserDetails {
 	private String telefoneCelular;
 	private String cpf;
 	private String tipo;
+	
+	@ManyToOne
+	private Autorizacao authorities;
 	
 	@Column(unique=true)
 	private String username;
@@ -53,11 +54,14 @@ public class Usuario implements UserDetails {
 	
 	@Transient
 	private String codigoValidacao;
+	
+	@Transient
+	private Long idEndereco;
 
 	@Column(nullable=true)
 	private String tokenPushNotification;
 
-	
+	@AtributoJson
 	public Long getId() {
 		return id;
 	}
@@ -70,14 +74,15 @@ public class Usuario implements UserDetails {
 		this.authorities = autorizacao;
 	}
 
-	public String getNomeo() {
+	@AtributoJson
+	public String getNome() {
 		return nome;
 	}
 
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	@AtributoJson
 	public String getCpf() {
 		return cpf;
 	}
@@ -89,7 +94,8 @@ public class Usuario implements UserDetails {
 	public void setUserName(String userName) {
 		this.username = userName;
 	}
-
+	
+	@AtributoJson
 	public boolean isAtivo() {
 		return ativo;
 	}
@@ -97,7 +103,8 @@ public class Usuario implements UserDetails {
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
-
+	
+	@AtributoJson
 	public String getPassword() {
 		return password;
 	}
@@ -105,14 +112,14 @@ public class Usuario implements UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Set<GrantedAuthority> roles = new HashSet<>();
 		roles.add(authorities);
 		return roles;
 	}
-
+	@AtributoJson
 	@Override
 	public String getUsername() {
 		
@@ -123,24 +130,25 @@ public class Usuario implements UserDetails {
 	public boolean isAccountNonExpired() {
 		return true;
 	}
-
+	
+	
 	@Override
 	public boolean isAccountNonLocked() {
 		return true;
 	}
-
+	
 	@Override
 	public boolean isCredentialsNonExpired() {
 		
 		return true;
 	}
-
+	
 	@Override
 	public boolean isEnabled() {
 		
-		return true;
+		return ativo;
 	}
-
+	
 	public String getCodigoValidacao() {
 		return codigoValidacao;
 	}
@@ -148,7 +156,7 @@ public class Usuario implements UserDetails {
 	public void setCodigoValidacao(String codigoValidacao) {
 		this.codigoValidacao = codigoValidacao;
 	}
-	
+	@AtributoJson
 	public String getTokenPushNotification() {
 		return tokenPushNotification;
 	}
@@ -157,7 +165,7 @@ public class Usuario implements UserDetails {
 		this.tokenPushNotification = tokenPushNotification;
 
 	}
-
+	@AtributoJson
 	public String getLinkfotoUsuario() {
 		return linkfotoUsuario;
 	}
@@ -181,7 +189,7 @@ public class Usuario implements UserDetails {
 	public void setTelefoneFixo(String telefoneFixo) {
 		this.telefoneFixo = telefoneFixo;
 	}
-
+	@AtributoJson
 	public String getTelefoneCelular() {
 		return telefoneCelular;
 	}
@@ -189,17 +197,13 @@ public class Usuario implements UserDetails {
 	public void setTelefoneCelular(String telefoneCelular) {
 		this.telefoneCelular = telefoneCelular;
 	}
-
+	@AtributoJson
 	public Endereco getEndereco() {
 		return endereco;
 	}
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
-	}
-
-	public String getNome() {
-		return nome;
 	}
 
 	public void setAuthorities(Autorizacao authorities) {
@@ -209,7 +213,7 @@ public class Usuario implements UserDetails {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
+	
 	public String getTipo() {
 		return tipo;
 	}
@@ -221,5 +225,13 @@ public class Usuario implements UserDetails {
 	@Override
 	public String toString() {
 		return JsonString.geraJsonString(this);
+	}
+	@AtributoJson
+	public Long getIdEndereco() {
+		return idEndereco;
+	}
+
+	public void setIdEndereco(Long idEndereco) {
+		this.idEndereco = idEndereco;
 	}
 }

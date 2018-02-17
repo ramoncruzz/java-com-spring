@@ -164,8 +164,16 @@ public static String geraJsonOKWithMensage(String mensagem) {
 	}
     private static String deGetterParaPropriedade(String nomeGetter){
         StringBuffer retorno = new StringBuffer();
-        retorno.append(nomeGetter.substring(3, 4).toLowerCase());
-        retorno.append(nomeGetter.substring(4));
+        if(nomeGetter.contains("is"))
+        {
+        	    retorno.append(nomeGetter.substring(2, 4).toLowerCase());
+            retorno.append(nomeGetter.substring(4));
+        }else
+        {
+          	retorno.append(nomeGetter.substring(3, 4).toLowerCase());
+            retorno.append(nomeGetter.substring(4));
+        }
+        
         return retorno.toString();
 }
 }

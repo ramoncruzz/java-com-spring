@@ -20,6 +20,7 @@ public class Endereco {
 	private String logradouro;
 	private String pontoDeReferencia;
 	private String bairro;
+	private String numCasa;
 	
 	@Transient
 	private String nomeCidade;
@@ -99,6 +100,14 @@ public class Endereco {
 	}
 	public void setIdCidade(Integer idCidade) {
 		this.idCidade = idCidade;
+	}
+	
+	@AtributoJson
+	public String getNumCasa() {
+		return numCasa;
+	}
+	public void setNumCasa(String numCasa) {
+		this.numCasa = numCasa;
 	}
 	
 	

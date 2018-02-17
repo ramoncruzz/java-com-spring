@@ -44,7 +44,7 @@ public class UsuarioController {
 		try {
 			return JsonString.geraJsonArray(usuarioDao.findAll());
 		}catch (Exception e) {
-			// TODO: handle exception
+		
 			return JsonString.jsonErroMensagem( e.getMessage());
 		}
 		
@@ -59,23 +59,47 @@ public class UsuarioController {
 			Long id=registro.registerUser(usuario);
 			return JsonString.geraJsonCreatedUpdated(id);
 		}catch (Exception e) {
-			// TODO: handle exception
+
 			return JsonString.jsonErroMensagem( e.getMessage());
 		}
 	}
-		
+	
+	@PostMapping(value="/ativar",produces="application/json")
+	public String ativarUsuario(@RequestBody Usuario usuario)
+	{
+		try {
+			String username=usuario.getUsername();
+			Usuario usuarioSalvo= usuarioDao.findByUsername(username);
+			usuarioSalvo.setAtivo(true);
+			usuarioDao.save(usuarioSalvo);
+			return JsonString.geraJsonOK();
+		}catch (Exception e) {
+			return JsonString.jsonErroMensagem( e.getMessage());
+		}
+	}
+	
+	@PostMapping(value="/desativar",produces="application/json")
+	public String desativarUsuario(@RequestBody Usuario usuario)
+	{
+		try {
+			String username=usuario.getUsername();
+			Usuario usuarioSalvo= usuarioDao.findByUsername(username);
+			usuarioSalvo.setAtivo(false);
+			usuarioDao.save(usuarioSalvo);
+			return JsonString.geraJsonOK();
+		}catch (Exception e) {
+			return JsonString.jsonErroMensagem( e.getMessage());
+		}
+	}
+	
 	@PutMapping(produces="application/json")
 	public String atualizar(@RequestBody Usuario usuario)
 	{
 		try
 		{
 			
-			Usuario usuarioSalvo = usuarioDao.findByUsername(usuario.getUsername());
-			Long idSalvo = usuarioSalvo.getId();
-			usuario.setId(idSalvo);
-			Long id=registro.registerUser(usuario);
-			
-			return JsonString.geraJsonCreatedUpdated(id);
+			Usuario usuarioAtualizado = usuarioDao.save(usuario);
+			return JsonString.geraJsonString(usuarioAtualizado);
 				
 		}catch (Exception e) {
 			return JsonString.jsonErroMensagem( e.getMessage());

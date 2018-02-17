@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.candangas.DAO.util.CidadeDAO;
 import com.candangas.DAO.util.EnderecoDAO;
 import com.candangas.DAO.util.LogradouroDAO;
 import com.candangas.helpers.JsonString;
+import com.candangas.model.util.Cidade;
 import com.candangas.model.util.Endereco;
 import com.candangas.model.util.Logradouro;
 
@@ -26,6 +28,9 @@ public class EnderecoController {
 	private EnderecoDAO enderecoDao;
 	@Autowired
 	private LogradouroDAO logradouroDao;
+	@Autowired
+	private CidadeDAO cidadeDao;
+	
 	
 	@GetMapping(produces="application/json")
 	public String listarTodos() {
@@ -71,7 +76,21 @@ public class EnderecoController {
 	public String cadastrar(@RequestBody Endereco endereco) {
 		try
 		{
-			Endereco e = enderecoDao.save(endereco);
+			String cep= endereco.getCep();
+			String numCasa = endereco.getNumCasa();
+			
+			Logradouro logradouro = logradouroDao.findByCep(cep);
+			if(logradouro==null) return JsonString.jsonErroMensagem("Não foi possível registrar o endereço. Tente novamente!");
+			Cidade cidade = cidadeDao.findByIdCidade(logradouro.getCidade().getIdCidade());
+			if(cidade==null) return JsonString.jsonErroMensagem("Não foi possível registrar o endereço. Tente novamente!");
+			
+			Endereco salvar = new Endereco();
+			salvar.setBairro(logradouro.getDescricaoBairro());
+			salvar.setCep(cep);
+			salvar.setCidade(cidade);
+		    salvar.setNumCasa(numCasa);		
+			
+			Endereco e = enderecoDao.save(salvar);
 			if (e.getId() > 0)
 				return JsonString.geraJsonString(e);
 			else
