@@ -73,7 +73,7 @@ public class EnderecoController {
 		{
 			Endereco e = enderecoDao.save(endereco);
 			if (e.getId() > 0)
-				return JsonString.geraJsonOK();
+				return JsonString.geraJsonString(e);
 			else
 				return JsonString.jsonErroMensagem("Erro ao tentar salvar Endereço");
 		}catch (Exception e) {
