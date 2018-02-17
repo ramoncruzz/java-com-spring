@@ -61,7 +61,7 @@ public class UsuarioController {
 	{
 		try
 		{
-			if(usuario.getIdEndereco()>0)
+			if(usuario.getIdEndereco()!=null)
 			{
 				Endereco endereco = enderecoDao.findById(usuario.getIdEndereco());
 				usuario.setEndereco(endereco);
