@@ -1,5 +1,7 @@
 package com.candangas.controllers.utils;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.candangas.DAO.util.CidadeDAO;
 import com.candangas.helpers.JsonString;
 import com.candangas.model.util.Cidade;
+
+import antlr.collections.List;
 
 @RestController
 @RequestMapping("/v0/cidade")
@@ -34,13 +38,29 @@ public class CidadeController {
 		}
 	}
 	
-	@GetMapping(value="/{codigoIbge}", produces="application/json")
+	@GetMapping(value="/ibge-{codigoIbge}", produces="application/json")
 	public String buscaCidadePorCodidgoIbge(@PathVariable Integer codigoIbge)
 	{
 		try
 		{
-			Cidade cidade = cidadeDao.findByCodigoIbge(codigoIbge);
-			if(cidade==null)
+			ArrayList<Cidade> cidade =(ArrayList<Cidade>)  cidadeDao.findByCodigoIbge(codigoIbge);
+			if(cidade!=null)
+				return JsonString.geraJsonArray(cidade);
+			else 
+				return JsonString.jsonErroMensagem("Cidade não encontrada.");
+			
+		}catch (Exception e) {
+			return JsonString.jsonErroMensagem(e.getMessage());
+		}
+	}
+	
+	@GetMapping(value="/{idCidade}", produces="application/json")
+	public String buscaCidadePorIdCidade(@PathVariable Integer idCidade)
+	{
+		try
+		{
+			Cidade cidade = cidadeDao.findByIdCidade(idCidade);
+			if(cidade!=null)
 				return JsonString.geraJsonString(cidade);
 			else 
 				return JsonString.jsonErroMensagem("Cidade não encontrada.");
