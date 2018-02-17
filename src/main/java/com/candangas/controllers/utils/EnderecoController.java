@@ -1,7 +1,5 @@
 package com.candangas.controllers.utils;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,9 +27,15 @@ public class EnderecoController {
 	@Autowired
 	private LogradouroDAO logradouroDao;
 	
-	@GetMapping
-	public List<Endereco> listarTodos() {
-		return enderecoDao.findAll();
+	@GetMapping(produces="application/json")
+	public String listarTodos() {
+		try
+		{
+			return JsonString.geraJsonArray(enderecoDao.findAll());
+		}catch (Exception e) {
+			return JsonString.jsonErroMensagem(e.getMessage());
+		}
+		
 	}
 
 	@GetMapping(value="/{cep}",produces="application/json")
@@ -47,6 +51,8 @@ public class EnderecoController {
 				endereco.setCEP(cep);
 				endereco.setLogradouro(logradouro.getDescricao());
 				endereco.setBairro(logradouro.getDescricaoBairro());
+				endereco.setNomeCidade(logradouro.getCidade().getDescricao());
+				endereco.setCodIbgeCidde(logradouro.getCidade().getCodigoIbge());
 				
 				return JsonString.geraJsonString(endereco);
 			}else

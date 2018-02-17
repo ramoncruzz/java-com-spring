@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.candangas.helpers.AtributoJson;
 import com.candangas.helpers.JsonString;
 
 @Entity
@@ -17,30 +18,36 @@ public class Cidade {
 	private Integer codigoIbge;
 	private String ddd;
 	
+	@AtributoJson
 	public Integer getIdCidade() {
 		return idCidade;
 	}
 	public void setIdCidade(Integer idCidade) {
 		this.idCidade = idCidade;
 	}
+	@AtributoJson
 	public String getDescricao() {
 		return descricao;
 	}
+	
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	@AtributoJson
 	public String getUf() {
 		return uf;
 	}
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
+	@AtributoJson
 	public Integer getCodigoIbge() {
 		return codigoIbge;
 	}
 	public void setCodigoIbge(Integer codigoIbge) {
 		this.codigoIbge = codigoIbge;
 	}
+	@AtributoJson
 	public String getDdd() {
 		return ddd;
 	}
