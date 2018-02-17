@@ -16,7 +16,7 @@ public class Endereco {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	private String CEP;
+	private String cep;
 	private String logradouro;
 	private String pontoDeReferencia;
 	private String bairro;
@@ -36,11 +36,11 @@ public class Endereco {
 		this.id = id;
 	}
 	@AtributoJson
-	public String getCEP() {
-		return CEP;
+	public String getCep() {
+		return cep;
 	}
-	public void setCEP(String cEP) {
-		CEP = cEP;
+	public void setCep(String CEP) {
+		this.cep = CEP;
 	}
 	@AtributoJson
 	public String getLogradouro() {

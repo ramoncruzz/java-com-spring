@@ -48,7 +48,7 @@ public class EnderecoController {
 			if(logradouro!=null)
 			{
 				endereco.setId(-1L);
-				endereco.setCEP(cep);
+				endereco.setCep(cep);
 				endereco.setLogradouro(logradouro.getDescricao());
 				endereco.setBairro(logradouro.getDescricaoBairro());
 				endereco.setNomeCidade(logradouro.getCidade().getDescricao());
