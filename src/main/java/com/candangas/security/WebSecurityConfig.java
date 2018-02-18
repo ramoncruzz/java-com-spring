@@ -42,11 +42,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //			.antMatchers(HttpMethod.GET,"/v0/sms").hasAuthority("USER")
 			
 			//USUARIO
-            .antMatchers(HttpMethod.PUT,"/v0/usuario").hasAnyAuthority("USER","ADMIN")
-			.antMatchers(HttpMethod.GET,"/v0/usuario/**").hasAnyAuthority("USER","ADMIN")
-			.antMatchers(HttpMethod.POST,"/v0/usuario").permitAll()
 			.antMatchers(HttpMethod.GET,"/v0/usuario").permitAll()
+			.antMatchers(HttpMethod.GET,"/v0/usuario/**").permitAll()
+			.antMatchers(HttpMethod.POST,"/v0/usuario").permitAll()
+			.antMatchers(HttpMethod.POST,"/v0/usuario/admin").permitAll()
+			.antMatchers(HttpMethod.POST,"/v0/usuario/ativar").hasAnyRole("ADMIN")
+			.antMatchers(HttpMethod.POST,"/v0/usuario/desativar").hasAnyRole("ADMIN")
+            .antMatchers(HttpMethod.PUT,"/v0/usuario").hasAnyAuthority("USER","ADMIN")
 			.antMatchers(HttpMethod.PUT,"/v0/usuario/recuperar").permitAll()
+			.antMatchers(HttpMethod.DELETE,"/v0/usuario/**").hasAnyRole("ADMIN")
             
             //SMS
 			.antMatchers(HttpMethod.POST,"/v0/sms/gerar-codigo").permitAll()
