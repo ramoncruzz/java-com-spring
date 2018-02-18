@@ -75,6 +75,26 @@ public class UsuarioController {
 		}
 	}
 	
+	@PostMapping(value="/admin",produces="application/json")
+	@ResponseStatus(HttpStatus.CREATED)
+	public String cadastrarAdmin(@RequestBody Usuario usuario)
+	{
+		try
+		{
+			if(usuario.getIdEndereco()!=null)
+			{
+				Endereco endereco = enderecoDao.findById(usuario.getIdEndereco());
+				usuario.setEndereco(endereco);
+			}
+			Long id=registro.registerAdminUser(usuario);
+			
+			return JsonString.geraJsonCreatedUpdated(id);
+		}catch (Exception e) {
+
+			return JsonString.jsonErroMensagem( e.getMessage());
+		}
+	}
+	
 	@PostMapping(value="/ativar",produces="application/json")
 	public String ativarUsuario(@RequestBody Usuario usuario)
 	{

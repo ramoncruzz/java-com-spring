@@ -33,23 +33,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().authorizeRequests()
 			.antMatchers(HttpMethod.GET,"/v0").permitAll()
-			.antMatchers(HttpMethod.GET,"/v0/**").permitAll()
-			.antMatchers(HttpMethod.POST,"/v0/**").permitAll()
+			//.antMatchers(HttpMethod.GET,"/v0/**").permitAll()
+			//.antMatchers(HttpMethod.POST,"/v0/**").permitAll()
 			//.antMatchers(HttpMethod.PUT,"/v0/**").permitAll()
-			.antMatchers(HttpMethod.DELETE,"/v0/**").permitAll()
+		//	.antMatchers(HttpMethod.DELETE,"/v0/**").permitAll()
 //			.antMatchers(HttpMethod.GET,"/v0/firebaseNotifications").hasAuthority("USER")
 //			.antMatchers(HttpMethod.POST,"/v0/firebaseNotifications").hasAuthority("USER")
 //			.antMatchers(HttpMethod.GET,"/v0/sms").hasAuthority("USER")
 			
 			//USUARIO
             .antMatchers(HttpMethod.PUT,"/v0/usuario").hasAnyAuthority("USER","ADMIN")
-//			.antMatchers(HttpMethod.GET,"/v0/usuario/**").hasAuthority("USER")
-//			.antMatchers(HttpMethod.POST,"/v0/usuario").permitAll()
-//			.antMatchers(HttpMethod.GET,"/v0/usuario").permitAll()
-//			.antMatchers(HttpMethod.PUT,"/v0/usuario/recuperar").permitAll()
-//			.antMatchers(HttpMethod.POST,"/v0/sms/gerar-codigo").permitAll()
-//			.antMatchers(HttpMethod.POST,"/v0/sms/validar").permitAll()
-//			.anyRequest().authenticated()
+			.antMatchers(HttpMethod.GET,"/v0/usuario/**").hasAnyAuthority("USER","ADMIN")
+			.antMatchers(HttpMethod.POST,"/v0/usuario").permitAll()
+			.antMatchers(HttpMethod.GET,"/v0/usuario").permitAll()
+			.antMatchers(HttpMethod.PUT,"/v0/usuario/recuperar").permitAll()
+            
+            //SMS
+			.antMatchers(HttpMethod.POST,"/v0/sms/gerar-codigo").permitAll()
+			.antMatchers(HttpMethod.POST,"/v0/sms/validar").permitAll()
+            
+			.anyRequest().authenticated()
 			.and()
 			// filtra requisições de login
 			.addFilterBefore(new JWTLoginFilter("/v0/login", authenticationManager()),
