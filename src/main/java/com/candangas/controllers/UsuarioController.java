@@ -135,6 +135,10 @@ public class UsuarioController {
 			usuario.setId(idSalvo);
 			usuario.setNome(nome);
 			usuario.setSobreNome(sobrenome);
+			usuario.setCpf(usuarioSalvo.getCpf());
+			usuario.setLinkfotoUsuario(usuarioSalvo.getLinkfotoUsuario());
+			usuario.setEndereco(usuarioSalvo.getEndereco());
+			usuario.setTelefoneCelular(usuarioSalvo.getTelefoneCelular());
 			Long id=registro.registerUser(usuario);
 			
 			return JsonString.geraJsonCreatedUpdated(id);
@@ -157,6 +161,10 @@ public class UsuarioController {
 			usuario.setId(idSalvo);
 			usuario.setNome(nome);
 			usuario.setSobreNome(sobrenome);
+			usuario.setCpf(usuarioSalvo.getCpf());
+			usuario.setLinkfotoUsuario(usuarioSalvo.getLinkfotoUsuario());
+			usuario.setEndereco(usuarioSalvo.getEndereco());
+			usuario.setTelefoneCelular(usuarioSalvo.getTelefoneCelular());
 			Long id=registro.registerUser(usuario);
 			
 			return JsonString.geraJsonCreatedUpdated(id);
