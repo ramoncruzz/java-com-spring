@@ -40,7 +40,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //			.antMatchers(HttpMethod.GET,"/v0/firebaseNotifications").hasAuthority("USER")
 //			.antMatchers(HttpMethod.POST,"/v0/firebaseNotifications").hasAuthority("USER")
 //			.antMatchers(HttpMethod.GET,"/v0/sms").hasAuthority("USER")
-//			.antMatchers(HttpMethod.PUT,"/v0/usuario").hasAuthority("USER")
+			
+			//USUARIO
+            .antMatchers(HttpMethod.PUT,"/v0/usuario").hasAnyAuthority("USER","ADMIN")
 //			.antMatchers(HttpMethod.GET,"/v0/usuario/**").hasAuthority("USER")
 //			.antMatchers(HttpMethod.POST,"/v0/usuario").permitAll()
 //			.antMatchers(HttpMethod.GET,"/v0/usuario").permitAll()
