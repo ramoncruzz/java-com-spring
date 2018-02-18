@@ -108,9 +108,16 @@ public class UsuarioController {
 	{
 		try
 		{
+			Usuario usuarioSalvo = usuarioDao.findByUsername(usuario.getUsername());
+			Long idSalvo = usuarioSalvo.getId();
+			String nome = usuarioSalvo.getNome();
+			String sobrenome = usuarioSalvo.getSobreNome();
+			usuario.setId(idSalvo);
+			usuario.setNome(nome);
+			usuario.setSobreNome(sobrenome);
+			Long id=registro.registerUser(usuario);
 			
-			Usuario usuarioAtualizado = usuarioDao.save(usuario);
-			return JsonString.geraJsonString(usuarioAtualizado);
+			return JsonString.geraJsonCreatedUpdated(id);
 				
 		}catch (Exception e) {
 			return JsonString.jsonErroMensagem( e.getMessage());
