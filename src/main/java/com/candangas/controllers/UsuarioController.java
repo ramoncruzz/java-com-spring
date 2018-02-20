@@ -1,5 +1,8 @@
 package com.candangas.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -53,6 +56,46 @@ public class UsuarioController {
 			return JsonString.jsonErroMensagem( e.getMessage());
 		}
 		
+	}
+	
+	@GetMapping(value="/vendedores",produces="application/json")
+	public String listaVendedores()
+	{
+		try
+		{
+			ArrayList<Usuario> listaVendedores = new ArrayList<>();
+			List<Usuario> usuariosSalvos = usuarioDao.findAll();
+			if(usuariosSalvos!=null && usuariosSalvos.size()>0)
+			{
+				for(Usuario user:usuariosSalvos)
+					if(user.getTipo().equalsIgnoreCase("USER"))
+						listaVendedores.add(user);	
+			}else
+				return JsonString.jsonErroMensagem("Nenhum vendedor cadastrado.");
+			return JsonString.geraJsonArray(listaVendedores);
+		}catch (Exception e) {
+			return JsonString.jsonErroMensagem(e.getMessage());
+		}
+	}
+	
+	@GetMapping(value="/administradores",produces="application/json")
+	public String listaAdministradores()
+	{
+		try
+		{
+			ArrayList<Usuario> listaVendedores = new ArrayList<>();
+			List<Usuario> usuariosSalvos = usuarioDao.findAll();
+			if(usuariosSalvos!=null && usuariosSalvos.size()>0)
+			{
+				for(Usuario user:usuariosSalvos)
+					if(user.getTipo().equalsIgnoreCase("ADMIN"))
+						listaVendedores.add(user);	
+			}else
+				return JsonString.jsonErroMensagem("Nenhum vendedor cadastrado.");
+			return JsonString.geraJsonArray(listaVendedores);
+		}catch (Exception e) {
+			return JsonString.jsonErroMensagem(e.getMessage());
+		}
 	}
 	
 	@PostMapping(produces="application/json")

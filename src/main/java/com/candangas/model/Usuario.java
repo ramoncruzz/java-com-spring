@@ -35,7 +35,6 @@ public class Usuario implements UserDetails {
 	private String telefoneFixo;
 	private String telefoneCelular;
 	private String cpf;
-	private String tipo;
 	
 	@ManyToOne
 	private Autorizacao authorities;
