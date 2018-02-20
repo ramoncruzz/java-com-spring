@@ -44,7 +44,8 @@ public class RegistroUsuarios implements UserService {
 		}
 		String hash =bCrypt.encode(user.getPassword());
 		user.setPassword(hash);
-		user.setAtivo(true);
+		boolean ativo=user.isAtivo();
+		user.setAtivo(ativo);
 		return usuarioDao.saveAndFlush(user).getId();
 		
 	}

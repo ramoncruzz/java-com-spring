@@ -182,6 +182,7 @@ public class UsuarioController {
 			usuario.setLinkfotoUsuario(usuarioSalvo.getLinkfotoUsuario());
 			usuario.setEndereco(usuarioSalvo.getEndereco());
 			usuario.setTelefoneCelular(usuarioSalvo.getTelefoneCelular());
+			usuario.setAtivo(usuarioSalvo.isAtivo());
 			Long id=0L;
 			if(usuarioSalvo.getTipo().equalsIgnoreCase("USER"))
 				id=registro.registerUser(usuario);
@@ -212,7 +213,11 @@ public class UsuarioController {
 			usuario.setLinkfotoUsuario(usuarioSalvo.getLinkfotoUsuario());
 			usuario.setEndereco(usuarioSalvo.getEndereco());
 			usuario.setTelefoneCelular(usuarioSalvo.getTelefoneCelular());
-			Long id=registro.registerUser(usuario);
+			Long id=0L;
+			if(usuarioSalvo.getTipo().equalsIgnoreCase("USER"))
+				id=registro.registerUser(usuario);
+			if(usuarioSalvo.getTipo().equalsIgnoreCase("ADMIN"))
+				id=registro.registerAdminUser(usuario);
 			
 			return JsonString.geraJsonCreatedUpdated(id);
 				
