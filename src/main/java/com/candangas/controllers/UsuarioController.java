@@ -46,7 +46,7 @@ public class UsuarioController {
 	}
 	
 	@PostMapping(value="/consulta",produces="application/json")
-	public String consultaExistenciadeUsuario(Usuario usuarioPost)
+	public String consultaExistenciadeUsuario(@RequestBody Usuario usuarioPost)
 	{
 		try
 		{
