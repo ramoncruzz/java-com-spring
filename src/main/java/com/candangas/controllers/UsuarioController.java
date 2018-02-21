@@ -46,6 +46,23 @@ public class UsuarioController {
 		
 	}
 	
+	@PostMapping(value="/consulta",produces="application/json")
+	public String consultaExistenciadeUsuario(Usuario usuarioPost)
+	{
+		try
+		{
+			String username=usuarioPost.getUsername();
+			Usuario usuario= usuarioDao.findByUsername(username);
+			if(usuario!=null)
+				return JsonString.geraJsonOKWithMensage("Usuario existe.");
+			else 
+				return JsonString.jsonErroMensagem("Usuario não existe");
+		}catch (Exception e) {
+			return JsonString.jsonErroMensagem( e.getMessage());
+		}
+		
+	}
+	
 	@GetMapping(produces="application/json")
 	public String listarTodos()
 	{

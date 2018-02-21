@@ -43,12 +43,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			
 			//USUARIO
 			.antMatchers(HttpMethod.GET,"/v0/usuario").permitAll()
-			.antMatchers(HttpMethod.GET,"/v0/usuario/**").permitAll()
+			.antMatchers(HttpMethod.GET,"/v0/usuario/").permitAll()
+			.antMatchers(HttpMethod.POST,"/v0/usuario/consulta").permitAll()
+			.antMatchers(HttpMethod.GET,"/v0/usuario/vendedores").hasAuthority("ADMIN")
+			.antMatchers(HttpMethod.GET,"/v0/usuario/administradores").hasAuthority("ADMIN")
 			.antMatchers(HttpMethod.POST,"/v0/usuario").permitAll()
 			.antMatchers(HttpMethod.POST,"/v0/usuario/").permitAll()
 			.antMatchers(HttpMethod.POST,"/v0/usuario/admin").permitAll()
 			.antMatchers(HttpMethod.POST,"/v0/usuario/ativar").hasAuthority("ADMIN")
 			.antMatchers(HttpMethod.POST,"/v0/usuario/desativar").hasAuthority("ADMIN")
+			.antMatchers(HttpMethod.POST,"/v0/usuario/*").hasAuthority("ADMIN")
             .antMatchers(HttpMethod.PUT,"/v0/usuario").hasAnyAuthority("USER","ADMIN")
 			.antMatchers(HttpMethod.PUT,"/v0/usuario/recuperar").permitAll()
 			.antMatchers(HttpMethod.DELETE,"/v0/usuario/**").hasAuthority("ADMIN")
