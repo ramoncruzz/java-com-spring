@@ -73,7 +73,10 @@ public class UsuarioController {
 			}else
 				return JsonString.jsonErroMensagem("Nenhum vendedor cadastrado.");
 			return JsonString.geraJsonArray(listaVendedores);
-		}catch (Exception e) {
+		}catch (IndexOutOfBoundsException e) {
+			return JsonString.jsonErroMensagem("Nenhum vendedor cadastrado.");
+		}catch(Exception e)
+		{
 			return JsonString.jsonErroMensagem(e.getMessage());
 		}
 	}
