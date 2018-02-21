@@ -33,7 +33,7 @@ public class UsuarioController {
 	@Autowired
 	private EnderecoDAO enderecoDao;
 	
-	@GetMapping(value="/{username}",produces="application/json")
+	@GetMapping(value="/busca/{username}",produces="application/json")
 	public String getUsuarioPorUserName(@PathVariable String username)
 	{
 		try

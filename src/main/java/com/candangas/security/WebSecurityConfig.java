@@ -44,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			//USUARIO
 			.antMatchers(HttpMethod.GET,"/v0/usuario").permitAll()
 			.antMatchers(HttpMethod.GET,"/v0/usuario/").permitAll()
+			.antMatchers(HttpMethod.GET,"/v0/usuario/busca/*").permitAll()
 			.antMatchers(HttpMethod.POST,"/v0/usuario/consulta").permitAll()
 			.antMatchers(HttpMethod.GET,"/v0/usuario/vendedores").hasAuthority("ADMIN")
 			.antMatchers(HttpMethod.GET,"/v0/usuario/administradores").hasAuthority("ADMIN")
