@@ -39,7 +39,10 @@ public class UsuarioController {
 		try
 		{
 			Usuario usuario= usuarioDao.findByUsername(username);
-			return usuario.toString();
+			if(usuario!=null)
+				return JsonString.geraJsonString(usuario);
+			else
+				return JsonString.jsonErroMensagem("Usuário não encontrado.");
 		}catch (Exception e) {
 			return JsonString.jsonErroMensagem( e.getMessage());
 		}
