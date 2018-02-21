@@ -43,7 +43,6 @@ public class UsuarioController {
 		}catch (Exception e) {
 			return JsonString.jsonErroMensagem( e.getMessage());
 		}
-		
 	}
 	
 	@PostMapping(value="/consulta",produces="application/json")
