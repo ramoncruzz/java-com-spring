@@ -169,13 +169,6 @@ public class Produto {
 	public void setLinkSiteVendas(String linkSiteVendas) {
 		this.linkSiteVendas = linkSiteVendas;
 	}
-	@AtributoJson
-	public double getPrecoPormocional() {
-		return precoPormocional;
-	}
-	public void setPrecoPormocional(double precoPormocional) {
-		this.precoPormocional = precoPormocional;
-	}
 	
 	@AtributoJson
 	public boolean isAtivo() {
