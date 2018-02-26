@@ -16,6 +16,7 @@ public class JsonString {
 			jsonString.append(",");
 			int tamanho = contaQtdGetValidos(o);
 			int contador=1;
+			
 			for(Method m : classe.getMethods())
 			{
 					if(isGetter(m))
@@ -35,12 +36,13 @@ public class JsonString {
 								jsonString.append(deGetterParaPropriedade(m.getName()));
 								jsonString.append("\":");
 								jsonString.append(m.invoke(o));
+								
 							}
 						}
-						
 						if(contador<tamanho)
 							jsonString.append(",");
 						contador++;
+						
 					}
 					if(isListReturn(m))
 					{
@@ -60,7 +62,7 @@ public class JsonString {
 						jsonString.append("]");
 						if(contador<tamanho)
 							jsonString.append(",");
-						contador++;
+						
 					}
 			}
 			jsonString.append("}");

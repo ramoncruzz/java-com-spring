@@ -25,7 +25,6 @@ public class Catalogo {
 	@Column(unique=true)
 	private String codigoReferencia;
 	private boolean ativo;
-	private boolean exibir;
 	private int diaInicio;
 	private int mesInicio;
 	private int anoInicio;
@@ -74,14 +73,8 @@ public class Catalogo {
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
-	@AtributoJson
-	public boolean isExibir() {
-		return exibir;
-	}
-	public void setExibir(boolean exibir) {
-		this.exibir = exibir;
-	}
-	@AtributoJson
+	
+	 
 	public int getDiaInicio() {
 		return diaInicio;
 	}
@@ -95,14 +88,14 @@ public class Catalogo {
 	public void setMesInicio(int mesInicio) {
 		this.mesInicio = mesInicio;
 	}
-	@AtributoJson
+	
 	public int getAnoInicio() {
 		return anoInicio;
 	}
 	public void setAnoInicio(int anoInicio) {
 		this.anoInicio = anoInicio;
 	}
-	@AtributoJson
+	
 	public int getDiaFim() {
 		return diaFim;
 	}
@@ -116,7 +109,7 @@ public class Catalogo {
 	public void setMesFim(int mesFim) {
 		this.mesFim = mesFim;
 	}
-	@AtributoJson
+	
 	public int getAnoFim() {
 		return anoFim;
 	}
@@ -144,7 +137,8 @@ public class Catalogo {
 	public void setLinkImagemPequena(String linkImagemPequena) {
 		this.linkImagemPequena = linkImagemPequena;
 	}
-	public List<Produto> getListaProdutos() {
+	@AtributoJson
+	public List<Produto> getProdutos() {
 		return listaProdutos;
 	}
 	public void setListaProdutos(List<Produto> listaProdutos) {
