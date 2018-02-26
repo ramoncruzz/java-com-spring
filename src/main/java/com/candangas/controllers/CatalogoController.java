@@ -22,7 +22,7 @@ public class CatalogoController {
 	@Autowired
 	private CatalogoDAO catalogoDao;
 	
-	@GetMapping(produces="application/json")
+	@GetMapping//(produces="application/json")
 	public String listaCatalogos()
 	{
 		try

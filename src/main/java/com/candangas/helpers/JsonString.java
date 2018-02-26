@@ -46,7 +46,7 @@ public class JsonString {
 					}
 					if(isListReturn(m))
 					{
-						jsonString.append("\"");
+						jsonString.append(",\"");
 						jsonString.append(deGetterParaPropriedade(m.getName()));
 						jsonString.append("\":");
 						jsonString.append("[");
@@ -60,13 +60,13 @@ public class JsonString {
 								jsonString.append(",");
 						}
 						jsonString.append("]");
-						if(contador<tamanho)
+						if(contador<=tamanho)
 							jsonString.append(",");
 						
 					}
 			}
 			jsonString.append("}");
-			return jsonString.toString();
+			return jsonString.toString().replace(",,", ",");
 		}catch (Exception e) {
 			// TODO: handle exception
 			throw new RuntimeException("Problema ao gerar jsonString",e);

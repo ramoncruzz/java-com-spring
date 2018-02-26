@@ -81,7 +81,7 @@ public class Catalogo {
 	public void setDiaInicio(int diaInicio) {
 		this.diaInicio = diaInicio;
 	}
-	@AtributoJson
+	
 	public int getMesInicio() {
 		return mesInicio;
 	}
@@ -102,7 +102,7 @@ public class Catalogo {
 	public void setDiaFim(int diaFim) {
 		this.diaFim = diaFim;
 	}
-	@AtributoJson
+	
 	public int getMesFim() {
 		return mesFim;
 	}
