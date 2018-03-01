@@ -22,7 +22,7 @@ public class CatalogoController {
 	@Autowired
 	private CatalogoDAO catalogoDao;
 	
-	@GetMapping//(produces="application/json")
+	@GetMapping(produces="application/json")
 	public String listaCatalogos()
 	{
 		try
@@ -33,14 +33,14 @@ public class CatalogoController {
 		}
 	}
 	
-	@GetMapping(value="/{codigoReferencia}",produces="application/json")
+	@GetMapping(value="/codigo-referencia/{codigoReferencia}",produces="application/json")
 	public String buscaPorCodigoReferencia(@PathVariable String codigoReferencia)
 	{
 		try
 		{
 			return catalogoDao.findByCodigoReferencia(codigoReferencia).toString();
 		}catch (Exception e) {
-			// TODO: handle exception
+			
 			return JsonString.jsonErroMensagem( e.getMessage());
 		}
 	}
@@ -76,7 +76,11 @@ public class CatalogoController {
 	{
 		try
 		{
-			Catalogo c = catalogoDao.save(catalogo);
+			
+			Catalogo c = catalogoDao.findByCodigoReferencia(catalogo.getCodigoReferencia());
+			c.setNome(catalogo.getNome());
+			catalogoDao.save(catalogo);
+			
 			return JsonString.geraJsonCreatedUpdated(c.getId());
 		}catch (Exception e) {
 			// TODO: handle exception

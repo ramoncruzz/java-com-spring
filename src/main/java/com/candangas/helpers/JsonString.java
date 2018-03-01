@@ -116,12 +116,23 @@ public static String geraJsonOK() {
 		jsonString.append("}");
 		return jsonString.toString();
 	}
-public static String geraJsonOKWithMensage(String mensagem) {
+public static String geraJsonOKSMS(String mensagem) {
 	
 	StringBuilder jsonString = new StringBuilder("{");
 	jsonString.append("\"sucess\":");
 	jsonString.append(true);
 	jsonString.append(",\"codigoSMS\":\"");
+	jsonString.append(mensagem);
+	jsonString.append("\"}");
+	
+	return jsonString.toString();
+}
+public static String geraJsonOKWithMensage(String mensagem) {
+	
+	StringBuilder jsonString = new StringBuilder("{");
+	jsonString.append("\"sucess\":");
+	jsonString.append(true);
+	jsonString.append(",\"msg\":\"");
 	jsonString.append(mensagem);
 	jsonString.append("\"}");
 	
