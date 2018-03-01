@@ -63,7 +63,7 @@ public class SMSController {
 		SMSValidacao s = smsDao.save(smsSalvar);
 		s.getId();
 		
-		//enviaSMSAPITotalVoice(sms.getTelefone(),codigoFormatado);
+		enviaSMSAPITotalVoice(sms.getTelefone(),codigoFormatado);
 		
 			return JsonString.geraJsonOKWithMensage(codigoFormatado);
 		} catch (Exception e) {
