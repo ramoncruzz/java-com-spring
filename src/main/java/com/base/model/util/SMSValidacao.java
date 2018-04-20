@@ -13,7 +13,7 @@ public class SMSValidacao {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
+	private String nomeAplicativo;
 	private String codigoValidacao;
 	private String telefone;
 	private boolean validado;
@@ -46,5 +46,11 @@ public class SMSValidacao {
 	@Override
 	public String toString() {
 		return JsonString.geraJsonString(this);
+	}
+	public String getNomeAplicativo() {
+		return nomeAplicativo;
+	}
+	public void setNomeAplicativo(String nomeAplicativo) {
+		this.nomeAplicativo = nomeAplicativo;
 	}
 }
