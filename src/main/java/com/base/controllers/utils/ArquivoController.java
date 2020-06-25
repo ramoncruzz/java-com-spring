@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -67,6 +68,14 @@ public class ArquivoController {
 		}
 	}
 	
+	@PostMapping(value="/teste",produces="application/json")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public String recebeArquivoTeste(@RequestParam("file") MultipartFormDataInput uploadfiles)
+	{
+		
+		return uploadfiles.toString();
+		
+	}
 	
 	
 	private Arquivo geraObjetoArquivo(String fileName)

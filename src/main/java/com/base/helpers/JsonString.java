@@ -151,6 +151,7 @@ public class JsonString {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private static boolean isListReturn(Method m) {
 		return m.getName().startsWith("get") && m.getReturnType() == List.class && m.getParameterTypes().length == 0;
 	}
@@ -308,7 +309,7 @@ public class JsonString {
 			
 			if(classe==org.hibernate.collection.internal.PersistentBag.class)
 			{
-				@SuppressWarnings("unchecked")
+				
 				org.hibernate.collection.internal.PersistentBag valorBag=((org.hibernate.collection.internal.PersistentBag) valor);
 				ArrayList<Object> p =new ArrayList<>();
 				for(Object obj:valorBag.toArray())

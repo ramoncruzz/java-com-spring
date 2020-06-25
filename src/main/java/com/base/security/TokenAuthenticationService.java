@@ -22,7 +22,7 @@ public class TokenAuthenticationService {
 		static final long EXPIRATION_TIME = 860_000_000;
 		//public final long EXPIRATION_TIME = 600_000;
 		public final String SECRET = "kverrna";
-		public final String TOKEN_PREFIX = "vitoria";
+		public final String TOKEN_PREFIX = "prefixo";
 		public final String HEADER_STRING = "Authorization";
 		
 		public TokenAuthenticationService() {}
